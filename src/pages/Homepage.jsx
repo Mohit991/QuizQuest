@@ -30,7 +30,7 @@ const HomePage = () => {
           <Typography
             className="username"
             fontWeight={600}
-            fontSize={"2rem"}
+            fontSize={"1.9rem"}
             sx={{
               letterSpacing:"3px",
               textShadow: "-0.08em 0.03em 0.12em rgba(0, 0, 0, 0.9)",
