@@ -1,0 +1,50 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.homepage-maiin-heading {
+  padding-top: 2%;
+}
+
+.homepage-heading-letter {
+  font-size: 6rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-shadow: -0.08em 0.03em 0.12em rgba(0, 0, 0, 0.9);
+}
+
+div span:not(:first-child) {
+  margin-left: -0.11em;
+}
+
+.homepage-main .start_btn_home {
+  padding: 25px 30px;
+  background-color: #050801;
+  color: #39ff14;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  letter-spacing: 4px;
+  overflow: hidden;
+  transition: 0.5s;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.homepage-main .start_btn_home:hover {
+  background: #39ff14;
+  color: #050801;
+  box-shadow: 0 0 5px #39ff14, 0 0 25px #39ff14, 0 0 50px #39ff14,
+    0 0 200px #39ff14;
+}
+
+.option-box .card:hover {
+  box-shadow: 0 0 5px #39ff14, 0 0 25px #39ff14, 0 0 50px #39ff14,
+    0 0 200px #39ff14;
+}
+
+
+
