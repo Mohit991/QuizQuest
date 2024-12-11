@@ -7,7 +7,7 @@ QuizHub is an engaging platform where you can test and improve your knowledge in
 ### Diverse Topics: Quizzes on HTML structure, CSS styling, JavaScript functions, and advanced web concepts.
 ### Progress Tracking: Monitor your learning journey and identify areas to improve.
 ### Leaderboards: Compete with others and rise to the top!
-Unlock new levels, earn badges, and make learning web development enjoyable with QuizHub. Perfect for students, hobbyists, and professionals alike.
+Unlock new levels, earn badges, and make learning web development enjoyable with QuizHub. Perfect for students, hobbyists, and professionals alike. 
 
 
 
