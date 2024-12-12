@@ -1,9 +1,9 @@
-import { Box } from "@mui/material"
+import { Box, Typography } from "@mui/material"
 
 const Question = ({questionText}) => {
     return (
-        <Box>
-            <h1>{questionText}</h1>
+        <Box className="questionBox">
+            <Typography className="text" variant="h4" mb={4}>{questionText}</Typography>
         </Box>
     )
 }

@@ -10,7 +10,7 @@ const ChooseLevel = () => {
   const navigate = useNavigate();
 
   const onLevelSelected = (level) => {
-    navigate(`/start/${topic}/${noOfQuestions}/${level}/quiz`);
+    navigate(`/start/${topic}/${noOfQuestions}/${level}/selectedOptions`);
   }
   
   return (

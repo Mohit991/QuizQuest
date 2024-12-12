@@ -6,7 +6,7 @@ import ChooseNoOfQuestions from "./pages/ChooseNoOfQuestions";
 import ChooseLevel from "./pages/ChooseLevel";
 import ChooseTopic from "./pages/ChooseTopic";
 import Quiz from "./pages/Quiz";
-import Question from "./components/Question";
+import SelectedOptions from "./pages/SelectedOptions";
 
 function App() {
   return (
@@ -28,7 +28,11 @@ function App() {
             element={<ChooseLevel />}
           />
           <Route
-            path="/start/:topic/:noOfQuestions/:level/quiz"
+            path="/start/:topic/:noOfQuestions/:level/selectedOptions"
+            element={<SelectedOptions />}
+          />
+          <Route
+            path="/start/:topic/:noOfQuestions/:level/selectedOptions/quiz"
             element={<Quiz />}
           />
         </Routes>

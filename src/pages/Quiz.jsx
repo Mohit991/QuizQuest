@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Question from "../components/Question";
 import Option from "../components/Option";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 const Quiz = () => {
   const { topic, noOfQuestions, level } = useParams();
@@ -85,8 +85,10 @@ const Quiz = () => {
     }
   }
 
+  console.log(level)
+
   return (
-    <div>
+    <Box className="quizBoxMain">
       <Question questionText={questionText} />
       {options.map((option, index) =>
         selectedAnswer == index ? (
@@ -94,7 +96,7 @@ const Quiz = () => {
             key={index}
             optionText={option}
             onOptionSelected={() => onOptionSelected(index)}
-            style={{ backgroundColor: "green" }}
+            style={{ fontSize:"20px" }}
           />
         ) : (
           <Option
@@ -105,11 +107,12 @@ const Quiz = () => {
         )
       )}
       <Button
+      className="btn"
         onClick={checkAnswerAndNext}
       >
         Next
       </Button>
-    </div>
+    </Box>
   );
 };
 
