@@ -1,6 +1,4 @@
 import { Box, Button, Divider, Typography } from "@mui/material";
-import OptionsBox from "../components/OptionsBox";
-import ChooseNoOfQuestions from "./ChooseNoOfQuestions";
 import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
@@ -43,7 +41,7 @@ const HomePage = () => {
                 `,
             }}
           >
-            MOHIT
+            USER
           </Typography>
         </Box>
         <Button

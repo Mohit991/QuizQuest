@@ -8,10 +8,10 @@ import ChooseTopic from "./pages/ChooseTopic";
 import Quiz from "./pages/Quiz";
 import SelectedOptions from "./pages/SelectedOptions";
 
+
 function App() {
   return (
     <>
-    {/* <Quiz /> */}
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />

@@ -14,7 +14,7 @@ const ChooseLevel = () => {
   }
   
   return (
-    <Box className="content" pt={3} width={"100%"}>
+    <Box className="chooseLevel" pt={3} width={"100%"}>
       <Typography
         fontSize={"1.3rem"}
         sx={{
@@ -22,6 +22,7 @@ const ChooseLevel = () => {
           fontWeight: "lighter",
         }}
         pt={1}
+        className="mainHead"
       >
         CHOOSE LEVEL
       </Typography>

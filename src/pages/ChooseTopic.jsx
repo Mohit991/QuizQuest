@@ -12,7 +12,7 @@ const ChooseTopic = () => {
   };
 
   return (
-    <Box className="content" pt={3} width={"100%"}>
+    <Box pt={3} width={"100%"}>
       <Typography
         fontSize={"1.3rem"}
         sx={{
