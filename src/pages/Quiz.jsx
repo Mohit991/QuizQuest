@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Question from "../components/Question";
 import Option from "../components/Option";
 import { Box, Button } from "@mui/material";
-import {convertDifficulty} from '../utils/conversions'
+import { convertDifficulty } from "../utils/conversions";
+import CustomSpinner from "../components/CustomSpinner";
+import ErrorPage from "./ErrorPage";
 
 const Quiz = () => {
   const { topic, noOfQuestions, level } = useParams();
@@ -13,162 +15,122 @@ const Quiz = () => {
   const [correctAnswer, setCorrectAnswer] = useState(-1);
   const [selectedAnswer, setSelectedAnswer] = useState(-1);
   const [questionIndex, setQuestionIndex] = useState(0);
+  const [response, setResponse] = useState([]);
+
+  const [isLoading, setIsLoading] = useState(true)
+  const [isError, setIsError] = useState(false)
+
+  const [score, setScore] = useState(0)
+
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const apiKey = 'TRoLR2UY81kGKq25N7VNwcZ7UaJWNJrKupFlqXrF'; // Replace with your actual API key
-    const url = 'https://quizapi.io/api/v1/questions';
-    console.log(convertDifficulty(level));
-    
-    fetch(`${url}?apiKey=${apiKey}&limit=${noOfQuestions}&category=${topic}&difficulty=${convertDifficulty(level)}`, {
-      method: 'GET',
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+    const fetchData = async () => {
+      try {
+        const apiKey = "TRoLR2UY81kGKq25N7VNwcZ7UaJWNJrKupFlqXrF";
+        const url = "https://quizapi.io/api/v1/questions";
+        const res = await fetch(
+          `${url}?apiKey=${apiKey}&limit=5&category=Linux&difficulty=${convertDifficulty(level)}`
+        );
+
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
         }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-        
-        // setQuestions(data);
-        // setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        
-        // setError(error);
-        // setLoading(false);
-      });
-  }, []);
+
+        const data = await res.json();
+        setResponse(data);
+        setIsLoading(false)
+      } catch (error) {
+        setIsError(true)
+        console.error("Fetch error:", error);
+      }
+    };
+
+    fetchData();
+  }, [topic, noOfQuestions, level]);
+
   useEffect(() => {
-    const response = [
-      {
-        id: 1,
-        question: "How to delete a directory in Linux?",
-        description: "delete folder",
-        answers: {
-          answer_a: "ls",
-          answer_b: "delete",
-          answer_c: "remove",
-          answer_d: "rmdir",
-          answer_e: "cd",
-          answer_f: "xf",
-        },
-        multiple_correct_answers: "false",
-        correct_answers: {
-          answer_a_correct: "false", 
-          answer_b_correct: "false",
-          answer_c_correct: "false",
-          answer_d_correct: "true",
-          answer_e_correct: "false",
-          answer_f_correct: "false",
-        },
-        explanation: "rmdir deletes an empty directory",
-        tip: null,
-        tags: [],
-        category: "linux",
-        difficulty: "Easy",
-      },
-      {
-        id: 2,
-        question: "How to create a directory in Linux?",
-        description: "create folder",
-        answers: {
-          answer_a: "ls",
-          answer_b: "delete",
-          answer_c: "remove",
-          answer_d: "mkdir",
-          answer_e: "cd",
-          answer_f: "xf",
-        },
-        multiple_correct_answers: "false",
-        correct_answers: {
-          answer_a_correct: "false",
-          answer_b_correct: "false",
-          answer_c_correct: "false",
-          answer_d_correct: "true",
-          answer_e_correct: "false",
-          answer_f_correct: "false",
-        },
-        explanation: "rmdir deletes an empty directory",
-        tip: null,
-        tags: [],
-        category: "linux",
-        difficulty: "Easy",
+    if (response.length > 0 && questionIndex < response.length) {
+      const currentQuestion = response[questionIndex];
+      setQuestionText(currentQuestion.question);
+  
+      // Set options
+      const answerOptions = [
+        currentQuestion.answers.answer_a,
+        currentQuestion.answers.answer_b,
+        currentQuestion.answers.answer_c,
+        currentQuestion.answers.answer_d,
+      ];
+  
+      if (currentQuestion.answers.answer_e) {
+        answerOptions.push(currentQuestion.answers.answer_e);
       }
-    ];
-
-    setQuestionText(response[questionIndex].question);
-    setOptions([
-      response[questionIndex].answers.answer_a,
-      response[questionIndex].answers.answer_b,
-      response[questionIndex].answers.answer_c,
-      response[questionIndex].answers.answer_d,
-    ]);
-
-    if (response[questionIndex].answers.answer_e) {
-      setOptions((prevOption) => [...prevOption, response[questionIndex].answers.answer_e]);
-    }
-    if (response[questionIndex].answers.answer_f) {
-      setOptions((prevOption) => [...prevOption, response[questionIndex].answers.answer_f]);
-    }
-
-    let index = 0;
-    for (let answer in response[questionIndex].correct_answers) {
-      if (response[questionIndex].correct_answers[answer] === "true") {
-        setCorrectAnswer(index);
+      if (currentQuestion.answers.answer_f) {
+        answerOptions.push(currentQuestion.answers.answer_f);
       }
-      index += 1;
+  
+      setOptions(answerOptions);
+  
+      // Determine the correct answer index
+      let correctIndex = -1;
+      let index = 0;
+      for (let answer in currentQuestion.correct_answers) {
+        if (currentQuestion.correct_answers[answer] === "true") {
+          correctIndex = index;
+          break;
+        }
+        index++;
+      }
+      setCorrectAnswer(correctIndex);
+    } else if (response.length > 0 && questionIndex >= response.length) {
+      navigate('/start/quiz/score', { state: { score } }); // Navigate with score data
     }
-
-    console.log("useEffect Called");
-  }, [questionIndex]);
+  }, [questionIndex, response, navigate, score]);
+  
 
   const onOptionSelected = (index) => {
     setSelectedAnswer(index);
   };
 
   const checkAnswerAndNext = () => {
-    if(selectedAnswer == -1){
-      return 
-    }
-    if(selectedAnswer == correctAnswer){
-      console.log('Correct');
-    }
-    else{
-      console.log('Incorrect');
-    }
-    setQuestionIndex(questionIndex+1)
-  }
+    if (selectedAnswer === -1) return;
 
-  return (
-    <Box className="quizBoxMain">
+    if (selectedAnswer === correctAnswer) {
+      setScore(score => score+1)
+      console.log("Correct");
+    } else {
+      console.log("Incorrect");
+    }
+
+    setSelectedAnswer(-1); // Reset the selected answer
+    setQuestionIndex((prevIndex) => prevIndex + 1); // Move to the next question
+  };
+
+
+  if(isError) {
+    return <ErrorPage />
+  }
+  else if(isLoading) {
+    return <CustomSpinner />
+  }
+  else {
+    return <Box className="quizBoxMain">
       <Question questionText={questionText} />
-      {options.map((option, index) =>
-        selectedAnswer == index ? (
-          <Option
-            key={index}
-            optionText={option}
-            onOptionSelected={() => onOptionSelected(index)}
-            style={{ backgroundColor:"red" }}
-          />
-        ) : (
-          <Option
-            key={index}
-            optionText={option}
-            onOptionSelected={() => onOptionSelected(index)}
-          />
-        )
-      )}
-      <Button
-      className="btn"
-        onClick={checkAnswerAndNext}
-      >
+      {options.map((option, index) => (
+        <Option
+          key={index}
+          optionText={option}
+          onOptionSelected={() => onOptionSelected(index)}
+          style={{
+            backgroundColor: selectedAnswer === index ? "red" : undefined,
+          }}
+        />
+      ))}
+      <Button className="btn" onClick={checkAnswerAndNext}>
         Next
       </Button>
     </Box>
-  );
+  }
 };
 
 export default Quiz;
