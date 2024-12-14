@@ -16,10 +16,13 @@ db.sequelize
 // Import and use routes
 const categoryRoutes = require('./routes/categoryRoutes');
 const topicRoutes = require('./routes/topicRoutes');
+const questionRoutes = require('./routes/questionRoutes');
+
 
 // Set up API routes
 app.use('/api/categories', categoryRoutes); // For category-related endpoints
 app.use('/api/categories', topicRoutes); // For topic-related endpoints
+app.use('/api/topic', questionRoutes); // For question-related endpoints
 
 // Start the server
 const PORT = process.env.APP_PORT || 3001;
