@@ -1,9 +1,11 @@
 const sequelize = require('../config/database');
 const Category = require('./Category');
+const Topic = require('./Topic');
 
 const db = {
     sequelize,
-    Category
+    Category,
+    Topic
 };
 
 module.exports = db;
