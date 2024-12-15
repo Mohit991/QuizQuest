@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import Question from "../components/Question";
-import Option from "../components/Option";
+import Question from "../../components/Question";
+import Option from "../../components/Option";
 import { Box, Button } from "@mui/material";
-import { convertDifficulty } from "../utils/conversions";
-import CustomSpinner from "../components/CustomSpinner";
-import ErrorPage from "./ErrorPage";
+import { convertDifficulty } from "../../utils/conversions";
+import CustomSpinner from "../../components/CustomSpinner";
+import ErrorPage from "../ErrorPage";
 
 const Quiz = () => {
   const { topic, noOfQuestions, level } = useParams();
@@ -83,7 +83,7 @@ const Quiz = () => {
       }
       setCorrectAnswer(correctIndex);
     } else if (response.length > 0 && questionIndex >= response.length) {
-      navigate('/start/quiz/score', { state: { score } }); // Navigate with score data
+      navigate('/quiz/score', { state: { score } }); // Navigate with score data
     }
   }, [questionIndex, response, navigate, score]);
   

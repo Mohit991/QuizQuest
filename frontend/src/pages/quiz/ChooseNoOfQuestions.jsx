@@ -1,15 +1,17 @@
 import { Box, Divider, Typography } from "@mui/material";
-import OptionsBox from "../components/OptionsBox";
+import OptionsBox from "../../components/OptionsBox";
 import { useParams, useNavigate } from "react-router-dom";
 
 const ChooseNoOfQuestions = () => {
   const quizQuestions = [10, 25, 50];
-  const { topic } = useParams();
+  const { category, topic } = useParams(); // Retrieve parameters from the URL
   const navigate = useNavigate();
+
   const onNoOfQuestionsSelected = (noOfQuestions) => {
-    console.log(noOfQuestions);
-    navigate(`/start/${topic}/${noOfQuestions}`);
-  }
+    // Navigate to the relative path for the next step
+    navigate(`${noOfQuestions}`);
+  };
+
   return (
     <Box className="content" pt={3} width={"100%"}>
       <Typography
@@ -25,7 +27,11 @@ const ChooseNoOfQuestions = () => {
       <Divider sx={{ borderColor: "whitesmoke", my: 4 }} />
       <Box sx={{ display: "flex", justifyContent: "space-between" }} gap={4}>
         {quizQuestions.map((noOfQuestions, index) => (
-          <OptionsBox key={index} option={noOfQuestions} onOptionChosen={onNoOfQuestionsSelected}/>
+          <OptionsBox
+            key={index}
+            option={noOfQuestions}
+            onOptionChosen={onNoOfQuestionsSelected}
+          />
         ))}
       </Box>
     </Box>

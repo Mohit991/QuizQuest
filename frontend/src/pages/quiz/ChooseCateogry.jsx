@@ -1,14 +1,15 @@
 import { Box, Divider, Typography } from "@mui/material";
-import OptionsBox from "../components/OptionsBox";
+import OptionsBox from "../../components/OptionsBox";
 import { useNavigate } from "react-router-dom";
 
-const ChooseTopic = () => {
-  const currentTopics = ["HTML", "CSS", "JavaScript"];
-
+const ChooseCateogry = () => {
+  const currentCategories = ["Technology", "HP GK", "English"];
   const navigate = useNavigate();
 
-  const onTopicSelected = (topic) => {
-    navigate(`/start/${topic}`);
+  const onCategorySelected = (category) => {
+    // Navigate to the nested route for the chosen category
+    console.log(`category = `, category);
+    navigate(`${category}`);
   };
 
   return (
@@ -21,16 +22,16 @@ const ChooseTopic = () => {
         }}
         pt={1}
       >
-        CHOOSE TOPIC
+        CHOOSE CATEGORY
       </Typography>
       <Divider sx={{ borderColor: "whitesmoke", my: 4 }} />
 
       <Box sx={{ display: "flex", justifyContent: "space-between" }} gap={4}>
-        {currentTopics.map((topic, index) => (
+        {currentCategories.map((category, index) => (
           <OptionsBox
             key={index}
-            option={topic}
-            onOptionChosen={onTopicSelected}
+            option={category}
+            onOptionChosen={onCategorySelected}
           />
         ))}
       </Box>
@@ -38,4 +39,4 @@ const ChooseTopic = () => {
   );
 };
 
-export default ChooseTopic;
+export default ChooseCateogry;

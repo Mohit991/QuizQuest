@@ -1,48 +1,32 @@
-import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
 import HomePage from "./pages/Homepage";
-import ChooseNoOfQuestions from "./pages/ChooseNoOfQuestions";
-import ChooseLevel from "./pages/ChooseLevel";
-import ChooseTopic from "./pages/ChooseTopic";
-import Quiz from "./pages/Quiz";
-import SelectedOptions from "./pages/SelectedOptions";
-import ScorePage from "./pages/ScorePage";
-
+import ChooseCateogry from "./pages/quiz/ChooseCateogry";
+import ChooseTopic from "./pages/quiz/ChooseTopic";
+import ChooseNoOfQuestions from "./pages/quiz/ChooseNoOfQuestions";
+import ChooseLevel from "./pages/quiz/ChooseLevel";
+import SelectedQuizOptions from "./pages/quiz/SelectedQuizOptions";
+import Quiz from "./pages/quiz/Quiz";
+import ScorePage from "./pages/quiz/ScorePage";
+import StartQuizLayout from "./pages/layouts/StartQuizLayout";
 
 function App() {
   return (
-    <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route
-            path="/start"
-            element={<ChooseTopic />}
-          />
-          <Route
-            path="/start/:topic"
-            element={<ChooseNoOfQuestions />}
-          />
-          <Route
-            path="/start/:topic/:noOfQuestions"
-            element={<ChooseLevel />}
-          />
-          <Route
-            path="/start/:topic/:noOfQuestions/:level/selectedOptions"
-            element={<SelectedOptions />}
-          />
-          <Route
-            path="/start/:topic/:noOfQuestions/:level/selectedOptions/quiz"
-            element={<Quiz />}
-          />
-          <Route
-            path="/start/quiz/score"
-            element={<ScorePage />}
-          />
-        </Routes>
-      </Router>
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+
+        <Route path="/quiz" element={<StartQuizLayout />}>
+          <Route index element={<ChooseCateogry />} />
+          <Route path=":category" element={<ChooseTopic />} />
+          <Route path="/quiz/:category/:topic" element={<ChooseNoOfQuestions />} />
+          <Route path="/quiz/:category/:topic/:noOfQuestions" element={<ChooseLevel />} />
+          <Route path="/quiz/:category/:topic/:noOfQuestions/:level" element={<SelectedQuizOptions />} />
+          <Route path="/quiz/:category/:topic/:noOfQuestions/:level/start" element={<Quiz />} />
+        </Route>
+
+        <Route path="/quiz/score" element={<ScorePage />} />
+      </Routes>
+    </Router>
   );
 }
 

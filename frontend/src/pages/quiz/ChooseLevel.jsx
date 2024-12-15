@@ -1,16 +1,16 @@
 import { Box, Divider, Typography } from "@mui/material";
-import OptionsBox from "../components/OptionsBox";
+import OptionsBox from "../../components/OptionsBox";
 import { useParams, useNavigate } from "react-router-dom";
 
 const ChooseLevel = () => {
   const levels = ["Beginner", "Intermediate", "Expert"];
-  const { topic, noOfQuestions } = useParams();
+  const { category, topic, noOfQuestions } = useParams();
   console.log('useParams', useParams());
   
   const navigate = useNavigate();
 
   const onLevelSelected = (level) => {
-    navigate(`/start/${topic}/${noOfQuestions}/${level}/selectedOptions`);
+    navigate(`${level}`);
   }
   
   return (
