@@ -1,24 +1,23 @@
 import { Box, Divider, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import OptionsBox from "../../components/OptionsBox";
-import { useEffect, useState, useContext } from "react";
-import { AppContext } from "../../context/AppContext";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState, useContext } from 'react'
 import ErrorPage from "../ErrorPage";
 import CustomSpinner from "../../components/CustomSpinner";
+import { AppContext } from "../../context/AppContext";
 
-const ChooseTopic = () => {
-  const [topics, setTopics] = useState([])
+const ChooseCategory = () => {
+  const [categories, setCategories] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [isError, setIsError] = useState(false)
+  const { setSelectedCategoryId } = useContext(AppContext);
 
-  const { selectedCategoryId, setSelectedTopic } = useContext(AppContext);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log(selectedCategoryId);
-        const url = `http://localhost:3001/api/categories/${selectedCategoryId}/topics`
+        const url = "http://localhost:3001/api/categories";
         const res = await fetch(url);
 
         if (!res.ok) {
@@ -26,7 +25,7 @@ const ChooseTopic = () => {
         }
 
         const data = await res.json();
-        setTopics(data)
+        setCategories(data)
         setIsLoading(false)
       } catch (error) {
         setIsError(true)
@@ -34,11 +33,12 @@ const ChooseTopic = () => {
       }
     };
     fetchData();
-  }, [selectedCategoryId]);
+  }, []);
 
-  const onTopicSelected = (topic) => {
-    setSelectedTopic(topic)
-    navigate(`${topic}`);
+  const onCategorySelected = (category) => {
+    setSelectedCategoryId(category.category_id)
+    // Navigate to the nested route for the chosen category
+    navigate(`${category.category_name}`);
   };
 
   if (isError) {
@@ -58,15 +58,16 @@ const ChooseTopic = () => {
           }}
           pt={1}
         >
-          CHOOSE TOPIC
+          CHOOSE CATEGORY
         </Typography>
         <Divider sx={{ borderColor: "whitesmoke", my: 4 }} />
+
         <Box sx={{ display: "flex", justifyContent: "space-between" }} gap={4}>
-          {topics.map((topic) => (
+          {categories.map((category) => (
             <OptionsBox
-              key={topic.topic_id}
-              option={topic.topic_name}
-              onOptionChosen={onTopicSelected}
+              key={category.category_id}
+              option={category.category_name}
+              onOptionChosen={() => onCategorySelected(category)}
             />
           ))}
         </Box>
@@ -75,4 +76,4 @@ const ChooseTopic = () => {
   };
 }
 
-export default ChooseTopic;
+export default ChooseCategory;

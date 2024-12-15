@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/Homepage";
-import ChooseCateogry from "./pages/quiz/ChooseCateogry";
+import ChooseCategory from "./pages/quiz/ChooseCategory";
 import ChooseTopic from "./pages/quiz/ChooseTopic";
 import ChooseNoOfQuestions from "./pages/quiz/ChooseNoOfQuestions";
 import ChooseLevel from "./pages/quiz/ChooseLevel";
@@ -16,7 +16,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
 
         <Route path="/quiz" element={<StartQuizLayout />}>
-          <Route index element={<ChooseCateogry />} />
+          <Route index element={<ChooseCategory />} />
           <Route path=":category" element={<ChooseTopic />} />
           <Route path="/quiz/:category/:topic" element={<ChooseNoOfQuestions />} />
           <Route path="/quiz/:category/:topic/:noOfQuestions" element={<ChooseLevel />} />

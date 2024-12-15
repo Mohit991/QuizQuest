@@ -1,4 +1,6 @@
 const express = require('express');
+const cors = require('cors')
+
 require('dotenv').config();
 const db = require('./models/index');
 
@@ -6,6 +8,8 @@ const app = express();
 
 // Middleware to parse JSON
 app.use(express.json());
+// Middleware for cors
+app.use(cors())
 
 // Sync the database
 db.sequelize

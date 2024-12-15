@@ -1,10 +1,9 @@
 import { Box, Divider, Typography } from "@mui/material";
 import OptionsBox from "../../components/OptionsBox";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const ChooseNoOfQuestions = () => {
   const quizQuestions = [10, 25, 50];
-  const { category, topic } = useParams(); // Retrieve parameters from the URL
   const navigate = useNavigate();
 
   const onNoOfQuestionsSelected = (noOfQuestions) => {
