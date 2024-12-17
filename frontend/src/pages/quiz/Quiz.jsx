@@ -5,7 +5,8 @@ import Option from "../../components/Option";
 import { Box, Button, Typography } from "@mui/material";
 import CustomSpinner from "../../components/CustomSpinner";
 import ErrorPage from "../ErrorPage";
-import { convertDifficulty } from "../../utils/conversions";
+import { AppContext } from "../../context/AppContext";
+import { useContext } from "react";
 
 const Quiz = ({ topic, noOfQuestions, level }) => {
   // State variables
@@ -17,16 +18,16 @@ const Quiz = ({ topic, noOfQuestions, level }) => {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
-  const [score, setScore] = useState(0);
+
+  const { selectedTopicId, score, setScore } = useContext(AppContext);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAndSetupQuiz = async () => {
+      setScore(0)
       try {
-        // Fetch data
-        const apiKey = "TRoLR2UY81kGKq25N7VNwcZ7UaJWNJrKupFlqXrF"; // Replace with your actual API key
-        const url = `https://quizapi.io/api/v1/questions?apiKey=${apiKey}&limit=5&category=Linux&difficulty=${convertDifficulty(level)}`;
+        const url = `http://localhost:3001/api/topic/${selectedTopicId}/questions`
         const res = await fetch(url);
 
         if (!res.ok) {
@@ -34,6 +35,7 @@ const Quiz = ({ topic, noOfQuestions, level }) => {
         }
 
         const data = await res.json();
+        console.log(data);
         setResponse(data);
 
         if (data.length > 0) {
@@ -46,33 +48,19 @@ const Quiz = ({ topic, noOfQuestions, level }) => {
       }
     };
 
-    const setupQuestion = (question) => {
-      setQuestionText(question.question);
+    const setupQuestion = (questionObject) => {
+      setQuestionText(questionObject.question_text);
 
       // Extract options
       const answerOptions = [
-        question.answers.answer_a,
-        question.answers.answer_b,
-        question.answers.answer_c,
-        question.answers.answer_d,
-      ].filter((option) => option); // Remove null values
-
-      if (question.answers.answer_e) answerOptions.push(question.answers.answer_e);
-      if (question.answers.answer_f) answerOptions.push(question.answers.answer_f);
+        questionObject.option1,
+        questionObject.option2,
+        questionObject.option3,
+        questionObject.option4
+      ]
 
       setOptions(answerOptions);
-
-      // Find correct answer index
-      let correctIndex = -1;
-      let index = 0;
-      for (let answer in question.correct_answers) {
-        if (question.correct_answers[answer] === "true") {
-          correctIndex = index;
-          break;
-        }
-        index++;
-      }
-      setCorrectAnswer(correctIndex);
+      setCorrectAnswer(questionObject.correct_option);
     };
 
     // If questions are already fetched, update the next question on questionIndex change
@@ -95,7 +83,7 @@ const Quiz = ({ topic, noOfQuestions, level }) => {
   const handleNextQuestion = () => {
     if (selectedAnswer === -1) return; // Ensure an option is selected
 
-    if (selectedAnswer === correctAnswer) {
+    if (selectedAnswer+1 === correctAnswer) {
       setScore((prevScore) => prevScore + 1); // Increment score if correct
     }
 

@@ -1,12 +1,17 @@
 import { Box, Divider, Typography } from "@mui/material";
 import OptionsBox from "../../components/OptionsBox";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../../context/AppContext";
+import { useContext } from "react";
 
 const ChooseNoOfQuestions = () => {
   const quizQuestions = [10, 25, 50];
   const navigate = useNavigate();
 
+  const { setSelectedNoOfQuestions } = useContext(AppContext);
+
   const onNoOfQuestionsSelected = (noOfQuestions) => {
+    setSelectedNoOfQuestions(noOfQuestions)
     // Navigate to the relative path for the next step
     navigate(`${noOfQuestions}`);
   };

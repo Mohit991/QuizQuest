@@ -1,13 +1,17 @@
 import { Box, Divider, Typography } from "@mui/material";
 import OptionsBox from "../../components/OptionsBox";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../../context/AppContext";
+import { useContext } from "react";
 
 const ChooseLevel = () => {
-  const levels = ["Beginner", "Intermediate", "Expert"];
+  const levels = ["Easy", "Medium", "Hard"];
   
   const navigate = useNavigate();
 
+  const { setSelectedLevel } = useContext(AppContext);
   const onLevelSelected = (level) => {
+    setSelectedLevel(level)
     navigate(`${level}`);
   }
   

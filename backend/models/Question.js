@@ -18,8 +18,8 @@ const Question = sequelize.define('Question', {
         }
     },
     question_text: {
-        type: DataTypes.STRING, 
-        allowNull: false       
+        type: DataTypes.STRING,
+        allowNull: false
     },
     option1: {
         type: DataTypes.STRING,
@@ -44,10 +44,17 @@ const Question = sequelize.define('Question', {
     explanation: {
         type: DataTypes.TEXT,
         allowNull: true
+    },
+    difficulty: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+            isIn: [['Easy', 'Medium', 'Hard']] // Only allow these values
+        }
     }
 }, {
     tableName: 'questions',
-    timestamps: false, 
+    timestamps: false,
 });
 
 // Set up the relationship with the Topic model

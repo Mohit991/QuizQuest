@@ -11,7 +11,7 @@ const ChooseTopic = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [isError, setIsError] = useState(false)
 
-  const { selectedCategoryId, setSelectedTopic } = useContext(AppContext);
+  const { selectedCategoryId, setSelectedTopicId } = useContext(AppContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,8 +37,8 @@ const ChooseTopic = () => {
   }, [selectedCategoryId]);
 
   const onTopicSelected = (topic) => {
-    setSelectedTopic(topic)
-    navigate(`${topic}`);
+    setSelectedTopicId(topic.topic_id)
+    navigate(`${topic.topic_name}`);
   };
 
   if (isError) {
@@ -66,7 +66,7 @@ const ChooseTopic = () => {
             <OptionsBox
               key={topic.topic_id}
               option={topic.topic_name}
-              onOptionChosen={onTopicSelected}
+              onOptionChosen={() => onTopicSelected(topic)}
             />
           ))}
         </Box>
