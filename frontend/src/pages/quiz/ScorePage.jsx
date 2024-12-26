@@ -1,18 +1,36 @@
 import { Button } from '@mui/material';
-import { useLocation } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+import { useContext, useState } from 'react';
+import { AppContext } from "../../context/AppContext";
+import CustomSpinner from "../../components/CustomSpinner";
+
 const ScorePage = () => {
-    const location = useLocation();
-    const { score } = location.state || { score: 0 }; // Get score 
+    const { score, selectedCategory, selectedTopic, selectedNoOfQuestions, selectedLevel } = useContext(AppContext);
+    const navigate = useNavigate();
+
+    const [isNavigating, setIsNavigating] = useState(false); // State to track navigation and spinner
 
     const onQuizTryAgain = () => {
-        
-    }
-    return(
-        <>
-            <h1>Your Score: {score}</h1>
-            <Button onClick={onQuizTryAgain}>Try Again</Button>
-        </>
-    )
-}
+        setIsNavigating(true); // Show spinner
+        setTimeout(() => {
+            navigate(`/quiz/${selectedCategory}/${selectedTopic}/${selectedNoOfQuestions}/${selectedLevel}`);
+        }, 1000); // Add delay before navigating
+    };
 
-export default ScorePage
+    return (
+        <>
+            {isNavigating ? (
+                <CustomSpinner /> // Show spinner while navigating
+            ) : (
+                <>
+                    <h1>Your Score: {score}</h1>
+                    <Button variant="contained" onClick={onQuizTryAgain}>
+                        Try Again
+                    </Button>
+                </>
+            )}
+        </>
+    );
+};
+
+export default ScorePage;

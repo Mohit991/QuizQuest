@@ -10,7 +10,7 @@ const ChooseCategory = () => {
   const [categories, setCategories] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [isError, setIsError] = useState(false)
-  const { setSelectedCategoryId } = useContext(AppContext);
+  const { setSelectedCategoryId, setSelectedCategory } = useContext(AppContext);
 
   const navigate = useNavigate();
 
@@ -37,6 +37,8 @@ const ChooseCategory = () => {
 
   const onCategorySelected = (category) => {
     setSelectedCategoryId(category.category_id)
+    setSelectedCategory(category.category_name)
+
     // Navigate to the nested route for the chosen category
     navigate(`${category.category_name}`);
   };

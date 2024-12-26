@@ -11,7 +11,7 @@ const ChooseTopic = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [isError, setIsError] = useState(false)
 
-  const { selectedCategoryId, setSelectedTopicId } = useContext(AppContext);
+  const { selectedCategoryId, setSelectedTopicId, setSelectedTopic } = useContext(AppContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,6 +38,8 @@ const ChooseTopic = () => {
 
   const onTopicSelected = (topic) => {
     setSelectedTopicId(topic.topic_id)
+    setSelectedTopic(topic.topic_name)
+
     navigate(`${topic.topic_name}`);
   };
 

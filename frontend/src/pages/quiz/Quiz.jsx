@@ -19,25 +19,27 @@ const Quiz = ({ topic, noOfQuestions, level }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
-  const { selectedTopicId, score, setScore } = useContext(AppContext);
+  const { selectedTopicId, score, setScore, selectedNoOfQuestions, selectedLevel } = useContext(AppContext);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchAndSetupQuiz = async () => {
-      setScore(0)
+      setScore(0);
       try {
-        const url = `http://localhost:3001/api/topic/${selectedTopicId}/questions`
+        // Construct the URL with query parameters
+        const url = `http://localhost:3001/api/topic/${selectedTopicId}/questions?noOfQuestions=${selectedNoOfQuestions}&level=${selectedLevel}`;
+        
         const res = await fetch(url);
-
+  
         if (!res.ok) {
           throw new Error(`HTTP error! status: ${res.status}`);
         }
-
+  
         const data = await res.json();
         console.log(data);
         setResponse(data);
-
+  
         if (data.length > 0) {
           setupQuestion(data[0]); // Set up the first question
         }
@@ -47,32 +49,33 @@ const Quiz = ({ topic, noOfQuestions, level }) => {
         setIsError(true);
       }
     };
-
+  
     const setupQuestion = (questionObject) => {
       setQuestionText(questionObject.question_text);
-
+  
       // Extract options
       const answerOptions = [
         questionObject.option1,
         questionObject.option2,
         questionObject.option3,
-        questionObject.option4
-      ]
-
+        questionObject.option4,
+      ];
+  
       setOptions(answerOptions);
       setCorrectAnswer(questionObject.correct_option);
     };
-
+  
     // If questions are already fetched, update the next question on questionIndex change
     if (response.length > 0 && questionIndex < response.length) {
       setupQuestion(response[questionIndex]);
     } else if (response.length > 0 && questionIndex >= response.length) {
       // Navigate to score page when the quiz ends
-      navigate("/quiz/score", { state: { score } });
+      navigate("/quiz/score");
     } else {
       fetchAndSetupQuiz(); // Fetch data if response is empty
     }
-  }, [response, questionIndex]);
+  }, [response, questionIndex, selectedNoOfQuestions, selectedLevel]);
+  
 
   // Handle option selection
   const handleOptionSelect = (index) => {

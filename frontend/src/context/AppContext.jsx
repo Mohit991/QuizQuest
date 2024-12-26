@@ -6,7 +6,9 @@ export const AppContext = createContext();
 // Create the provider component
 export const AppProvider = ({ children }) => {
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedTopicId, setSelectedTopicId] = useState(null);
+  const [selectedTopic, setSelectedTopic] = useState('');
   const [selectedNoOfQuestions, setSelectedNoOfQuestions] = useState(null);
   const [selectedLevel, setSelectedLevel] = useState(null);
   const [score, setScore] = useState(null)
@@ -16,6 +18,10 @@ export const AppProvider = ({ children }) => {
       value={{
         selectedCategoryId,
         setSelectedCategoryId,
+        selectedCategory,
+        setSelectedCategory,
+        selectedTopic,
+        setSelectedTopic,
         selectedTopicId,
         setSelectedTopicId,
         selectedNoOfQuestions, 
