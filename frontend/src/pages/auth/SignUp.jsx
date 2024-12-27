@@ -1,7 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Box, TextField, Button, Typography, MenuItem } from "@mui/material";
+import axios from "axios";
+import { AppContext } from "../../context/AppContext";
 
 const SignUp = () => {
+
+  const { setUserName, setUserId, setUserEmail } = useContext(AppContext);
+
   const [formData, setFormData] = useState({
     name: "",
     age: "",
@@ -12,28 +17,102 @@ const SignUp = () => {
   });
 
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
     setError(""); // Clear errors as the user types
+    setSuccess(""); // Clear success message
   };
 
-  const handleSignUp = () => {
+  const validateForm = () => {
     const { name, age, gender, email, password, confirmPassword } = formData;
 
+    // Check required fields
     if (!name || !age || !gender || !email || !password || !confirmPassword) {
-      setError("All fields are required.");
-      return;
+      return "All fields are required.";
     }
 
+    // Validate name
+    if (!/^[A-Za-z]+$/.test(name)) {
+      return "Name should only contain alphabetic characters.";
+    }
+    if (name.length < 2 || name.length > 50) {
+      return "Name must be between 2 and 50 characters.";
+    }
+
+    // Validate age
+    const ageNumber = parseInt(age, 10);
+    if (isNaN(ageNumber) || ageNumber < 1 || ageNumber > 80) {
+      return "Age must be a number between 1 and 80.";
+    }
+
+    // Validate gender
+    if (!["male", "female", "other"].includes(gender.toLowerCase())) {
+      return "Gender must be 'Male', 'Female', or 'Other'.";
+    }
+
+    // Validate email
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return "Please enter a valid email address.";
+    }
+
+    // Validate password
+    if (password.length < 8 || password.length > 100) {
+      return "Password must be between 8 and 100 characters.";
+    }
+
+    // Validate password confirmation
     if (password !== confirmPassword) {
-      setError("Passwords do not match.");
+      return "Passwords do not match.";
+    }
+
+    return null; // No errors
+  };
+
+  const handleSignUp = async () => {
+    const validationError = validateForm();
+    if (validationError) {
+      setError(validationError);
       return;
     }
 
-    // Add sign-up logic here
-    console.log("User signed up successfully:", formData);
-    alert("Sign Up Successful!");
+    try {
+      // Send the data to the backend
+      const { name, age, gender, email, password } = formData;
+
+      const baseUrl = import.meta.env.VITE_REACT_APP_API_BASE_URL;
+      const response = await axios.post(`${baseUrl}/users`, {
+        name,
+        age: parseInt(age, 10),
+        gender,
+        email,
+        password,
+      });
+
+      // Extract JWT and user details from the response
+      const { token, user } = response.data;
+
+      // Store the token in localStorage
+      localStorage.setItem("jwtToken", token);
+
+      // save the user details for context management
+      setUserId(user.id)
+      setUserName(user.name)
+      setUserEmail(user.email)
+
+      setSuccess("Sign Up Successful!");
+      setFormData({
+        name: "",
+        age: "",
+        gender: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
+    } catch (err) {
+      setError(err.response?.data?.message || "An error occurred during sign-up.");
+    }
   };
 
   return (
@@ -64,6 +143,15 @@ const SignUp = () => {
       >
         <TextField
           fullWidth
+          label="Email ID"
+          name="email"
+          type="email"
+          value={formData.email}
+          onChange={handleChange}
+          margin="normal"
+        />
+        <TextField
+          fullWidth
           label="Your Name"
           name="name"
           value={formData.name}
@@ -92,15 +180,7 @@ const SignUp = () => {
           <MenuItem value="female">Female</MenuItem>
           <MenuItem value="other">Other</MenuItem>
         </TextField>
-        <TextField
-          fullWidth
-          label="Email ID"
-          name="email"
-          type="email"
-          value={formData.email}
-          onChange={handleChange}
-          margin="normal"
-        />
+
         <TextField
           fullWidth
           label="Password"
@@ -123,6 +203,12 @@ const SignUp = () => {
         {error && (
           <Typography color="error" sx={{ marginTop: "10px" }}>
             {error}
+          </Typography>
+        )}
+
+        {success && (
+          <Typography color="primary" sx={{ marginTop: "10px" }}>
+            {success}
           </Typography>
         )}
 

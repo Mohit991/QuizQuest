@@ -1,17 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Box, TextField, Button, Typography } from "@mui/material";
+import axios from "axios";
+import { AppContext } from "../../context/AppContext";
 
 const SignIn = ({ setAuth }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const { setUserName, setUserId, setUserEmail } = useContext(AppContext);
 
-  const handleSignIn = () => {
-    if (username && password) {
-      // Add authentication logic here
-      setAuth(true); // Update authenticated state
-      console.log("User signed in successfully");
-    } else {
-      alert("Please fill in both fields.");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSignIn = async () => {
+    if (!email || !password) {
+      setError("Please fill in both fields.");
+      return;
+    }
+
+    try {
+      const baseUrl = import.meta.env.VITE_REACT_APP_API_BASE_URL;
+
+      // Send login request to the backend
+      const response = await axios.post(`${baseUrl}/users/login`, {
+        email,
+        password,
+      });
+
+      const { token, user } = response.data;
+
+      // Store the token in localStorage
+      localStorage.setItem("jwtToken", token);
+
+      // Save user details in AppContext
+      setUserId(user.id);
+      setUserName(user.name);
+      setUserEmail(user.email);
+
+      console.log("Sign-in successful:", user);
+
+      // Update authentication state
+      setAuth(true);
+      setError(""); // Clear any previous errors
+    } catch (err) {
+      setError(err.response?.data?.message || "Invalid email or password.");
     }
   };
 
@@ -43,9 +73,10 @@ const SignIn = ({ setAuth }) => {
       >
         <TextField
           fullWidth
-          label="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          label="Email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           margin="normal"
         />
         <TextField
@@ -56,6 +87,12 @@ const SignIn = ({ setAuth }) => {
           onChange={(e) => setPassword(e.target.value)}
           margin="normal"
         />
+
+        {error && (
+          <Typography color="error" sx={{ marginTop: "10px" }}>
+            {error}
+          </Typography>
+        )}
 
         <Button
           variant="contained"
