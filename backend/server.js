@@ -21,9 +21,10 @@ db.sequelize
 const categoryRoutes = require('./routes/categoryRoutes');
 const topicRoutes = require('./routes/topicRoutes');
 const questionRoutes = require('./routes/questionRoutes');
-
+const userRoutes = require('./routes/userRoutes')
 
 // Set up API routes
+app.use('/api/users', userRoutes); // For user-related endpoints
 app.use('/api/categories', categoryRoutes); // For category-related endpoints
 app.use('/api/categories', topicRoutes); // For topic-related endpoints
 app.use('/api/topic', questionRoutes); // For question-related endpoints

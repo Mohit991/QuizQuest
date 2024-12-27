@@ -1,31 +1,24 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomePage from "./pages/Homepage";
-import ChooseCategory from "./pages/quiz/ChooseCategory";
-import ChooseTopic from "./pages/quiz/ChooseTopic";
-import ChooseNoOfQuestions from "./pages/quiz/ChooseNoOfQuestions";
-import ChooseLevel from "./pages/quiz/ChooseLevel";
-import SelectedQuizOptions from "./pages/quiz/SelectedQuizOptions";
-import Quiz from "./pages/quiz/Quiz";
-import ScorePage from "./pages/quiz/ScorePage";
-import StartQuizLayout from "./pages/layouts/StartQuizLayout";
+import { useState } from "react";
+import LandingPage from "./pages/LandingPage";
+import SignIn from "./pages/auth/SignIn";
+import SignUp from "./pages/auth/SignUp";
+import RoutesConfig from "./routes/RoutesConfig"
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-
-        <Route path="/quiz" element={<StartQuizLayout />}>
-          <Route index element={<ChooseCategory />} />
-          <Route path=":category" element={<ChooseTopic />} />
-          <Route path="/quiz/:category/:topic" element={<ChooseNoOfQuestions />} />
-          <Route path="/quiz/:category/:topic/:noOfQuestions" element={<ChooseLevel />} />
-          <Route path="/quiz/:category/:topic/:noOfQuestions/:level" element={<SelectedQuizOptions />} />
-          <Route path="/quiz/:category/:topic/:noOfQuestions/:level/start" element={<Quiz />} />
-        </Route>
-
-        <Route path="/quiz/score" element={<ScorePage />} />
-      </Routes>
+      {isAuthenticated ? (
+        <RoutesConfig />
+      ) : (
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/signin" element={<SignIn setAuth={setIsAuthenticated} />} />
+          <Route path="/signup" element={<SignUp setAuth={setIsAuthenticated} />} />
+        </Routes>
+      )}
     </Router>
   );
 }
