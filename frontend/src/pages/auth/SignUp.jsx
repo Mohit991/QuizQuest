@@ -1,11 +1,12 @@
 import React, { useState, useContext } from "react";
 import { Box, TextField, Button, Typography, MenuItem } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AppContext } from "../../context/AppContext";
 
 const SignUp = () => {
-
   const { setUserName, setUserId, setUserEmail } = useContext(AppContext);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -21,53 +22,47 @@ const SignUp = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setError(""); // Clear errors as the user types
-    setSuccess(""); // Clear success message
+    setError("");
+    setSuccess("");
   };
 
   const validateForm = () => {
     const { name, age, gender, email, password, confirmPassword } = formData;
 
-    // Check required fields
     if (!name || !age || !gender || !email || !password || !confirmPassword) {
       return "All fields are required.";
     }
 
-    // Validate name
     if (!/^[A-Za-z]+$/.test(name)) {
       return "Name should only contain alphabetic characters.";
     }
+
     if (name.length < 2 || name.length > 50) {
       return "Name must be between 2 and 50 characters.";
     }
 
-    // Validate age
     const ageNumber = parseInt(age, 10);
     if (isNaN(ageNumber) || ageNumber < 1 || ageNumber > 80) {
       return "Age must be a number between 1 and 80.";
     }
 
-    // Validate gender
     if (!["male", "female", "other"].includes(gender.toLowerCase())) {
       return "Gender must be 'Male', 'Female', or 'Other'.";
     }
 
-    // Validate email
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return "Please enter a valid email address.";
     }
 
-    // Validate password
     if (password.length < 8 || password.length > 100) {
       return "Password must be between 8 and 100 characters.";
     }
 
-    // Validate password confirmation
     if (password !== confirmPassword) {
       return "Passwords do not match.";
     }
 
-    return null; // No errors
+    return null;
   };
 
   const handleSignUp = async () => {
@@ -78,11 +73,10 @@ const SignUp = () => {
     }
 
     try {
-      // Send the data to the backend
+      const baseUrl = import.meta.env.VITE_REACT_APP_API_BASE_URL;
       const { name, age, gender, email, password } = formData;
 
-      const baseUrl = import.meta.env.VITE_REACT_APP_API_BASE_URL;
-      const response = await axios.post(`${baseUrl}/users`, {
+      const response = await axios.post(`${baseUrl}/public/signup`, {
         name,
         age: parseInt(age, 10),
         gender,
@@ -90,26 +84,14 @@ const SignUp = () => {
         password,
       });
 
-      // Extract JWT and user details from the response
       const { token, user } = response.data;
 
-      // Store the token in localStorage
       localStorage.setItem("jwtToken", token);
+      setUserId(user.id);
+      setUserName(user.name);
+      setUserEmail(user.email);
 
-      // save the user details for context management
-      setUserId(user.id)
-      setUserName(user.name)
-      setUserEmail(user.email)
-
-      setSuccess("Sign Up Successful!");
-      setFormData({
-        name: "",
-        age: "",
-        gender: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-      });
+      navigate("/"); // Redirect to HomePage
     } catch (err) {
       setError(err.response?.data?.message || "An error occurred during sign-up.");
     }
@@ -143,15 +125,6 @@ const SignUp = () => {
       >
         <TextField
           fullWidth
-          label="Email ID"
-          name="email"
-          type="email"
-          value={formData.email}
-          onChange={handleChange}
-          margin="normal"
-        />
-        <TextField
-          fullWidth
           label="Your Name"
           name="name"
           value={formData.name}
@@ -180,7 +153,15 @@ const SignUp = () => {
           <MenuItem value="female">Female</MenuItem>
           <MenuItem value="other">Other</MenuItem>
         </TextField>
-
+        <TextField
+          fullWidth
+          label="Email"
+          name="email"
+          type="email"
+          value={formData.email}
+          onChange={handleChange}
+          margin="normal"
+        />
         <TextField
           fullWidth
           label="Password"

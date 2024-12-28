@@ -1,22 +1,23 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { useContext } from "react";
 import LandingPage from "./pages/LandingPage";
 import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
-import RoutesConfig from "./routes/RoutesConfig"
+import RoutesConfig from "./routes/RoutesConfig";
+import { AppContext } from "./context/AppContext";
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { userId } = useContext(AppContext);
 
   return (
     <Router>
-      {isAuthenticated ? (
+      {userId ? (
         <RoutesConfig />
       ) : (
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/signin" element={<SignIn setAuth={setIsAuthenticated} />} />
-          <Route path="/signup" element={<SignUp setAuth={setIsAuthenticated} />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
         </Routes>
       )}
     </Router>

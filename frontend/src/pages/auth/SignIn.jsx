@@ -1,10 +1,12 @@
 import React, { useState, useContext } from "react";
 import { Box, TextField, Button, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AppContext } from "../../context/AppContext";
 
-const SignIn = ({ setAuth }) => {
+const SignIn = () => {
   const { setUserName, setUserId, setUserEmail } = useContext(AppContext);
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,27 +21,16 @@ const SignIn = ({ setAuth }) => {
     try {
       const baseUrl = import.meta.env.VITE_REACT_APP_API_BASE_URL;
 
-      // Send login request to the backend
-      const response = await axios.post(`${baseUrl}/users/login`, {
-        email,
-        password,
-      });
+      const response = await axios.post(`${baseUrl}/public/login`, { email, password });
 
       const { token, user } = response.data;
 
-      // Store the token in localStorage
       localStorage.setItem("jwtToken", token);
-
-      // Save user details in AppContext
       setUserId(user.id);
       setUserName(user.name);
       setUserEmail(user.email);
 
-      console.log("Sign-in successful:", user);
-
-      // Update authentication state
-      setAuth(true);
-      setError(""); // Clear any previous errors
+      navigate("/"); // Redirect to HomePage
     } catch (err) {
       setError(err.response?.data?.message || "Invalid email or password.");
     }

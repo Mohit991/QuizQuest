@@ -1,7 +1,10 @@
 import { Box, Button, Divider, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AppContext } from "../context/AppContext";
 
 const HomePage = () => {
+  const { userName } = useContext(AppContext)
   const navigate = useNavigate();
   const startSelection = () => {
     navigate(`/quiz`);
@@ -30,18 +33,18 @@ const HomePage = () => {
             fontWeight={600}
             fontSize={"1.9rem"}
             sx={{
-              letterSpacing:"3px",
+              letterSpacing: "3px",
               textShadow: "-0.08em 0.03em 0.12em rgba(0, 0, 0, 0.9)",
               padding: "20px",
               border: "1px solid white",
-              borderRadius:"5px",
+              borderRadius: "5px",
               WebkitMask: `
                   conic-gradient(at 50px 50px, #0000 75%, #000 0) 0 0/calc(100% - 50px) calc(100% - 50px),
                   linear-gradient(#000 0 0) content-box
                 `,
             }}
           >
-            USER
+            {userName}
           </Typography>
         </Box>
         <Button

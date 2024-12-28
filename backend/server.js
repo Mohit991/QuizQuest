@@ -1,36 +1,43 @@
 const express = require('express');
-const cors = require('cors')
-
+const cors = require('cors');
 require('dotenv').config();
 const db = require('./models/index');
+const { protect } = require('./middleware/authMiddleware'); // Import the protect middleware
 
 const app = express();
 
 // Middleware to parse JSON
 app.use(express.json());
-// Middleware for cors
-app.use(cors())
+// Middleware for CORS
+app.use(cors());
 
 // Sync the database
 db.sequelize
-    .sync({ force: false }) // Set to true only during development to reset tables
-    .then(() => console.log('Database synced'))
-    .catch((err) => console.error('Error syncing database:', err.message));
+  .sync({ force: false }) // Set to true only during development to reset tables
+  .then(() => console.log('Database synced'))
+  .catch((err) => console.error('Error syncing database:', err.message));
 
-// Import and use routes
+// Import routes
+const publicRoutes = require('./routes/publicRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const topicRoutes = require('./routes/topicRoutes');
 const questionRoutes = require('./routes/questionRoutes');
-const userRoutes = require('./routes/userRoutes')
+const userRoutes = require('./routes/userRoutes');
 
-// Set up API routes
-app.use('/api/users', userRoutes); // For user-related endpoints
-app.use('/api/categories', categoryRoutes); // For category-related endpoints
-app.use('/api/categories', topicRoutes); // For topic-related endpoints
-app.use('/api/topic', questionRoutes); // For question-related endpoints
+// Public routes: These routes are accessible without authentication
+app.use('/api/public', publicRoutes);
+
+// Apply the protect middleware globally for all routes below this line
+app.use(protect);
+
+// Protected routes: All routes below require authentication
+app.use('/api/categories', categoryRoutes); // Category-related endpoints
+app.use('/api/topics', topicRoutes);        // Topic-related endpoints
+app.use('/api/questions', questionRoutes); // Question-related endpoints
+app.use('/api/users', userRoutes);    // User-related protected endpoints
 
 // Start the server
 const PORT = process.env.APP_PORT || 3001;
 app.listen(PORT, () => {
-    console.log(`App listening at http://localhost:${PORT}`);
+  console.log(`App listening at http://localhost:${PORT}`);
 });
