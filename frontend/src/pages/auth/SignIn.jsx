@@ -25,7 +25,7 @@ const SignIn = () => {
 
       const { token, user } = response.data;
 
-      localStorage.setItem("jwtToken", token);
+      localStorage.setItem("token", token);
       setUserId(user.id);
       setUserName(user.name);
       setUserEmail(user.email);

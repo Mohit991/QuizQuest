@@ -1,7 +1,39 @@
 const User = require('../models/User');
 const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcrypt');
-const { generateToken } = require('../utils/jwtUtils'); // For generating JWT tokens
+const { generateToken, verifyToken } = require('../utils/jwtUtils'); // For generating JWT tokens
+
+
+// @route   GET /api/users/verifyToken
+// @desc    Verify the JWT token and return user details
+// @access  Private
+const verifyTokenHandler = asyncHandler(async (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1];
+
+  if (!token) {
+    return res.status(401).json({ message: "No token provided" });
+  }
+
+  try {
+    
+    const decoded = verifyToken(token, process.env.JWT_SECRET);
+    const user = await User.findByPk(decoded.id, {
+      attributes: ["id", "name", "email"],
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({
+      message: "Token is valid",
+      user,
+    });
+  } catch (error) {
+    res.status(401).json({ message: "Invalid or expired token" });
+  }
+});
+
 
 // @route   POST /api/users
 // @desc    Register a new user
@@ -159,6 +191,7 @@ const deleteUser = asyncHandler(async (req, res) => {
 });
 
 module.exports = {
+  verifyTokenHandler,
   createUser,
   loginUser,
   getAllUsers,
