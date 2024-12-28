@@ -5,35 +5,29 @@ import { useEffect, useState, useContext } from 'react'
 import ErrorPage from "../ErrorPage";
 import CustomSpinner from "../../components/CustomSpinner";
 import { AppContext } from "../../context/AppContext";
+import { fetchCategories } from  "../../api/api"
 
 const ChooseCategory = () => {
   const [categories, setCategories] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [isError, setIsError] = useState(false)
-  const { setSelectedCategoryId, setSelectedCategory } = useContext(AppContext);
+  const { setSelectedCategoryId, setSelectedCategory, token } = useContext(AppContext);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const url = "http://localhost:3001/api/categories";
-        const res = await fetch(url);
-
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-
-        const data = await res.json();
-        setCategories(data)
-        setIsLoading(false)
+        const data = await fetchCategories(token);
+        setCategories(data);
+        setIsLoading(false);
       } catch (error) {
-        setIsError(true)
+        setIsError(true);
         console.error("Fetch error:", error);
       }
     };
     fetchData();
-  }, []);
+  }, [token]);
 
   const onCategorySelected = (category) => {
     setSelectedCategoryId(category.category_id)

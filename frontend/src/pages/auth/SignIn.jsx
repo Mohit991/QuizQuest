@@ -1,38 +1,51 @@
 import React, { useState, useContext } from "react";
 import { Box, TextField, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { signIn } from "../../api/api";
 import { AppContext } from "../../context/AppContext";
+import CustomSpinner from "../../components/CustomSpinner"; // Import CustomSpinner
 
 const SignIn = () => {
-  const { setUserName, setUserId, setUserEmail } = useContext(AppContext);
+  const { setUserName, setUserId, setUserEmail, setToken } = useContext(AppContext);
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError("");
+  };
 
   const handleSignIn = async () => {
+    const { email, password } = formData;
+
     if (!email || !password) {
-      setError("Please fill in both fields.");
+      setError("All fields are required.");
       return;
     }
 
+    setLoading(true);
+
     try {
-      const baseUrl = import.meta.env.VITE_REACT_APP_API_BASE_URL;
-
-      const response = await axios.post(`${baseUrl}/public/login`, { email, password });
-
-      const { token, user } = response.data;
+      const { token, user } = await signIn(email, password);
 
       localStorage.setItem("token", token);
+      setToken(token);
       setUserId(user.id);
       setUserName(user.name);
       setUserEmail(user.email);
 
       navigate("/"); // Redirect to HomePage
     } catch (err) {
-      setError(err.response?.data?.message || "Invalid email or password.");
+      setError(err.message || "An unexpected error occurred. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -55,7 +68,7 @@ const SignIn = () => {
       <Box
         sx={{
           width: "100%",
-          maxWidth: "400px",
+          maxWidth: "500px",
           backgroundColor: "white",
           padding: "20px",
           borderRadius: "8px",
@@ -65,17 +78,19 @@ const SignIn = () => {
         <TextField
           fullWidth
           label="Email"
+          name="email"
           type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={formData.email}
+          onChange={handleChange}
           margin="normal"
         />
         <TextField
           fullWidth
           label="Password"
+          name="password"
           type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={formData.password}
+          onChange={handleChange}
           margin="normal"
         />
 
@@ -91,8 +106,9 @@ const SignIn = () => {
           fullWidth
           sx={{ marginTop: "20px" }}
           onClick={handleSignIn}
+          disabled={loading}
         >
-          Sign In
+          {loading ? <CustomSpinner /> : "Sign In"}
         </Button>
       </Box>
     </Box>

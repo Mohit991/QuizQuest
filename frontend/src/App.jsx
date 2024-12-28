@@ -8,6 +8,7 @@ import RoutesConfig from "./routes/RoutesConfig";
 import { AppContext } from "./context/AppContext";
 import CustomSpinner from "./components/CustomSpinner";
 import ErrorPage from "./pages/ErrorPage";
+import { verifyToken } from "./api/api";
 
 function App() {
   const { userId, setUserId, setUserName, setUserEmail } = useContext(AppContext);
@@ -16,33 +17,28 @@ function App() {
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    const verifyToken = async () => {
+    const checkToken = async () => {
       const token = localStorage.getItem("token");
       if (token) {
         try {
-          const baseUrl = import.meta.env.VITE_REACT_APP_API_BASE_URL;
-          const response = await axios.get(`${baseUrl}/users/verifyToken`, {
-            headers: { Authorization: `Bearer ${token}` },
-          });
-
-          // If token is valid, update context
-          const { id, name, email } = response.data.user;
+          const user = await verifyToken(token);
+          const { id, name, email } = user;
           setUserId(id);
           setUserName(name);
           setUserEmail(email);
         } catch (error) {
-          console.error("Token verification failed:", error.response?.data?.message || error.message);
-          setIsError(true); // Set error state
-          localStorage.removeItem("token"); // Clear invalid token
+          console.error("Token verification failed:", error);
+          setIsError(true);
+          localStorage.removeItem("token");
         } finally {
-          setIsLoading(false); // Ensure loading is false regardless of success or error
+          setIsLoading(false);
         }
       } else {
-        setIsLoading(false); // No token, stop loading
+        setIsLoading(false);
       }
     };
 
-    verifyToken();
+    checkToken();
   }, [setUserId, setUserName, setUserEmail]);
 
   if (isError) {

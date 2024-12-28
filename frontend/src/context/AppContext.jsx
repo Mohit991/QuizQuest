@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 // Create the context
 export const AppContext = createContext();
@@ -16,6 +16,16 @@ export const AppProvider = ({ children }) => {
   const [userName, setUserName] = useState(null)
   const [userId, setUserId] = useState(null)
   const [userEmail, setUserEmail] = useState(null)
+
+  const [token, setToken] = useState(localStorage.getItem('token') || '');
+
+  useEffect(() => {
+    if (token) {
+      localStorage.setItem('token', token);
+    } else {
+      localStorage.removeItem('token');
+    }
+  }, [token]);
 
   return (
     <AppContext.Provider
@@ -39,7 +49,9 @@ export const AppProvider = ({ children }) => {
         userId,
         setUserId,
         userEmail,
-        setUserEmail
+        setUserEmail,
+        token,
+        setToken
       }}
     >
       {children}

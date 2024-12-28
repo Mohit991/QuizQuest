@@ -1,11 +1,12 @@
 import React, { useState, useContext } from "react";
 import { Box, TextField, Button, Typography, MenuItem } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { signUp } from "../../api/api";
 import { AppContext } from "../../context/AppContext";
+import CustomSpinner from "../../components/CustomSpinner";
 
 const SignUp = () => {
-  const { setUserName, setUserId, setUserEmail } = useContext(AppContext);
+  const { setUserName, setUserId, setUserEmail, setToken } = useContext(AppContext);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -19,6 +20,7 @@ const SignUp = () => {
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -72,28 +74,23 @@ const SignUp = () => {
       return;
     }
 
+    setLoading(true);
     try {
-      const baseUrl = import.meta.env.VITE_REACT_APP_API_BASE_URL;
       const { name, age, gender, email, password } = formData;
 
-      const response = await axios.post(`${baseUrl}/public/signup`, {
-        name,
-        age: parseInt(age, 10),
-        gender,
-        email,
-        password,
-      });
-
-      const { token, user } = response.data;
+      const { token, user } = await signUp(name, age, gender, email, password);
 
       localStorage.setItem("token", token);
+      setToken(token);
       setUserId(user.id);
       setUserName(user.name);
       setUserEmail(user.email);
 
       navigate("/"); // Redirect to HomePage
     } catch (err) {
-      setError(err.response?.data?.message || "An error occurred during sign-up.");
+      setError(err.message || "An error occurred during sign up.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -199,8 +196,9 @@ const SignUp = () => {
           fullWidth
           sx={{ marginTop: "20px" }}
           onClick={handleSignUp}
+          disabled={loading}
         >
-          Sign Up
+          {loading ? <CustomSpinner /> : "Sign Up"}
         </Button>
       </Box>
     </Box>
