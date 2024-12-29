@@ -56,12 +56,21 @@ const SignIn = () => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        minHeight: "100vh",
+        minHeight: "86vh",
         padding: "20px",
-        backgroundColor: "#f5f5f5",
+        backgroundColor: "#050801",
+        color: "#39ff14",
+        fontFamily: "monospace",
       }}
     >
-      <Typography variant="h4" gutterBottom sx={{ color: "black" }}>
+      <Typography
+        variant="h4"
+        gutterBottom
+        sx={{
+          color: "#39ff14",
+          fontFamily: "monospace",
+        }}
+      >
         Sign In
       </Typography>
 
@@ -69,10 +78,13 @@ const SignIn = () => {
         sx={{
           width: "100%",
           maxWidth: "500px",
-          backgroundColor: "white",
+          backgroundColor: "#050801",
+          border: "1px solid #39ff14",
           padding: "20px",
           borderRadius: "8px",
-          boxShadow: "0px 2px 8px rgba(0,0,0,0.1)",
+          color: "#39ff14",
+          fontFamily: "monospace",
+          boxShadow: "0px 2px 8px rgba(57, 255, 20, 0.1)",
         }}
       >
         <TextField
@@ -83,6 +95,17 @@ const SignIn = () => {
           value={formData.email}
           onChange={handleChange}
           margin="normal"
+          InputLabelProps={{
+            style: { color: "#39ff14", fontFamily: "monospace" },
+          }}
+          InputProps={{
+            style: {
+              color: "#39ff14",
+              backgroundColor: "#050801",
+              border: "1px solid #39ff14",
+              fontFamily: "monospace",
+            },
+          }}
         />
         <TextField
           fullWidth
@@ -92,10 +115,28 @@ const SignIn = () => {
           value={formData.password}
           onChange={handleChange}
           margin="normal"
+          InputLabelProps={{
+            style: { color: "#39ff14", fontFamily: "monospace" },
+          }}
+          InputProps={{
+            style: {
+              color: "#39ff14",
+              backgroundColor: "#050801",
+              border: "1px solid #39ff14",
+              fontFamily: "monospace",
+            },
+          }}
         />
 
         {error && (
-          <Typography color="error" sx={{ marginTop: "10px" }}>
+          <Typography
+            color="error"
+            sx={{
+              marginTop: "10px",
+              color: "#ff6347", 
+              fontFamily: "monospace",
+            }}
+          >
             {error}
           </Typography>
         )}
@@ -104,7 +145,15 @@ const SignIn = () => {
           variant="contained"
           color="primary"
           fullWidth
-          sx={{ marginTop: "20px" }}
+          sx={{
+            marginTop: "20px",
+            backgroundColor: "#39ff14",
+            color: "#050801",
+            fontFamily: "monospace",
+            "&:hover": {
+              backgroundColor: "#2ecc71",
+            },
+          }}
           onClick={handleSignIn}
           disabled={loading}
         >
@@ -112,6 +161,7 @@ const SignIn = () => {
         </Button>
       </Box>
     </Box>
+
   );
 };
 
