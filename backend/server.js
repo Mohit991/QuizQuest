@@ -32,8 +32,8 @@ app.use(protect);
 
 // Protected routes: All routes below require authentication
 app.use('/api/categories', categoryRoutes); // Category-related endpoints
-app.use('/api/topics', topicRoutes);        // Topic-related endpoints
-app.use('/api/questions', questionRoutes); // Question-related endpoints
+app.use('/api/categories', topicRoutes);        // Topic-related endpoints
+app.use('/api/topic', questionRoutes); // Question-related endpoints
 app.use('/api/users', userRoutes);    // User-related protected endpoints
 
 // Start the server

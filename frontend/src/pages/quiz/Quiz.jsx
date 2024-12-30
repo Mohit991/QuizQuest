@@ -7,6 +7,7 @@ import CustomSpinner from "../../components/CustomSpinner";
 import ErrorPage from "../ErrorPage";
 import { AppContext } from "../../context/AppContext";
 import { useContext } from "react";
+import { fetchQuiz } from "../../api/api";
 
 const Quiz = ({ topic, noOfQuestions, level }) => {
   // State variables
@@ -19,7 +20,7 @@ const Quiz = ({ topic, noOfQuestions, level }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
-  const { selectedTopicId, score, setScore, selectedNoOfQuestions, selectedLevel } = useContext(AppContext);
+  const { selectedTopicId, score, setScore, selectedNoOfQuestions, selectedLevel, token } = useContext(AppContext);
 
   const navigate = useNavigate();
 
@@ -27,17 +28,7 @@ const Quiz = ({ topic, noOfQuestions, level }) => {
     const fetchAndSetupQuiz = async () => {
       setScore(0);
       try {
-        // Construct the URL with query parameters
-        const url = `http://localhost:3001/api/topic/${selectedTopicId}/questions?noOfQuestions=${selectedNoOfQuestions}&level=${selectedLevel}`;
-        
-        const res = await fetch(url);
-  
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-  
-        const data = await res.json();
-        console.log(data);
+        const data = await fetchQuiz(token, selectedTopicId, selectedNoOfQuestions, selectedLevel)
         setResponse(data);
   
         if (data.length > 0) {
@@ -74,7 +65,7 @@ const Quiz = ({ topic, noOfQuestions, level }) => {
     } else {
       fetchAndSetupQuiz(); // Fetch data if response is empty
     }
-  }, [response, questionIndex, selectedNoOfQuestions, selectedLevel]);
+  }, [response, questionIndex, selectedNoOfQuestions, selectedLevel, token]);
   
 
   // Handle option selection

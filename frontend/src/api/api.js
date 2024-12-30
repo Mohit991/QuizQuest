@@ -53,3 +53,32 @@ export const fetchCategories = async (token) => {
     throw err;
   }
 };
+
+export const fetchTopicsOfCategory = async (token, selectedCategoryId) => {
+  console.log(selectedCategoryId);
+  try {
+    const response = await api.get(`/categories/${selectedCategoryId}/topics`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    const err = new Error(`HTTP error! status: ${error.response?.status}`);
+    err.code = error.response?.status;
+    throw err;
+  }
+};
+
+//http://localhost:3001/api/topic/${selectedTopicId}/questions?noOfQuestions=${selectedNoOfQuestions}&level=${selectedLevel}`;
+
+export const fetchQuiz = async (token, selectedTopicId, selectedNoOfQuestions, selectedLevel) => {
+  try {
+    const response = await api.get(`/topic/${selectedTopicId}/questions?noOfQuestions=${selectedNoOfQuestions}&level=${selectedLevel}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    const err = new Error(`HTTP error! status: ${error.response?.status}`);
+    err.code = error.response?.status;
+    throw err;
+  }
+};

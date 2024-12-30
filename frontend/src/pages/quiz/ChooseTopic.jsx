@@ -5,36 +5,29 @@ import { useEffect, useState, useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 import ErrorPage from "../ErrorPage";
 import CustomSpinner from "../../components/CustomSpinner";
+import { fetchTopicsOfCategory } from  "../../api/api"
 
 const ChooseTopic = () => {
   const [topics, setTopics] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [isError, setIsError] = useState(false)
 
-  const { selectedCategoryId, setSelectedTopicId, setSelectedTopic } = useContext(AppContext);
+  const { selectedCategoryId, setSelectedTopicId, setSelectedTopic, token } = useContext(AppContext);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log(selectedCategoryId);
-        const url = `http://localhost:3001/api/categories/${selectedCategoryId}/topics`
-        const res = await fetch(url);
-
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-
-        const data = await res.json();
-        setTopics(data)
-        setIsLoading(false)
+        const data = await fetchTopicsOfCategory(token, selectedCategoryId);
+        setTopics(data);
+        setIsLoading(false);
       } catch (error) {
-        setIsError(true)
+        setIsError(true);
         console.error("Fetch error:", error);
       }
     };
     fetchData();
-  }, [selectedCategoryId]);
+  }, [token, selectedCategoryId]);
 
   const onTopicSelected = (topic) => {
     setSelectedTopicId(topic.topic_id)
