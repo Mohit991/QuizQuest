@@ -17,21 +17,14 @@ const LandingPage = () => {
     <Box
       sx={{
         textAlign: "center",
-        backgroundColor: "#050801",
-        color: "#39ff14",
-        fontFamily: "monospace",
+        backgroundColor: "transparent",
+        color: "#004c70", // Dark teal
+        
         minHeight: "86vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        padding: "1.7rem",
-        border: "0.1px solid #39ff14",
-        borderRadius: "5px",
-        WebkitMask: `
-                  conic-gradient(at 50px 50px, #0000 75%, #000 0) 0 0/calc(100% - 50px) calc(100% - 50px),
-                  linear-gradient(#000 0 0) content-box
-                `,
       }}
     >
       {/* Welcome Banner */}
@@ -40,7 +33,8 @@ const LandingPage = () => {
         sx={{
           fontWeight: "bold",
           marginBottom: "1rem",
-          textShadow: "0 4px 6px rgba(57, 255, 20, 0.3)",
+          color: "#004c70", // Dark teal
+          textShadow: "0 4px 6px rgba(0, 0, 0, 0.3)", // Subtle shadow for depth
         }}
       >
         Welcome to Quiz Hub
@@ -49,7 +43,8 @@ const LandingPage = () => {
         variant="h5"
         sx={{
           marginBottom: "2rem",
-          textShadow: "0 2px 4px rgba(57, 255, 20, 0.3)",
+          color: "#eae7dc", // Light beige
+          textShadow: "0 2px 4px rgba(0, 0, 0, 0.3)", // Subtle shadow for readability
         }}
       >
         Challenge yourself with quizzes on various topics, track your progress,
@@ -63,12 +58,12 @@ const LandingPage = () => {
           size="large"
           onClick={handleSignIn}
           sx={{
-            backgroundColor: "#39ff14",
-            color: "#050801",
+            backgroundColor: "#004c70", // Dark teal
+            color: "#f5f5f5", // Off-white
             fontWeight: "bold",
-            fontFamily: "monospace",
+            
             "&:hover": {
-              backgroundColor: "#28cc10",
+              backgroundColor: "#3a7ca5", // Slightly lighter teal
             },
           }}
         >
@@ -79,13 +74,13 @@ const LandingPage = () => {
           size="large"
           onClick={handleSignUp}
           sx={{
-            color: "#39ff14",
-            borderColor: "#39ff14",
+            color: "#004c70", // Dark teal
+            borderColor: "#004c70", // Border matches text
             fontWeight: "bold",
-            fontFamily: "monospace",
+            
             "&:hover": {
-              borderColor: "#28cc10",
-              color: "#28cc10",
+              borderColor: "#3a7ca5", // Lighter teal on hover
+              color: "#3a7ca5",
             },
           }}
         >
@@ -99,8 +94,8 @@ const LandingPage = () => {
           variant="body1"
           sx={{
             lineHeight: 1.8,
-            fontFamily: "monospace",
-            color: "#39ff14",
+            
+            color: "#eae7dc", // Light beige
           }}
         >
           Whether you're preparing for exams, improving your general knowledge,
@@ -110,6 +105,7 @@ const LandingPage = () => {
         </Typography>
       </Container>
     </Box>
+
   );
 };
 

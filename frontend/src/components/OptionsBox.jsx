@@ -31,7 +31,7 @@ export default function OptionsBox({ option, onOptionChosen }) {
             sx={{
               color: "#3fc028",
               fontSize: 30,
-              fontFamily: "monospace",
+              
             }}
           >
             {option}

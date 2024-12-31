@@ -58,17 +58,16 @@ const SignIn = () => {
         justifyContent: "center",
         minHeight: "86vh",
         padding: "20px",
-        backgroundColor: "#050801",
-        color: "#39ff14",
-        fontFamily: "monospace",
+        backgroundColor: "transparent",
+        
       }}
     >
       <Typography
         variant="h4"
         gutterBottom
         sx={{
-          color: "#39ff14",
-          fontFamily: "monospace",
+          color: "#004c70",
+          
         }}
       >
         Sign In
@@ -78,12 +77,12 @@ const SignIn = () => {
         sx={{
           width: "100%",
           maxWidth: "500px",
-          backgroundColor: "#050801",
-          border: "1px solid #39ff14",
+          backgroundColor: "transparent",
+          border: "1px solid #004c70",
           padding: "20px",
           borderRadius: "8px",
           color: "#39ff14",
-          fontFamily: "monospace",
+          
           boxShadow: "0px 2px 8px rgba(57, 255, 20, 0.1)",
         }}
       >
@@ -96,14 +95,14 @@ const SignIn = () => {
           onChange={handleChange}
           margin="normal"
           InputLabelProps={{
-            style: { color: "#39ff14", fontFamily: "monospace" },
+            style: { color: "#004c70",  fontSize: "16px" },
           }}
           InputProps={{
             style: {
-              color: "#39ff14",
-              backgroundColor: "#050801",
-              border: "1px solid #39ff14",
-              fontFamily: "monospace",
+              color: "#004c70",
+              backgroundColor: "transparent",
+              border: "1px solid #004c70",
+              
             },
           }}
         />
@@ -116,14 +115,14 @@ const SignIn = () => {
           onChange={handleChange}
           margin="normal"
           InputLabelProps={{
-            style: { color: "#39ff14", fontFamily: "monospace" },
+            style: { color: "#004c70",  fontSize: "16px" },
           }}
           InputProps={{
             style: {
-              color: "#39ff14",
+              color: "#004c70",
               backgroundColor: "#050801",
-              border: "1px solid #39ff14",
-              fontFamily: "monospace",
+              border: "1px solid #004c70",
+              
             },
           }}
         />
@@ -133,8 +132,8 @@ const SignIn = () => {
             color="error"
             sx={{
               marginTop: "10px",
-              color: "#ff6347", 
-              fontFamily: "monospace",
+              color: "#ff6347",
+              
             }}
           >
             {error}
@@ -147,11 +146,11 @@ const SignIn = () => {
           fullWidth
           sx={{
             marginTop: "20px",
-            backgroundColor: "#39ff14",
+            backgroundColor: "#004c70",
             color: "#050801",
-            fontFamily: "monospace",
+            
             "&:hover": {
-              backgroundColor: "#2ecc71",
+              backgroundColor: "#00688c",
             },
           }}
           onClick={handleSignIn}
@@ -161,7 +160,6 @@ const SignIn = () => {
         </Button>
       </Box>
     </Box>
-
   );
 };
 

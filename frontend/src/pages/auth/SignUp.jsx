@@ -101,19 +101,17 @@ const SignUp = () => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        minHeight: "86vh",
-        padding: "20px",
-        backgroundColor: "#050801",
-        color: "#39ff14",
-        fontFamily: "monospace",
+        padding: "20px 20px 0px 20px",
+        backgroundColor: "transparent",
+        
       }}
     >
       <Typography
         variant="h4"
         gutterBottom
         sx={{
-          color: "#39ff14",
-          fontFamily: "monospace",
+          color: "#004c70",
+          
         }}
       >
         Sign Up
@@ -123,71 +121,71 @@ const SignUp = () => {
         sx={{
           width: "100%",
           maxWidth: "500px",
-          backgroundColor: "#050801",
-          border: "1px solid #39ff14",
+          backgroundColor: "transparent",
+          border: "1px solid #004c70",
           padding: "20px",
           borderRadius: "8px",
-          color: "#39ff14",
-          fontFamily: "monospace",
-          boxShadow: "0px 2px 8px rgba(57, 255, 20, 0.1)",
+          color: "#004c70",
+          
+          boxShadow: "0px 2px 8px rgba(0, 76, 112, 0.1)",
         }}
       >
         <TextField
           fullWidth
-          label="Your Name"
+          label="Name"
           name="name"
           value={formData.name}
           onChange={handleChange}
           margin="normal"
           InputLabelProps={{
-            style: { color: "#39ff14", fontFamily: "monospace" },
+            style: { color: "#fff", fontFamily: "Arial, sans-serif" },
           }}
           InputProps={{
             style: {
-              color: "#39ff14",
-              backgroundColor: "#050801",
-              border: "1px solid #39ff14",
-              fontFamily: "monospace",
+              color: "#fff",
+              backgroundColor: "transparent",
+              border: "1px solid #004c70",
+              
             },
           }}
         />
         <TextField
           fullWidth
-          label="Your Age"
+          label="Age"
           name="age"
           type="number"
           value={formData.age}
           onChange={handleChange}
           margin="normal"
           InputLabelProps={{
-            style: { color: "#39ff14", fontFamily: "monospace" },
+            style: { color: "#fff", fontFamily: "Arial, sans-serif" },
           }}
           InputProps={{
             style: {
-              color: "#39ff14",
-              backgroundColor: "#050801",
-              border: "1px solid #39ff14",
-              fontFamily: "monospace",
+              color: "#fff",
+              backgroundColor: "transparent",
+              border: "1px solid #004c70",
+              
             },
           }}
         />
         <TextField
           fullWidth
           select
-          label="Your Gender"
+          label="Gender"
           name="gender"
           value={formData.gender}
           onChange={handleChange}
           margin="normal"
           InputLabelProps={{
-            style: { color: "#39ff14", fontFamily: "monospace" },
+            style: { color: "#fff", fontFamily: "Arial, sans-serif" },
           }}
           SelectProps={{
             style: {
-              color: "#39ff14",
-              backgroundColor: "#050801",
-              border: "1px solid #39ff14",
-              fontFamily: "monospace",
+              color: "#fff",
+              backgroundColor: "transparent",
+              border: "1px solid #004c70",
+              
             },
           }}
         >
@@ -204,14 +202,14 @@ const SignUp = () => {
           onChange={handleChange}
           margin="normal"
           InputLabelProps={{
-            style: { color: "#39ff14", fontFamily: "monospace" },
+            style: { color: "#fff", fontFamily: "Arial, sans-serif" },
           }}
           InputProps={{
             style: {
-              color: "#39ff14",
-              backgroundColor: "#050801",
-              border: "1px solid #39ff14",
-              fontFamily: "monospace",
+              color: "#fff",
+              backgroundColor: "transparent",
+              border: "1px solid #004c70",
+              
             },
           }}
         />
@@ -224,14 +222,14 @@ const SignUp = () => {
           onChange={handleChange}
           margin="normal"
           InputLabelProps={{
-            style: { color: "#39ff14", fontFamily: "monospace" },
+            style: { color: "#fff", fontFamily: "Arial, sans-serif" },
           }}
           InputProps={{
             style: {
-              color: "#39ff14",
-              backgroundColor: "#050801",
-              border: "1px solid #39ff14",
-              fontFamily: "monospace",
+              color: "#fff",
+              backgroundColor: "transparent",
+              border: "1px solid #004c70",
+              
             },
           }}
         />
@@ -244,14 +242,14 @@ const SignUp = () => {
           onChange={handleChange}
           margin="normal"
           InputLabelProps={{
-            style: { color: "#39ff14", fontFamily: "monospace" },
+            style: { color: "#fff", fontFamily: "Arial, sans-serif" },
           }}
           InputProps={{
             style: {
-              color: "#39ff14",
-              backgroundColor: "#050801",
-              border: "1px solid #39ff14",
-              fontFamily: "monospace",
+              color: "#fff",
+              backgroundColor: "transparent",
+              border: "1px solid #004c70",
+              
             },
           }}
         />
@@ -260,8 +258,8 @@ const SignUp = () => {
           <Typography
             sx={{
               marginTop: "10px",
-              color: "#ff6347", // Optional error color
-              fontFamily: "monospace",
+              color: "#ff6347", // Error color
+              
             }}
           >
             {error}
@@ -272,8 +270,8 @@ const SignUp = () => {
           <Typography
             sx={{
               marginTop: "10px",
-              color: "#39ff14",
-              fontFamily: "monospace",
+              color: "#004c70",
+              
             }}
           >
             {success}
@@ -282,15 +280,14 @@ const SignUp = () => {
 
         <Button
           variant="contained"
-          color="primary"
           fullWidth
           sx={{
             marginTop: "20px",
-            backgroundColor: "#39ff14",
-            color: "#050801",
-            fontFamily: "monospace",
+            backgroundColor: "#004c70",
+            color: "#fff",
+            
             "&:hover": {
-              backgroundColor: "#2ecc71",
+              backgroundColor: "#00688c", // Lighter shade for hover effect
             },
           }}
           onClick={handleSignUp}
@@ -300,6 +297,7 @@ const SignUp = () => {
         </Button>
       </Box>
     </Box>
+
 
   );
 };

@@ -45,6 +45,11 @@ const HomePage = () => {
             }}
           >
             {userName}
+            <Box>
+              <Typography sx={{fontSize:"10px"}}>
+               See Your Progress
+              </Typography>
+            </Box>
           </Typography>
         </Box>
         <Button
