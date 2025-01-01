@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
-import axios from "axios";
 import LandingPage from "./pages/LandingPage";
 import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
@@ -59,7 +58,6 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/user-progress" element={<UserProgress />} />
         </Routes>
       )}
     </Router>

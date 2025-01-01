@@ -39,7 +39,7 @@ app.use('/api/users', userRoutes);    // User-related protected endpoints
 app.use('/api/user-progress', userProgressRoutes); // User progress protected endpoints
 
 // Start the server
-const PORT = process.env.APP_PORT || 3001;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`App listening at http://localhost:${PORT}`);
 });

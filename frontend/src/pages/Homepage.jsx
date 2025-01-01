@@ -1,5 +1,5 @@
 import { Box, Button, Divider, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 
@@ -47,7 +47,7 @@ const HomePage = () => {
             {userName}
             <Box>
               <Typography sx={{fontSize:"10px"}}>
-               See Your Progress
+                <Link to="/user-progress">See Your Progress</Link>
               </Typography>
             </Box>
           </Typography>
