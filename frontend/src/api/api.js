@@ -68,6 +68,32 @@ export const fetchTopicsOfCategory = async (token, selectedCategoryId) => {
   }
 };
 
+export const fetchLevels = async (token) => {
+  try {
+    const response = await api.get('/levels', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    const err = new Error(`HTTP error! status: ${error.response?.status}`);
+    err.code = error.response?.status;
+    throw err;
+  }
+};
+
+export const fetchQuestionCounts = async (token) => {
+  try {
+    const response = await api.get('/question-counts', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    const err = new Error(error.response?.data?.message || error.message);
+    err.code = error.response?.status;
+    throw err;
+  }
+};
 
 export const fetchQuiz = async (token, selectedTopicId, selectedNoOfQuestions, selectedLevel) => {
   try {
@@ -99,13 +125,13 @@ export const getUserProgress = async (userId, token) => {
 
 export const postUserProgress = async (userProgress, token) => {
   try {
-    console.log('Posting user progress:', userProgress); // Add logging
-    const response = await api.post('/user-progress/', userProgress, {
+    const response = await api.post('/user-progress', userProgress, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
   } catch (error) {
-    console.error('Error posting user progress:', error.response?.data || error.message); // Improve error logging
+    console.error('Error posting user progress:', error);
     throw error;
   }
 };
+

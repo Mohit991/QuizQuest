@@ -2,16 +2,25 @@ import { Box, Divider, Typography } from "@mui/material";
 import OptionsBox from "../../components/OptionsBox";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import { fetchQuestionCounts } from "../../api/api"
 
 const ChooseNoOfQuestions = () => {
-  const quizQuestions = [10, 25, 50];
+  const [quizQuestions, setQuizQuestions] = useState([]);
   const navigate = useNavigate();
+  const { setSelectedNoOfQuestions, token } = useContext(AppContext);
 
-  const { setSelectedNoOfQuestions } = useContext(AppContext);
+  useEffect(() => {
+    const getQuestionCounts = async () => {
+      const data = await fetchQuestionCounts(token);
+      console.log(data);
+      setQuizQuestions(data);
+    };
+    getQuestionCounts();
+  }, [token]);
 
   const onNoOfQuestionsSelected = (noOfQuestions) => {
-    setSelectedNoOfQuestions(noOfQuestions)
+    setSelectedNoOfQuestions(noOfQuestions);
     // Navigate to the relative path for the next step
     navigate(`${noOfQuestions}`);
   };
@@ -30,11 +39,11 @@ const ChooseNoOfQuestions = () => {
       </Typography>
       <Divider sx={{ borderColor: "whitesmoke", my: 4 }} />
       <Box sx={{ display: "flex", justifyContent: "space-between" }} gap={4}>
-        {quizQuestions.map((noOfQuestions, index) => (
+        {quizQuestions.map((questionCounts, index) => (
           <OptionsBox
             key={index}
-            option={noOfQuestions}
-            onOptionChosen={onNoOfQuestionsSelected}
+            option={questionCounts.count}
+            onOptionChosen={() => onNoOfQuestionsSelected(questionCounts.count)}
           />
         ))}
       </Box>

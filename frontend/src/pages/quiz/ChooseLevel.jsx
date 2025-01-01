@@ -2,19 +2,31 @@ import { Box, Divider, Typography } from "@mui/material";
 import OptionsBox from "../../components/OptionsBox";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import { fetchLevels } from "../../api/api";
 
 const ChooseLevel = () => {
-  const levels = ["Easy", "Medium", "Hard"];
-  
+  const [levels, setLevels] = useState([]);
   const navigate = useNavigate();
+  const { setSelectedLevel, token } = useContext(AppContext);
 
-  const { setSelectedLevel } = useContext(AppContext);
+  useEffect(() => {
+    const getLevels = async () => {
+      try {
+        const levelsData = await fetchLevels(token);
+        setLevels(levelsData);
+      } catch (error) {
+        console.error('Error fetching levels:', error);
+      }
+    };
+    getLevels();
+  }, [token]);
+
   const onLevelSelected = (level) => {
-    setSelectedLevel(level)
+    setSelectedLevel(level);
     navigate(`${level}`);
-  }
-  
+  };
+
   return (
     <Box className="chooseLevel" pt={3} width={"100%"}>
       <Typography
@@ -31,7 +43,7 @@ const ChooseLevel = () => {
       <Divider sx={{ borderColor: "whitesmoke", my: 4 }} />
       <Box sx={{ display: "flex", justifyContent: "space-between" }} gap={4}>
         {levels.map((level, index) => (
-          <OptionsBox key={index} option={level} onOptionChosen={onLevelSelected}/>
+          <OptionsBox key={index} option={level.name} onOptionChosen={onLevelSelected} />
         ))}
       </Box>
     </Box>
