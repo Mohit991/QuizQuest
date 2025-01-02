@@ -9,7 +9,7 @@ import { AppContext } from "../../context/AppContext";
 import { useContext } from "react";
 import { fetchQuiz } from "../../api/api";
 
-const Quiz = ({ topic, noOfQuestions, level }) => {
+const Quiz = () => {
   // State variables
   const [response, setResponse] = useState([]);
   const [questionText, setQuestionText] = useState("");
@@ -107,7 +107,7 @@ const Quiz = ({ topic, noOfQuestions, level }) => {
             optionText={option}
             onOptionSelected={() => handleOptionSelect(index)}
             style={{
-              backgroundColor: selectedAnswer === index ? "lightblue" : undefined,
+              border: selectedAnswer === index ? "3px solid #39ff14" : undefined,
             }}
           />
         ))}

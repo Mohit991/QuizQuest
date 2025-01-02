@@ -38,7 +38,7 @@ const ScorePage = () => {
     const onQuizTryAgain = () => {
         setIsNavigating(true); // Show spinner
         setTimeout(() => {
-            navigate(`/quiz/${selectedCategory}/${selectedTopic}/${selectedNoOfQuestions}/${selectedLevel}`);
+            navigate(`/quiz/${selectedCategory}/quiz-configuration`);
         }, 1000); // Add delay before navigating
     };
 

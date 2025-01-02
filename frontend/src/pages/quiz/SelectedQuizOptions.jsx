@@ -1,35 +1,49 @@
 import { Box, Button, Typography } from "@mui/material";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { AppContext } from "../../context/AppContext"; 
 
 const SelectedQuizOptions = () => {
-  const { category, topic, noOfQuestions, level } = useParams(); // Retrieve route parameters
   const navigate = useNavigate();
+  const { selectedCategory, selectedTopic, selectedNoOfQuestions, selectedLevel } =
+    useContext(AppContext); // Retrieve options from context
 
   const onStartQuiz = () => {
-    // Navigate to the relative route for the quiz
     navigate("start");
   };
 
   return (
-    <Box className="selectedOptions">
+    <Box className="selectedOptions" py={4} px={2}>
       <Typography
         className="text-head"
         variant="h2"
         letterSpacing={2}
+        mb={4}
+        textAlign="center"
       >
         START QUIZ
       </Typography>
 
       <Box>
-        <Typography py={2} className="text">Category : {category}</Typography>
-        <Typography py={2} className="text">Topic : {topic}</Typography>
-        <Typography py={2} className="text">Questions : {noOfQuestions}</Typography>
-        <Typography py={2} className="text">Level : {level}</Typography>
+        <Typography py={2} className="text">
+          <strong>Category:</strong> {selectedCategory}
+        </Typography>
+        <Typography py={2} className="text">
+          <strong>Topic:</strong> {selectedTopic}
+        </Typography>
+        <Typography py={2} className="text">
+          <strong>Questions:</strong> {selectedNoOfQuestions}
+        </Typography>
+        <Typography py={2} className="text">
+          <strong>Level:</strong> {selectedLevel}
+        </Typography>
       </Box>
 
       <Button
         onClick={onStartQuiz}
-        mt={2}
+        variant="contained"
+        color="primary"
+        sx={{ mt: 4, width: "100%" }}
         className="btn"
       >
         START QUIZ

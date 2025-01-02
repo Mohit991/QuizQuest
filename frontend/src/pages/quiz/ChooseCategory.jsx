@@ -34,7 +34,7 @@ const ChooseCategory = () => {
     setSelectedCategory(category.category_name)
 
     // Navigate to the nested route for the chosen category
-    navigate(`${category.category_name}`);
+    navigate(`/quiz/${category.category_name}/quiz-configuration`);
   };
 
   if (isError) {
