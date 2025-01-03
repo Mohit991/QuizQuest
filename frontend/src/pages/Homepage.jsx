@@ -10,12 +10,6 @@ const HomePage = () => {
     navigate(`/quiz`);
   };
 
-  const handleSignOut = (setters, navigate) => {
-    localStorage.removeItem('token');
-    clearContext()
-    navigate("/signin"); 
-  };
-
   return (
     <Box className="homepage-main">
       <Box className="header">
@@ -51,12 +45,6 @@ const HomePage = () => {
             }}
           >
             {userName}
-            <Box>
-              <Typography sx={{ fontSize: "10px" }}>
-                <Link to="/user-progress">See Your Progress</Link><br />
-                <Link onClick={handleSignOut} >Sign Out</Link>
-              </Typography>
-            </Box>
           </Typography>
         </Box>
         <Button
