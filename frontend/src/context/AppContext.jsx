@@ -18,7 +18,6 @@ export const AppProvider = ({ children }) => {
   const [userEmail, setUserEmail] = useState(null)
 
   const [token, setToken] = useState(localStorage.getItem('token') || '');
-
   useEffect(() => {
     if (token) {
       localStorage.setItem('token', token);
@@ -26,6 +25,20 @@ export const AppProvider = ({ children }) => {
       localStorage.removeItem('token');
     }
   }, [token]);
+
+  const clearContext = () => {
+    setSelectedCategoryId(null);
+    setSelectedCategory(null);
+    setSelectedTopicId(null);
+    setSelectedTopic(null);
+    setSelectedNoOfQuestions(null);
+    setSelectedLevel(null);
+    setScore(null);
+    setUserName(null);
+    setUserId(null);
+    setUserEmail(null);
+    setToken("");
+  };
 
   return (
     <AppContext.Provider
@@ -51,7 +64,8 @@ export const AppProvider = ({ children }) => {
         userEmail,
         setUserEmail,
         token,
-        setToken
+        setToken,
+        clearContext
       }}
     >
       {children}

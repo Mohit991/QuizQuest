@@ -4,10 +4,16 @@ import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 
 const HomePage = () => {
-  const { userName } = useContext(AppContext)
+  const { userName, clearContext } = useContext(AppContext)
   const navigate = useNavigate();
   const startSelection = () => {
     navigate(`/quiz`);
+  };
+
+  const handleSignOut = (setters, navigate) => {
+    localStorage.removeItem('token');
+    clearContext()
+    navigate("/signin"); 
   };
 
   return (
@@ -46,8 +52,9 @@ const HomePage = () => {
           >
             {userName}
             <Box>
-              <Typography sx={{fontSize:"10px"}}>
-                <Link to="/user-progress">See Your Progress</Link>
+              <Typography sx={{ fontSize: "10px" }}>
+                <Link to="/user-progress">See Your Progress</Link><br />
+                <Link onClick={handleSignOut} >Sign Out</Link>
               </Typography>
             </Box>
           </Typography>
