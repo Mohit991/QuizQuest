@@ -9,6 +9,7 @@ import CustomSpinner from "./components/CustomSpinner";
 import ErrorPage from "./pages/ErrorPage";
 import { verifyToken } from "./api/api";
 import UserProgress from "./pages/user/UserProgress";
+import ResponsiveAppBar from "./components/AppBar";
 
 function App() {
   const { userId, setUserId, setUserName, setUserEmail } = useContext(AppContext);
@@ -52,7 +53,10 @@ function App() {
   return (
     <Router>
       {userId ? (
-        <RoutesConfig />
+        <>
+          <ResponsiveAppBar />
+          <RoutesConfig />
+        </>
       ) : (
         <Routes>
           <Route path="/" element={<LandingPage />} />
