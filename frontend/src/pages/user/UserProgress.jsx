@@ -42,9 +42,8 @@ const UserProgress = () => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>User ID</TableCell>
-            <TableCell>Topic ID</TableCell>
-            <TableCell>Score</TableCell>
+            <TableCell>Category</TableCell>
+            <TableCell>Topic</TableCell>
             <TableCell>Total Questions</TableCell>
             <TableCell>Correct Answers</TableCell>
             <TableCell>Quiz Date</TableCell>
@@ -61,9 +60,8 @@ const UserProgress = () => {
                 "&:hover": { backgroundColor: "#1c1f25" },
               }}
             >
-              <TableCell sx={{ color: "white" }}>{row.user_id}</TableCell>
-              <TableCell sx={{ color: "white" }}>{row.topic_id}</TableCell>
-              <TableCell sx={{ color: "white" }}>{row.score}</TableCell>
+              <TableCell sx={{ color: "white" }}>{row.category_name}</TableCell>
+              <TableCell sx={{ color: "white" }}>{row.topic_name}</TableCell>
               <TableCell sx={{ color: "white" }}>{row.total_questions}</TableCell>
               <TableCell sx={{ color: "white" }}>{row.correct_answers}</TableCell>
               <TableCell sx={{ color: "white" }}>
