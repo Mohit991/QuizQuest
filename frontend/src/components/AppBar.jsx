@@ -122,6 +122,9 @@ const ResponsiveAppBar = () => {
                     } else if (setting === 'Progress') {
                       navigate('/user-progress');
                     }
+                    else{
+                      navigate('/user');
+                    }
                     handleCloseUserMenu();
                   }}
                 >

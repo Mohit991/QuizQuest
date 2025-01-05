@@ -135,3 +135,16 @@ export const postUserProgress = async (userProgress, token) => {
   }
 };
 
+export const getUserInfo = async (userId, token) => {
+  try {
+    const response = await api.get(`/users/${userId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    const err = new Error(error.response?.data?.message || error.message);
+    err.code = error.response?.status;
+    throw err;
+  }
+};
+

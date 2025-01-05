@@ -7,6 +7,7 @@ import ScorePage from "../pages/quiz/ScorePage";
 import StartQuizLayout from "../pages/layouts/StartQuizLayout";
 import UserProgress from "../pages/user/UserProgress";
 import QuizConfiguration from "../pages/quiz/QuizConfiguration"; 
+import User from "../pages/user/User";
 
 const RoutesConfig = () => (
   <Routes>
@@ -17,6 +18,7 @@ const RoutesConfig = () => (
       <Route path="/quiz/:category/quiz-configuration/selected-options" element={<SelectedQuizOptions />} />
       <Route path="/quiz/:category/quiz-configuration/selected-options/start" element={<Quiz />} />
     </Route>
+    <Route path="/user" element={<User />} />
     <Route path="/user-progress" element={<UserProgress />} />
     <Route path="/quiz/score" element={<ScorePage />} />
   </Routes>
