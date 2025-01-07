@@ -59,15 +59,15 @@ const SignIn = () => {
         minHeight: "86vh",
         padding: "20px",
         backgroundColor: "transparent",
-        
+
       }}
     >
       <Typography
         variant="h4"
         gutterBottom
         sx={{
-          color: "#004c70",
-          
+          color: "#ffa116",
+
         }}
       >
         Sign In
@@ -77,12 +77,12 @@ const SignIn = () => {
         sx={{
           width: "100%",
           maxWidth: "500px",
-          backgroundColor: "transparent",
-          border: "1px solid #004c70",
+          backgroundColor: "#282828",
+          border: "none",
           padding: "20px",
           borderRadius: "8px",
           color: "#39ff14",
-          
+
           boxShadow: "0px 2px 8px rgba(57, 255, 20, 0.1)",
         }}
       >
@@ -94,15 +94,26 @@ const SignIn = () => {
           value={formData.email}
           onChange={handleChange}
           margin="normal"
-          InputLabelProps={{
-            style: { color: "#004c70",  fontSize: "16px" },
-          }}
-          InputProps={{
-            style: {
-              color: "#004c70",
-              backgroundColor: "transparent",
-              border: "1px solid #004c70",
-              
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              backgroundColor: "#3e3e3e",
+              border:"0px 0px 1px 0px solid red",
+              "&:hover": {
+                backgroundColor: "none",
+              },
+              "&.Mui-focused": {
+                backgroundColor: "#3e3e3e",
+              },
+              "& fieldset": {
+                border: "none",
+              },
+            },
+            "& .MuiInputLabel-root": {
+              fontSize: "16px",
+              color: "#eff1f6bf",
+            },
+            "& .MuiInputLabel-root.Mui-focused": {
+              color: "#fff",
             },
           }}
         />
@@ -114,15 +125,25 @@ const SignIn = () => {
           value={formData.password}
           onChange={handleChange}
           margin="normal"
-          InputLabelProps={{
-            style: { color: "#004c70",  fontSize: "16px" },
-          }}
-          InputProps={{
-            style: {
-              color: "#004c70",
-              backgroundColor: "#050801",
-              border: "1px solid #004c70",
-              
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              backgroundColor: "#3e3e3e",
+              "&:hover": {
+                backgroundColor: "none",
+              },
+              "&.Mui-focused": {
+                backgroundColor: "#3e3e3e",
+              },
+              "& fieldset": {
+                border: "none",
+              },
+            },
+            "& .MuiInputLabel-root": {
+              fontSize: "16px",
+              color: "#eff1f6bf",
+            },
+            "& .MuiInputLabel-root.Mui-focused": {
+              color: "#fff",
             },
           }}
         />
@@ -133,7 +154,6 @@ const SignIn = () => {
             sx={{
               marginTop: "10px",
               color: "#ff6347",
-              
             }}
           >
             {error}
@@ -141,16 +161,14 @@ const SignIn = () => {
         )}
 
         <Button
-          variant="contained"
-          color="primary"
           fullWidth
           sx={{
-            marginTop: "20px",
-            backgroundColor: "#004c70",
-            color: "#050801",
-            
+            backgroundColor: "#ffa1161f",
+            color: "#ffa116",
+            fontWeight: "bold",
+
             "&:hover": {
-              backgroundColor: "#00688c",
+              backgroundColor: "rgba(255, 161, 22, 0.3)",
             },
           }}
           onClick={handleSignIn}

@@ -6,7 +6,8 @@ import { AppContext } from "../../context/AppContext";
 import CustomSpinner from "../../components/CustomSpinner";
 
 const SignUp = () => {
-  const { setUserName, setUserId, setUserEmail, setToken } = useContext(AppContext);
+  const { setUserName, setUserId, setUserEmail, setToken } =
+    useContext(AppContext);
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -103,15 +104,13 @@ const SignUp = () => {
         justifyContent: "center",
         padding: "20px 20px 0px 20px",
         backgroundColor: "transparent",
-        
       }}
     >
       <Typography
         variant="h4"
         gutterBottom
         sx={{
-          color: "#004c70",
-          
+          color: "#ffa116",
         }}
       >
         Sign Up
@@ -121,12 +120,12 @@ const SignUp = () => {
         sx={{
           width: "100%",
           maxWidth: "500px",
-          backgroundColor: "transparent",
-          border: "1px solid #004c70",
+          backgroundColor: "#282828",
+          border: "none",
           padding: "20px",
           borderRadius: "8px",
           color: "#004c70",
-          
+
           boxShadow: "0px 2px 8px rgba(0, 76, 112, 0.1)",
         }}
       >
@@ -137,15 +136,25 @@ const SignUp = () => {
           value={formData.name}
           onChange={handleChange}
           margin="normal"
-          InputLabelProps={{
-            style: { color: "#fff", fontFamily: "Arial, sans-serif" },
-          }}
-          InputProps={{
-            style: {
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              backgroundColor: "#3e3e3e",
+              "&:hover": {
+                backgroundColor: "none",
+              },
+              "&.Mui-focused": {
+                backgroundColor: "#3e3e3e",
+              },
+              "& fieldset": {
+                border: "none",
+              },
+            },
+            "& .MuiInputLabel-root": {
+              fontSize: "16px",
+              color: "#eff1f6bf",
+            },
+            "& .MuiInputLabel-root.Mui-focused": {
               color: "#fff",
-              backgroundColor: "transparent",
-              border: "1px solid #004c70",
-              
             },
           }}
         />
@@ -157,15 +166,25 @@ const SignUp = () => {
           value={formData.age}
           onChange={handleChange}
           margin="normal"
-          InputLabelProps={{
-            style: { color: "#fff", fontFamily: "Arial, sans-serif" },
-          }}
-          InputProps={{
-            style: {
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              backgroundColor: "#3e3e3e",
+              "&:hover": {
+                backgroundColor: "none",
+              },
+              "&.Mui-focused": {
+                backgroundColor: "#3e3e3e",
+              },
+              "& fieldset": {
+                border: "none",
+              },
+            },
+            "& .MuiInputLabel-root": {
+              fontSize: "16px",
+              color: "#eff1f6bf",
+            },
+            "& .MuiInputLabel-root.Mui-focused": {
               color: "#fff",
-              backgroundColor: "transparent",
-              border: "1px solid #004c70",
-              
             },
           }}
         />
@@ -177,21 +196,62 @@ const SignUp = () => {
           value={formData.gender}
           onChange={handleChange}
           margin="normal"
-          InputLabelProps={{
-            style: { color: "#fff", fontFamily: "Arial, sans-serif" },
-          }}
-          SelectProps={{
-            style: {
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              backgroundColor: "#3e3e3e",
+              color:"#eff1f6bf",
+              "&:hover": {
+                backgroundColor: "none",
+              },
+              "&.Mui-focused": {
+                backgroundColor: "#3e3e3e",
+              },
+              "& fieldset": {
+                border: "none",
+              },
+            },
+            "& .MuiInputLabel-root": {
+              fontSize: "16px",
+              color: "#eff1f6bf",
+            },
+            "& .MuiInputLabel-root.Mui-focused": {
               color: "#fff",
-              backgroundColor: "transparent",
-              border: "1px solid #004c70",
-              
             },
           }}
         >
-          <MenuItem value="male">Male</MenuItem>
-          <MenuItem value="female">Female</MenuItem>
-          <MenuItem value="other">Other</MenuItem>
+          <MenuItem
+            value="male"
+            sx={{
+              "&:hover": {
+                backgroundColor: "#575757",
+                color: "#fff",
+              },
+            }}
+          >
+            Male
+          </MenuItem>
+          <MenuItem
+            value="female"
+            sx={{
+              "&:hover": {
+                backgroundColor: "#575757",
+                color: "#fff",
+              },
+            }}
+          >
+            Female
+          </MenuItem>
+          <MenuItem
+            value="other"
+            sx={{
+              "&:hover": {
+                backgroundColor: "#575757",
+                color: "#fff",
+              },
+            }}
+          >
+            Other
+          </MenuItem>
         </TextField>
         <TextField
           fullWidth
@@ -201,15 +261,25 @@ const SignUp = () => {
           value={formData.email}
           onChange={handleChange}
           margin="normal"
-          InputLabelProps={{
-            style: { color: "#fff", fontFamily: "Arial, sans-serif" },
-          }}
-          InputProps={{
-            style: {
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              backgroundColor: "#3e3e3e",
+              "&:hover": {
+                backgroundColor: "none",
+              },
+              "&.Mui-focused": {
+                backgroundColor: "#3e3e3e",
+              },
+              "& fieldset": {
+                border: "none",
+              },
+            },
+            "& .MuiInputLabel-root": {
+              fontSize: "16px",
+              color: "#eff1f6bf",
+            },
+            "& .MuiInputLabel-root.Mui-focused": {
               color: "#fff",
-              backgroundColor: "transparent",
-              border: "1px solid #004c70",
-              
             },
           }}
         />
@@ -221,15 +291,25 @@ const SignUp = () => {
           value={formData.password}
           onChange={handleChange}
           margin="normal"
-          InputLabelProps={{
-            style: { color: "#fff", fontFamily: "Arial, sans-serif" },
-          }}
-          InputProps={{
-            style: {
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              backgroundColor: "#3e3e3e",
+              "&:hover": {
+                backgroundColor: "none",
+              },
+              "&.Mui-focused": {
+                backgroundColor: "#3e3e3e",
+              },
+              "& fieldset": {
+                border: "none",
+              },
+            },
+            "& .MuiInputLabel-root": {
+              fontSize: "16px",
+              color: "#eff1f6bf",
+            },
+            "& .MuiInputLabel-root.Mui-focused": {
               color: "#fff",
-              backgroundColor: "transparent",
-              border: "1px solid #004c70",
-              
             },
           }}
         />
@@ -241,15 +321,25 @@ const SignUp = () => {
           value={formData.confirmPassword}
           onChange={handleChange}
           margin="normal"
-          InputLabelProps={{
-            style: { color: "#fff", fontFamily: "Arial, sans-serif" },
-          }}
-          InputProps={{
-            style: {
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              backgroundColor: "#3e3e3e",
+              "&:hover": {
+                backgroundColor: "none",
+              },
+              "&.Mui-focused": {
+                backgroundColor: "#3e3e3e",
+              },
+              "& fieldset": {
+                border: "none",
+              },
+            },
+            "& .MuiInputLabel-root": {
+              fontSize: "16px",
+              color: "#eff1f6bf",
+            },
+            "& .MuiInputLabel-root.Mui-focused": {
               color: "#fff",
-              backgroundColor: "transparent",
-              border: "1px solid #004c70",
-              
             },
           }}
         />
@@ -259,7 +349,6 @@ const SignUp = () => {
             sx={{
               marginTop: "10px",
               color: "#ff6347", // Error color
-              
             }}
           >
             {error}
@@ -271,7 +360,6 @@ const SignUp = () => {
             sx={{
               marginTop: "10px",
               color: "#004c70",
-              
             }}
           >
             {success}
@@ -282,12 +370,12 @@ const SignUp = () => {
           variant="contained"
           fullWidth
           sx={{
-            marginTop: "20px",
-            backgroundColor: "#004c70",
-            color: "#fff",
-            
+            backgroundColor: "#ffa1161f",
+            color: "#ffa116",
+            fontWeight: "bold",
+
             "&:hover": {
-              backgroundColor: "#00688c", // Lighter shade for hover effect
+              backgroundColor: "rgba(255, 161, 22, 0.3)",
             },
           }}
           onClick={handleSignUp}
@@ -297,8 +385,6 @@ const SignUp = () => {
         </Button>
       </Box>
     </Box>
-
-
   );
 };
 

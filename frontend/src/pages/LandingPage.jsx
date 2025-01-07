@@ -17,9 +17,7 @@ const LandingPage = () => {
     <Box
       sx={{
         textAlign: "center",
-        backgroundColor: "transparent",
-        color: "#004c70", // Dark teal
-        
+        backgroundColor: "transparent",        
         minHeight: "86vh",
         display: "flex",
         flexDirection: "column",
@@ -33,8 +31,8 @@ const LandingPage = () => {
         sx={{
           fontWeight: "bold",
           marginBottom: "1rem",
-          color: "#004c70", // Dark teal
-          textShadow: "0 4px 6px rgba(0, 0, 0, 0.3)", // Subtle shadow for depth
+          color: "#ffa116", 
+          textShadow: "0 4px 6px rgba(0, 0, 0, 0.3)", 
         }}
       >
         Welcome to Quiz Hub
@@ -43,7 +41,7 @@ const LandingPage = () => {
         variant="h5"
         sx={{
           marginBottom: "2rem",
-          color: "#eae7dc", // Light beige
+          color: "#eff1f6bf", 
           textShadow: "0 2px 4px rgba(0, 0, 0, 0.3)", // Subtle shadow for readability
         }}
       >
@@ -58,12 +56,12 @@ const LandingPage = () => {
           size="large"
           onClick={handleSignIn}
           sx={{
-            backgroundColor: "#004c70", // Dark teal
-            color: "#f5f5f5", // Off-white
+            backgroundColor: "#ffa1161f",
+            color: "#ffa116", 
             fontWeight: "bold",
             
             "&:hover": {
-              backgroundColor: "#3a7ca5", // Slightly lighter teal
+              backgroundColor: "rgba(255, 161, 22, 0.3)", 
             },
           }}
         >
@@ -74,13 +72,13 @@ const LandingPage = () => {
           size="large"
           onClick={handleSignUp}
           sx={{
-            color: "#004c70", // Dark teal
-            borderColor: "#004c70", // Border matches text
+            color: "#eff1f6bf", 
             fontWeight: "bold",
+            backgroundColor:"#393939",
+            border:"none",
             
             "&:hover": {
-              borderColor: "#3a7ca5", // Lighter teal on hover
-              color: "#3a7ca5",
+              backgroundColor:"rgba(57, 57, 57, 0.8)"
             },
           }}
         >
@@ -95,7 +93,7 @@ const LandingPage = () => {
           sx={{
             lineHeight: 1.8,
             
-            color: "#eae7dc", // Light beige
+            color: "#eff1f6bf",
           }}
         >
           Whether you're preparing for exams, improving your general knowledge,
