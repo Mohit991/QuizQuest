@@ -25,9 +25,24 @@ const ResponsiveAppBar = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
 
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null);
+
 
 
   const navigate = useNavigate();
+
+  const handleMouseEnter = (dropdownName) => {
+    setActiveDropdown(dropdownName);
+  };
+
+  const handleMouseLeave = () => {
+    setActiveDropdown(null);
+  };
+
+  const handleSelectOption = (route) => {
+    navigate(`/${route}`);
+    setActiveDropdown(null);
+  };
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -65,11 +80,11 @@ const ResponsiveAppBar = () => {
 
 
   return (
-    <AppBar sx={{ background: "transparent" }}>
+    <AppBar className='appbar' sx={{ background: "#282828" }}>
       <Container maxWidth="xl">
         <Toolbar sx={{ margin: "0px 100px" }} disableGutters>
           <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} >
-            <Link to="/"><img src={logo} height={80} /></Link>
+            <Link to="/"><img src={logo} height={45} /></Link>
           </Box>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -88,13 +103,79 @@ const ResponsiveAppBar = () => {
           <Box sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
+              <Box
+                onMouseEnter={() => handleMouseEnter('trivia')}
+                onMouseLeave={handleMouseLeave}
+                sx={{ position: 'relative', marginRight: 2 }}
+              >
+                <Button sx={{ color: 'white' }}>Trivia</Button>
+                {activeDropdown === 'trivia' && (
+                  <select
+                    size="3"
+                    style={{
+                      position: 'absolute',
+                      top: '100%',
+                      left: 0,
+                      background: '#fff',
+                      boxShadow: '0px 4px 6px rgba(0,0,0,0.2)',
+                      border: 'none',
 
+                      cursor: 'pointer',
+                      overflow: 'hidden'
+                    }}
+                    onChange={(e) => handleSelectOption(e.target.value)}
+                  >
+                    <option className="appbar_option" value="option1">Random Option 1</option>
+                    <option className="appbar_option" value="option2">Random Option 2</option>
+                    <option className="appbar_option" value="option3">Random Option 3</option>
+                  </select>
+                )}
+              </Box>
+
+              <Box
+                onMouseEnter={() => handleMouseEnter('quiz')}
+                onMouseLeave={handleMouseLeave}
+                sx={{ position: 'relative', marginRight: 2 }}
+              >
+                <Button sx={{ color: 'white' }}>Quiz</Button>
+                {activeDropdown === 'quiz' && (
+                  <select
+                    size="3"
+                    style={{
+                      position: 'absolute',
+                      top: '100%',
+                      left: 0,
+                      background: '#fff',
+                      boxShadow: '0px 4px 6px rgba(0,0,0,0.2)',
+                      border: 'none',
+
+                      cursor: 'pointer',
+                      overflow: 'hidden'
+                    }}
+                    onChange={(e) => handleSelectOption(e.target.value)}
+                  >
+                    <option className="appbar_option" value="option4">Technology</option>
+                    <option className="appbar_option" value="option5">General Knowledge</option>
+                    <option className="appbar_option" value="option6">English</option>
+                  </select>
+                )}
+              </Box>
+
+              <Box
+                onMouseEnter={() => handleMouseEnter('leaderboard')}
+                onMouseLeave={handleMouseLeave}
+                sx={{ position: 'relative', marginRight: 2 }}
+              >
+                <Button sx={{ color: '#ffa116' }}>Leaderboard</Button>
+              </Box>
+            </Box>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src={profile} />
+                <Avatar alt="Remy Sharp" sx={{height: 38, width: 38}} src={profile} />
               </IconButton>
             </Tooltip>
             <Menu
@@ -122,7 +203,7 @@ const ResponsiveAppBar = () => {
                     } else if (setting === 'Progress') {
                       navigate('/user-progress');
                     }
-                    else{
+                    else {
                       navigate('/user');
                     }
                     handleCloseUserMenu();
