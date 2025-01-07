@@ -26,7 +26,7 @@ const userRoutes = require('./routes/userRoutes');
 const userProgressRoutes = require('./routes/userProgress');
 const levelRoutes = require('./routes/levelRoutes'); // Import levelRoutes
 const questionsCountForQuizRoutes = require('./routes/questionsCountForQuizRoutes'); // Import the new route
-const leaderboardRoutes = require('./routes/leaderboardRoutes'); // Import leaderboardRoutes
+const leaderboardsRoutes = require('./routes/leaderboardsRoutes'); // Import leaderboardRoutes
 
 // Public routes: These routes are accessible without authentication
 app.use('/api/public', publicRoutes);
@@ -43,7 +43,7 @@ app.use('/api/question-counts', questionsCountForQuizRoutes); // Add the new rou
 
 app.use('/api/users', userRoutes);    // User-related protected endpoints
 app.use('/api/user-progress', userProgressRoutes); // User progress protected endpoints
-app.use('/api/leaderboards', leaderboardRoutes); // Leaderboards related protected endpoints
+app.use('/api/leaderboards', leaderboardsRoutes); // Leaderboards related protected endpoints
 
 
 // Start the server
