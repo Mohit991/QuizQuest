@@ -148,3 +148,16 @@ export const getUserInfo = async (userId, token) => {
   }
 };
 
+export const fetchLeaderboards = async (token, categoryId) => {
+  try {
+    const response = await api.get(`/leaderboards?category=${categoryId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    const err = new Error(error.response?.data?.message || error.message);
+    err.code = error.response?.status;
+    throw err;
+  }
+};
+

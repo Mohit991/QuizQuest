@@ -8,6 +8,7 @@ import StartQuizLayout from "../pages/layouts/StartQuizLayout";
 import UserProgress from "../pages/user/UserProgress";
 import QuizConfiguration from "../pages/quiz/QuizConfiguration"; 
 import User from "../pages/user/User";
+import Leaderboards from "../pages/user/Leaderboards";
 
 const RoutesConfig = () => (
   <Routes>
@@ -20,6 +21,7 @@ const RoutesConfig = () => (
     </Route>
     <Route path="/user" element={<User />} />
     <Route path="/user-progress" element={<UserProgress />} />
+    <Route path="/leaderboards" element={<Leaderboards />} />
     <Route path="/quiz/score" element={<ScorePage />} />
   </Routes>
 );

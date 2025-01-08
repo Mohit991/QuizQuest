@@ -167,7 +167,7 @@ const ResponsiveAppBar = () => {
                 onMouseLeave={handleMouseLeave}
                 sx={{ position: 'relative', marginRight: 2 }}
               >
-                <Button sx={{ color: '#ffa116' }}>Leaderboard</Button>
+                <Button sx={{ color: '#ffa116' }} onClick={() => handleSelectOption('leaderboards')}>Leaderboard</Button>
               </Box>
             </Box>
           </Box>
