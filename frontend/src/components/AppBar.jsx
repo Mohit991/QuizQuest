@@ -10,12 +10,12 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import logo from '../assets/KKlogo.png'
+import logo from '../assets/images/KKlogo.png'
 import { AppContext } from '../context/AppContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import profile from "../assets/user.png"
+import profile from '../assets/images/user.png';
 
 const settings = ['Profile', 'Progress', 'Logout'];
 

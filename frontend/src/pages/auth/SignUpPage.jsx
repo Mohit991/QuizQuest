@@ -1,11 +1,11 @@
 import React, { useState, useContext } from "react";
 import { Box, TextField, Button, Typography, MenuItem } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { signUp } from "../../api/api";
+import { signUp } from "../../services/apiService";
 import { AppContext } from "../../context/AppContext";
 import CustomSpinner from "../../components/CustomSpinner";
 
-const SignUp = () => {
+const SignUpPage = () => {
   const { setUserName, setUserId, setUserEmail, setToken } =
     useContext(AppContext);
   const navigate = useNavigate();
@@ -388,4 +388,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignUpPage;

@@ -7,7 +7,7 @@ import CustomSpinner from "../../components/CustomSpinner";
 import ErrorPage from "../ErrorPage";
 import { AppContext } from "../../context/AppContext";
 import { useContext } from "react";
-import { fetchQuiz } from "../../api/api";
+import { fetchQuiz } from "../../services/apiService";
 
 const Quiz = () => {
   // State variables

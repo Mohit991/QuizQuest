@@ -5,9 +5,9 @@ import { useEffect, useState, useContext } from 'react'
 import ErrorPage from "../ErrorPage";
 import CustomSpinner from "../../components/CustomSpinner";
 import { AppContext } from "../../context/AppContext";
-import { fetchCategories } from  "../../api/api"
+import { fetchCategories } from  "../../services/apiService"
 
-const ChooseCategory = () => {
+const ChooseCategoryPage = () => {
   const [categories, setCategories] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [isError, setIsError] = useState(false)
@@ -72,4 +72,4 @@ const ChooseCategory = () => {
   };
 }
 
-export default ChooseCategory;
+export default ChooseCategoryPage;

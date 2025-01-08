@@ -3,13 +3,13 @@ import OptionsBox from "../../components/OptionsBox";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import { AppContext } from "../../context/AppContext";
-import { fetchLevels, fetchQuestionCounts, fetchTopicsOfCategory } from "../../api/api";
+import { fetchLevels, fetchQuestionCounts, fetchTopicsOfCategory } from "../../services/apiService";
 import ErrorPage from "../ErrorPage";
 import CustomSpinner from "../../components/CustomSpinner";
 
 console.log("quiz configuration loaded");
 
-const QuizConfiguration = () => {
+const SelectQuizConfigPage = () => {
   const [levels, setLevels] = useState([]);
   const [quizQuestions, setQuizQuestions] = useState([]);
   const [topics, setTopics] = useState([]);
@@ -188,4 +188,4 @@ const QuizConfiguration = () => {
   );
 };
 
-export default QuizConfiguration;
+export default SelectQuizConfigPage;

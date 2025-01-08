@@ -1,14 +1,13 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import LandingPage from "./pages/LandingPage";
-import SignIn from "./pages/auth/SignIn";
-import SignUp from "./pages/auth/SignUp";
+import SignInPage from "./pages/auth/SignInPage";
+import SignUpPage from "./pages/auth/SignUpPage";
 import RoutesConfig from "./routes/RoutesConfig";
 import { AppContext } from "./context/AppContext";
 import CustomSpinner from "./components/CustomSpinner";
 import ErrorPage from "./pages/ErrorPage";
-import { verifyToken } from "./api/api";
-import UserProgress from "./pages/user/UserProgress";
+import { verifyToken } from "./services/apiService";
 import ResponsiveAppBar from "./components/AppBar";
 
 function App() {
@@ -60,8 +59,8 @@ function App() {
       ) : (
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
+          <Route path="/signin" element={<SignInPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
         </Routes>
       )}
     </Router>

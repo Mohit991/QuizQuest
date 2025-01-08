@@ -1,25 +1,25 @@
 import { Routes, Route } from "react-router-dom";
-import HomePage from "../pages/Homepage";
-import ChooseCategory from "../pages/quiz/ChooseCategory";
-import SelectedQuizOptions from "../pages/quiz/SelectedQuizOptions";
+import HomePage from "../pages/HomePage";
+import ChooseCategoryPage from "../pages/quiz/ChooseCategoryPage";
+import SelectedQuizConfigPage from "../pages/quiz/SelectedQuizConfigPage";
 import Quiz from "../pages/quiz/Quiz";
 import ScorePage from "../pages/quiz/ScorePage";
-import StartQuizLayout from "../pages/layouts/StartQuizLayout";
+import StartQuizLayout from "../layouts/StartQuizLayout";
 import UserProgress from "../pages/user/UserProgress";
-import QuizConfiguration from "../pages/quiz/QuizConfiguration"; 
-import User from "../pages/user/User";
+import SelectQuizConfigPage from "../pages/quiz/SelectQuizConfigPage"; 
+import UserInfo from "../pages/user/UserInfo";
 import Leaderboards from "../pages/user/Leaderboards";
 
 const RoutesConfig = () => (
   <Routes>
     <Route path="/" element={<HomePage />} />
     <Route path="/quiz" element={<StartQuizLayout />}>
-      <Route index element={<ChooseCategory />} />
-      <Route path="/quiz/:category/quiz-configuration" element={<QuizConfiguration />} /> 
-      <Route path="/quiz/:category/quiz-configuration/selected-options" element={<SelectedQuizOptions />} />
+      <Route index element={<ChooseCategoryPage />} />
+      <Route path="/quiz/:category/quiz-configuration" element={<SelectQuizConfigPage />} /> 
+      <Route path="/quiz/:category/quiz-configuration/selected-options" element={<SelectedQuizConfigPage />} />
       <Route path="/quiz/:category/quiz-configuration/selected-options/start" element={<Quiz />} />
     </Route>
-    <Route path="/user" element={<User />} />
+    <Route path="/user" element={<UserInfo />} />
     <Route path="/user-progress" element={<UserProgress />} />
     <Route path="/leaderboards" element={<Leaderboards />} />
     <Route path="/quiz/score" element={<ScorePage />} />

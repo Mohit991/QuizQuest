@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import { fetchCategories, fetchLeaderboards } from '../../api/api';
+import { fetchCategories, fetchLeaderboards } from '../../services/apiService';
 import { AppContext } from '../../context/AppContext';
 
 const Leaderboards = () => {

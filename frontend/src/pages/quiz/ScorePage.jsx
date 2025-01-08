@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useState, useEffect } from 'react';
 import { AppContext } from "../../context/AppContext";
 import CustomSpinner from "../../components/CustomSpinner";
-import { postUserProgress } from '../../api/api';
+import { postUserProgress } from '../../services/apiService';
 
 const ScorePage = () => {
     const { token, userId, score, selectedTopicId, selectedCategory, selectedTopic, selectedNoOfQuestions, selectedLevel } = useContext(AppContext);

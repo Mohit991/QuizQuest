@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AppContext } from "../../context/AppContext";
-import { getUserProgress } from '../../api/api';
+import { getUserProgress } from '../../services/apiService';
 import {
   Table,
   TableBody,

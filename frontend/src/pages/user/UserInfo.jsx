@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { TextField, Button, Container, Typography, Grid, IconButton, MenuItem } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
-import { getUserInfo } from '../../api/api'; // Adjust the import path as necessary
+import { getUserInfo } from '../../services/apiService'; // Adjust the import path as necessary
 import { AppContext } from '../../context/AppContext';
 
-const User = () => {
+const UserInfo = () => {
     const { userId, token } = useContext(AppContext);
     const [userInfo, setUserInfo] = useState({
         name: '',
@@ -185,4 +185,4 @@ const User = () => {
     );
 };
 
-export default User;
+export default UserInfo;

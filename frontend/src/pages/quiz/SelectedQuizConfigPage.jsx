@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../../context/AppContext"; 
 
-const SelectedQuizOptions = () => {
+const SelectedQuizConfigPage = () => {
   const navigate = useNavigate();
   const { selectedCategory, selectedTopic, selectedNoOfQuestions, selectedLevel } =
     useContext(AppContext); // Retrieve options from context
@@ -52,4 +52,4 @@ const SelectedQuizOptions = () => {
   );
 };
 
-export default SelectedQuizOptions;
+export default SelectedQuizConfigPage;
