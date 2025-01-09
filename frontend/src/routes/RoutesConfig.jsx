@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import ChooseCategoryPage from "../pages/quiz/ChooseCategoryPage";
 import SelectedQuizConfigPage from "../pages/quiz/SelectedQuizConfigPage";
-import Quiz from "../pages/quiz/Quiz";
+import Quiz from "../components/Quiz";
 import ScorePage from "../pages/quiz/ScorePage";
 import StartQuizLayout from "../layouts/StartQuizLayout";
 import UserProgress from "../pages/user/UserProgress";

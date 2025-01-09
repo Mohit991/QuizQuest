@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Question from "../../components/Question";
-import Option from "../../components/Option";
+import Question from "./Question";
+import Option from "./Option";
 import { Box, Button, Typography } from "@mui/material";
-import CustomSpinner from "../../components/CustomSpinner";
-import ErrorPage from "../ErrorPage";
-import { AppContext } from "../../context/AppContext";
+import CustomSpinner from "./CustomSpinner";
+import ErrorPage from "../pages/ErrorPage";
+import { AppContext } from "../context/AppContext";
 import { useContext } from "react";
-import { fetchQuiz } from "../../services/apiService";
+import { fetchQuiz } from "../services/apiService";
 
 const Quiz = () => {
-  // State variables
   const [response, setResponse] = useState([]);
   const [questionText, setQuestionText] = useState("");
   const [options, setOptions] = useState([]);
