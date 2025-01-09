@@ -112,7 +112,7 @@ const ResponsiveAppBar = () => {
                 <Button sx={{ color: 'white' }}>Trivia</Button>
                 {activeDropdown === 'trivia' && (
                   <select
-                    size="3"
+                    size="2"
                     style={{
                       position: 'absolute',
                       top: '100%',
@@ -126,9 +126,8 @@ const ResponsiveAppBar = () => {
                     }}
                     onChange={(e) => handleSelectOption(e.target.value)}
                   >
-                    <option className="appbar_option" value="option1">Random Option 1</option>
-                    <option className="appbar_option" value="option2">Random Option 2</option>
-                    <option className="appbar_option" value="option3">Random Option 3</option>
+                    <option className="appbar_option" value="option1">Coming Soon..</option>
+                    <option className="appbar_option" value="option1">Coming Soon..</option>
                   </select>
                 )}
               </Box>

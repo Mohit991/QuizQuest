@@ -1,13 +1,12 @@
-import { Box, Button, Divider, Typography } from "@mui/material";
-import OptionsBox from "../../components/OptionsBox";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState, useContext } from "react";
+import { Box, Button, Typography, Container, Paper, Grid } from "@mui/material";
+import { motion } from "framer-motion";
+import OptionsBox from "../../components/OptionsBox";
 import { AppContext } from "../../context/AppContext";
 import { fetchLevels, fetchQuestionCounts, fetchTopicsOfCategory } from "../../services/apiService";
 import ErrorPage from "../ErrorPage";
 import CustomSpinner from "../../components/CustomSpinner";
-
-console.log("quiz configuration loaded");
 
 const SelectQuizConfigPage = () => {
   const [levels, setLevels] = useState([]);
@@ -81,111 +80,171 @@ const SelectQuizConfigPage = () => {
   const isProceedDisabled = !(selectedTopic && selectedLevel && selectedNoOfQuestions);
 
   if (isError) {
-    return (
-      <Box>
-        <ErrorPage />
-      </Box>
-    );
+    return <ErrorPage />;
   }
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+    },
+  };
+
   return (
-    <Box pt={3} width={"100%"}>
-      <Typography
-        fontSize={"1.3rem"}
-        sx={{
-          textShadow: "-0.08em 0.03em 0.12em rgba(0, 0, 0, 0.9)",
-          fontWeight: "lighter",
-        }}
-        pt={1}
-      >
-        CONFIGURE YOUR QUIZ
-      </Typography>
-      <Divider sx={{ borderColor: "whitesmoke", my: 4 }} />
-
-      {/* Selected Category */}
-      <Box mb={4}>
-        <Typography fontSize="1.1rem" fontWeight="bold">
-          Selected Category: {selectedCategory}
-        </Typography>
-      </Box>
-
-      {/* Topic Selection */}
-      <Box mb={4}>
-        <Typography fontSize="1.1rem" fontWeight="bold">
-          Choose Topic:
-        </Typography>
-        {isLoading ? (
-          <CustomSpinner />
-        ) : (
-          <Box sx={{ display: "flex", justifyContent: "space-between" }} gap={4}>
-            {topics.map((topic) => (
-              <OptionsBox
-                key={topic.topic_id}
-                option={topic.topic_name}
-                selected={selectedTopic === topic.topic_name}
-                onOptionChosen={() => onTopicSelected(topic)}
-              />
-            ))}
-          </Box>
-        )}
-      </Box>
-
-      {/* Level Selection */}
-      <Box mb={4}>
-        <Typography fontSize="1.1rem" fontWeight="bold">
-          Choose Level:
-        </Typography>
-        {isLoading ? (
-          <CustomSpinner />
-        ) : (
-          <Box sx={{ display: "flex", justifyContent: "space-between" }} gap={4}>
-            {levels.map((level, index) => (
-              <OptionsBox
-                key={index}
-                option={level.name}
-                selected={selectedLevel === level.name}
-                onOptionChosen={() => onLevelSelected(level)}
-              />
-            ))}
-          </Box>
-        )}
-      </Box>
-
-      {/* Number of Questions Selection */}
-      <Box mb={4}>
-        <Typography fontSize="1.1rem" fontWeight="bold">
-          Choose Number of Questions:
-        </Typography>
-        {isLoading ? (
-          <CustomSpinner />
-        ) : (
-          <Box sx={{ display: "flex", justifyContent: "space-between" }} gap={4}>
-            {quizQuestions.map((questionCounts, index) => (
-              <OptionsBox
-                key={index}
-                option={questionCounts.count}
-                selected={selectedNoOfQuestions === questionCounts.count}
-                onOptionChosen={() => onNoOfQuestionsSelected(questionCounts)}
-              />
-            ))}
-          </Box>
-        )}
-      </Box>
-
-      {/* Proceed Button */}
-      <Box mt={4}>
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleProceed}
-          disabled={isProceedDisabled}
-          sx={{ width: "100%" }}
+    <Box
+      sx={{
+        minHeight: "81vh",
+        backgroundColor: "#393939",
+        pt: 8,
+      }}
+    >
+      <Container maxWidth="lg">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={containerVariants}
         >
-          Proceed
-        </Button>
-      </Box>
+          <Paper
+            elevation={3}
+            sx={{
+              p: 4,
+              backgroundColor: "#242424",
+              color: "#ffa116",
+              borderRadius: "16px",
+            }}
+          >
+            <motion.div variants={itemVariants}>
+              <Typography
+                variant="h4"
+                sx={{
+                  fontWeight: "lighter",
+                  textAlign: "center",
+                  mb: 4,
+                  textShadow: "2px 2px 4px rgba(0,0,0,0.5)",
+                }}
+              >
+                CONFIGURE YOUR QUIZ
+              </Typography>
+            </motion.div>
+
+            <motion.div variants={itemVariants}>
+              <Typography variant="h6" fontWeight="bold" mb={2}>
+                Selected Category: {selectedCategory}
+              </Typography>
+            </motion.div>
+
+            <Grid container spacing={4}>
+              <Grid item xs={12}>
+                <motion.div variants={itemVariants}>
+                  {/* <Typography variant="h6" fontWeight="bold" mb={2}>
+                    Choose Topic:
+                  </Typography> */}
+                  {isLoading ? (
+                    <CustomSpinner />
+                  ) : (
+                    <Grid container spacing={2}>
+                      {topics.map((topic) => (
+                        <Grid item xs={12} sm={6} md={4} key={topic.topic_id}>
+                          <OptionsBox
+                            option={topic.topic_name}
+                            selected={selectedTopic === topic.topic_name}
+                            onOptionChosen={() => onTopicSelected(topic)}
+                          />
+                        </Grid>
+                      ))}
+                    </Grid>
+                  )}
+                </motion.div>
+              </Grid>
+
+              <Grid item xs={12}>
+                <motion.div variants={itemVariants}>
+                  {/* <Typography variant="h6" fontWeight="bold" mb={2}>
+                    Choose Level:
+                  </Typography> */}
+                  {isLoading ? (
+                    <CustomSpinner />
+                  ) : (
+                    <Grid container spacing={2}>
+                      {levels.map((level, index) => (
+                        <Grid item xs={12} sm={6} md={4} key={index}>
+                          <OptionsBox
+                            option={level.name}
+                            selected={selectedLevel === level.name}
+                            onOptionChosen={() => onLevelSelected(level)}
+                          />
+                        </Grid>
+                      ))}
+                    </Grid>
+                  )}
+                </motion.div>
+              </Grid>
+
+              <Grid item xs={12}>
+                <motion.div variants={itemVariants}>
+                  {/* <Typography variant="h6" fontWeight="bold" mb={2}>
+                    Choose Number of Questions:
+                  </Typography> */}
+                  {isLoading ? (
+                    <CustomSpinner />
+                  ) : (
+                    <Grid container spacing={2}>
+                      {quizQuestions.map((questionCounts, index) => (
+                        <Grid item xs={12} sm={6} md={4} key={index}>
+                          <OptionsBox
+                            option={questionCounts.count}
+                            selected={selectedNoOfQuestions === questionCounts.count}
+                            onOptionChosen={() => onNoOfQuestionsSelected(questionCounts)}
+                          />
+                        </Grid>
+                      ))}
+                    </Grid>
+                  )}
+                </motion.div>
+              </Grid>
+            </Grid>
+
+            <motion.div variants={itemVariants}>
+              <Box mt={4}>
+                <Button
+                  variant="contained"
+                  onClick={handleProceed}
+                  disabled={isProceedDisabled}
+                  sx={{
+                    width: "100%",
+                    backgroundColor: "#ffa116",
+                    color: "#242424",
+                    fontWeight: "bold",
+                    "&:hover": {
+                      backgroundColor: "#ff8c00",
+                    },
+                    "&:disabled": {
+                      backgroundColor: "#6b6b6b",
+                      color: "#a0a0a0",
+                    },
+                  }}
+                >
+                  Proceed
+                </Button>
+              </Box>
+            </motion.div>
+          </Paper>
+        </motion.div>
+      </Container>
     </Box>
   );
 };
 
 export default SelectQuizConfigPage;
+

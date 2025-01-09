@@ -22,7 +22,7 @@ const Leaderboards = () => {
     }, [selectedCategory, token]);
 
     return (
-        <div style={{ textAlign: 'center' }}>
+        <div style={{ textAlign: 'center', paddingTop:"100px" }}>
             <select 
                 onChange={(e) => setSelectedCategory(categories.find(cat => cat.id === e.target.value))}
                 style={{ color: 'white'}}

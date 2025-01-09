@@ -1,16 +1,17 @@
-import { Box, Divider, Typography } from "@mui/material";
-import OptionsBox from "../../components/OptionsBox";
+import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState, useContext } from 'react'
+import { Box, Typography, Container, Grid } from "@mui/material";
+import { motion } from "framer-motion";
+import OptionsBox from "../../components/OptionsBox";
 import ErrorPage from "../ErrorPage";
 import CustomSpinner from "../../components/CustomSpinner";
 import { AppContext } from "../../context/AppContext";
-import { fetchCategories } from  "../../services/apiService"
+import { fetchCategories } from "../../services/apiService";
 
 const ChooseCategoryPage = () => {
-  const [categories, setCategories] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [isError, setIsError] = useState(false)
+  const [categories, setCategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
   const { setSelectedCategoryId, setSelectedCategory, token } = useContext(AppContext);
 
   const navigate = useNavigate();
@@ -30,46 +31,55 @@ const ChooseCategoryPage = () => {
   }, [token]);
 
   const onCategorySelected = (category) => {
-    setSelectedCategoryId(category.category_id)
-    setSelectedCategory(category.category_name)
-
-    // Navigate to the nested route for the chosen category
+    setSelectedCategoryId(category.category_id);
+    setSelectedCategory(category.category_name);
     navigate(`/quiz/${category.category_name}/quiz-configuration`);
   };
 
-  if (isError) {
-    return <ErrorPage />
-  }
-  else if (isLoading) {
-    return <CustomSpinner />
-  }
-  else {
-    return (
-      <Box pt={3} width={"100%"}>
-        <Typography
-          fontSize={"1.3rem"}
-          sx={{
-            textShadow: "-0.08em 0.03em 0.12em rgba(0, 0, 0, 0.9)",
-            fontWeight: "lighter",
-          }}
-          pt={1}
-        >
-          CHOOSE CATEGORY
-        </Typography>
-        <Divider sx={{ borderColor: "whitesmoke", my: 4 }} />
+  if (isError) return <ErrorPage />;
+  if (isLoading) return <CustomSpinner />;
 
-        <Box sx={{ display: "flex", justifyContent: "space-between" }} gap={4}>
-          {categories.map((category) => (
-            <OptionsBox
-              key={category.category_id}
-              option={category.category_name}
-              onOptionChosen={() => onCategorySelected(category)}
-            />
+  return (
+    <Box sx={{ backgroundColor: "#393939", minHeight: "81vh", pt: 8 }}>
+      <Container maxWidth="lg">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Typography
+            variant="h4"
+            sx={{
+              fontWeight: "lighter",
+              color: "#ffa116",
+              textAlign: "center",
+              mb: 4,
+            }}
+          >
+            CHOOSE CATEGORY
+          </Typography>
+        </motion.div>
+
+        <Grid container spacing={4} justifyContent="center">
+          {categories.map((category, index) => (
+            <Grid item key={category.category_id}>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <OptionsBox
+                  option={category.category_name}
+                  onOptionChosen={() => onCategorySelected(category)}
+                />
+              </motion.div>
+            </Grid>
           ))}
-        </Box>
-      </Box>
-    );
-  };
-}
+        </Grid>
+      </Container>
+    </Box>
+  );
+};
 
 export default ChooseCategoryPage;
+

@@ -1,13 +1,11 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import Question from "./Question";
-import Option from "./Option";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, Paper, LinearProgress } from "@mui/material";
+import { motion, AnimatePresence } from "framer-motion";
+import { AppContext } from "../context/AppContext";
+import { fetchQuiz } from "../services/apiService";
 import CustomSpinner from "./CustomSpinner";
 import ErrorPage from "../pages/ErrorPage";
-import { AppContext } from "../context/AppContext";
-import { useContext } from "react";
-import { fetchQuiz } from "../services/apiService";
 
 const Quiz = () => {
   const [response, setResponse] = useState([]);
@@ -31,7 +29,7 @@ const Quiz = () => {
         setResponse(data);
   
         if (data.length > 0) {
-          setupQuestion(data[0]); // Set up the first question
+          setupQuestion(data[0]);
         }
         setIsLoading(false);
       } catch (error) {
@@ -42,49 +40,40 @@ const Quiz = () => {
   
     const setupQuestion = (questionObject) => {
       setQuestionText(questionObject.question_text);
-  
-      // Extract options
       const answerOptions = [
         questionObject.option1,
         questionObject.option2,
         questionObject.option3,
         questionObject.option4,
       ];
-  
       setOptions(answerOptions);
       setCorrectAnswer(questionObject.correct_option);
     };
   
-    // If questions are already fetched, update the next question on questionIndex change
     if (response.length > 0 && questionIndex < response.length) {
       setupQuestion(response[questionIndex]);
     } else if (response.length > 0 && questionIndex >= response.length) {
-      // Navigate to score page when the quiz ends
       navigate("/quiz/score");
     } else {
-      fetchAndSetupQuiz(); // Fetch data if response is empty
+      fetchAndSetupQuiz();
     }
   }, [response, questionIndex, selectedNoOfQuestions, selectedLevel, token]);
-  
 
-  // Handle option selection
   const handleOptionSelect = (index) => {
     setSelectedAnswer(index);
   };
 
-  // Check answer and move to next question
   const handleNextQuestion = () => {
-    if (selectedAnswer === -1) return; // Ensure an option is selected
+    if (selectedAnswer === -1) return;
 
-    if (selectedAnswer+1 === correctAnswer) {
-      setScore((prevScore) => prevScore + 1); // Increment score if correct
+    if (selectedAnswer + 1 === correctAnswer) {
+      setScore((prevScore) => prevScore + 1);
     }
 
-    setSelectedAnswer(-1); // Reset selected answer
-    setQuestionIndex((prevIndex) => prevIndex + 1); // Move to next question
+    setSelectedAnswer(-1);
+    setQuestionIndex((prevIndex) => prevIndex + 1);
   };
 
-  // Render loading spinner, error page, or quiz UI
   if (isError) {
     return <ErrorPage />;
   }
@@ -94,33 +83,98 @@ const Quiz = () => {
   }
 
   return (
-    <Box className="quizBoxMain" sx={{ maxWidth: "600px", margin: "auto", textAlign: "center" }}>
-      <Typography variant="h4" gutterBottom>
-        Question {questionIndex + 1} of {response.length}
-      </Typography>
-      <Question questionText={questionText} />
-      <Box>
-        {options.map((option, index) => (
-          <Option
-            key={index}
-            optionText={option}
-            onOptionSelected={() => handleOptionSelect(index)}
-            style={{
-              border: selectedAnswer === index ? "3px solid #39ff14" : undefined,
-            }}
+    <Box sx={{
+      minHeight: "90vh",
+      backgroundColor: "#393939",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    }}>
+      <Paper elevation={3} sx={{
+        maxWidth: "600px",
+        width: "100%",
+        p: 4,
+        backgroundColor: "#242424",
+        color: "#ffa116",
+        borderRadius: "16px",
+      }}>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Typography variant="h4" gutterBottom align="center" sx={{ mb: 3 }}>
+            Question {questionIndex + 1} of {response.length}
+          </Typography>
+          <LinearProgress 
+            variant="determinate" 
+            value={(questionIndex / response.length) * 100} 
+            sx={{ mb: 3, backgroundColor: "#393939", "& .MuiLinearProgress-bar": { backgroundColor: "#ffa116" } }}
           />
-        ))}
-      </Box>
-      <Button
-        variant="contained"
-        className="btn"
-        onClick={handleNextQuestion}
-        sx={{ marginTop: "20px" }}
-      >
-        {questionIndex === response.length - 1 ? "Finish Quiz" : "Next"}
-      </Button>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={questionIndex}
+              initial={{ x: 300, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: -300, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 260, damping: 20 }}
+            >
+              <Typography variant="h6" gutterBottom align="center" sx={{ mb: 3 }}>
+                {questionText}
+              </Typography>
+              <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                {options.map((option, index) => (
+                  <motion.div
+                    key={index}
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Button
+                      fullWidth
+                      variant={selectedAnswer === index ? "contained" : "outlined"}
+                      onClick={() => handleOptionSelect(index)}
+                      sx={{
+                        borderColor: "#ffa116",
+                        color: selectedAnswer === index ? "#242424" : "#ffa116",
+                        backgroundColor: selectedAnswer === index ? "#ffa116" : "transparent",
+                        "&:hover": {
+                          backgroundColor: selectedAnswer === index ? "#ff8c00" : "rgba(255, 161, 22, 0.1)",
+                        },
+                      }}
+                    >
+                      {option}
+                    </Button>
+                  </motion.div>
+                ))}
+              </Box>
+            </motion.div>
+          </AnimatePresence>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+          >
+            <Button
+              variant="contained"
+              fullWidth
+              onClick={handleNextQuestion}
+              sx={{
+                mt: 4,
+                backgroundColor: "#ffa116",
+                color: "#242424",
+                "&:hover": {
+                  backgroundColor: "#ff8c00",
+                },
+              }}
+            >
+              {questionIndex === response.length - 1 ? "Finish Quiz" : "Next"}
+            </Button>
+          </motion.div>
+        </motion.div>
+      </Paper>
     </Box>
   );
 };
 
 export default Quiz;
+

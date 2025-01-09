@@ -38,7 +38,7 @@ const HomePage = () => {
   ];
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" sx={{ backgroundColor: '#393939', color: '#fff', borderRadius: '10px', py: 4, px: 2 }}>
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -46,8 +46,8 @@ const HomePage = () => {
       >
         <Box sx={{ my: 4, textAlign: 'center' }}>
           <motion.div variants={itemVariants}>
-            <Typography variant="h1" component="h1" gutterBottom>
-              Welcome back, {userName}!
+            <Typography variant="h1" component="h1" gutterBottom sx={{ color: '#ffa116' }}>
+              Welcome back, <span style={{ color: "#fff" }}>{userName}!</span>
             </Typography>
           </motion.div>
           <motion.div variants={itemVariants}>
@@ -58,23 +58,30 @@ const HomePage = () => {
           <motion.div variants={itemVariants}>
             <Button
               variant="contained"
-              color="primary"
               size="large"
               onClick={startSelection}
               startIcon={<Quiz />}
-              sx={{ mt: 2 }}
+              sx={{
+                mt: 2,
+                color: 'black',
+                backgroundColor: '#ffa116',
+                '&:hover': {
+                  backgroundColor: '#ffc44a',
+                  boxShadow: 'none',
+                },
+              }}
             >
               Start New Quiz
             </Button>
           </motion.div>
 
-          <Divider sx={{ my: 4 }} />
+          <Divider sx={{ my: 4, borderColor: '#ffa116' }} />
 
           <Box pt={3}>
             <Typography
               fontWeight={600}
               fontSize="1.5rem"
-              sx={{ letterSpacing: '3px', textShadow: '0.08em 0.03em 0.12em rgba(0, 0, 0, 0.9)' }}
+              sx={{ letterSpacing: '3px', textShadow: '0.08em 0.03em 0.12em rgba(255, 255, 255, 0.9)' }}
             >
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
                 <Typography>Quizzes Attempted</Typography>
@@ -93,26 +100,26 @@ const HomePage = () => {
         </Box>
 
         <motion.div variants={itemVariants}>
-          <Typography variant="h3" component="h2" gutterBottom sx={{ mt: 6, mb: 3 }}>
+          <Typography variant="h3" component="h2" gutterBottom sx={{ mt: 6, mb: 3, color: '#ffa116' }}>
             Featured Quizzes
           </Typography>
           <Grid container spacing={4}>
             {featuredQuizzes.map((quiz, index) => (
               <Grid item xs={12} md={4} key={index}>
-                <Card>
+                <Card sx={{ backgroundColor: '#505050', color: '#fff', boxShadow: '0 4px 10px rgba(0,0,0,0.3)' }}>
                   <CardContent>
-                    <Typography variant="h5" component="div" gutterBottom>
+                    <Typography variant="h5" component="div" gutterBottom sx={{ color: '#ffa116' }}>
                       {quiz.title}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography variant="body2" color="text.secondary" sx={{ color: '#ccc' }}>
                       {quiz.description}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                    <Typography variant="body2" sx={{ mt: 1, color: '#ffa116' }}>
                       Difficulty: {quiz.difficulty}
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small" color="primary">
+                    <Button size="small" sx={{ color: '#ffa116' }}>
                       Take Quiz
                     </Button>
                   </CardActions>
@@ -123,49 +130,29 @@ const HomePage = () => {
         </motion.div>
 
         <motion.div variants={itemVariants}>
-          <Typography variant="h3" component="h2" gutterBottom sx={{ mt: 6, mb: 3 }}>
+          <Typography variant="h3" component="h2" gutterBottom sx={{ mt: 6, mb: 3, color: '#ffa116' }}>
             Why QuizHub?
           </Typography>
           <Grid container spacing={4}>
-            <Grid item xs={12} md={4}>
-              <Paper elevation={3} sx={{ p: 3, height: '100%' }}>
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%' }}>
-                  <School fontSize="large" color="primary" />
-                  <Typography variant="h6" component="h3" sx={{ mt: 2, mb: 1 }}>
-                    Learn
-                  </Typography>
-                  <Typography variant="body1" align="center">
-                    Expand your knowledge with our diverse range of quiz topics. From science to pop culture, we've got you covered.
-                  </Typography>
-                </Box>
-              </Paper>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Paper elevation={3} sx={{ p: 3, height: '100%' }}>
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%' }}>
-                  <EmojiEvents fontSize="large" color="primary" />
-                  <Typography variant="h6" component="h3" sx={{ mt: 2, mb: 1 }}>
-                    Compete
-                  </Typography>
-                  <Typography variant="body1" align="center">
-                    Challenge friends and climb the leaderboard to prove your expertise. Earn badges and unlock achievements as you go.
-                  </Typography>
-                </Box>
-              </Paper>
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Paper elevation={3} sx={{ p: 3, height: '100%' }}>
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%' }}>
-                  <TrendingUp fontSize="large" color="primary" />
-                  <Typography variant="h6" component="h3" sx={{ mt: 2, mb: 1 }}>
-                    Improve
-                  </Typography>
-                  <Typography variant="body1" align="center">
-                    Track your progress and watch your scores improve over time. Personalized recommendations help you focus on areas for growth.
-                  </Typography>
-                </Box>
-              </Paper>
-            </Grid>
+            {[
+              { icon: School, title: 'Learn', text: 'Discover new topics and grow your expertise.' },
+              { icon: EmojiEvents, title: 'Compete', text: 'Challenge friends and climb the leaderboard.' },
+              { icon: TrendingUp, title: 'Improve', text: 'Track your progress and enhance your skills.' },
+            ].map((item, index) => (
+              <Grid item xs={12} md={4} key={index}>
+                <Paper elevation={3} sx={{ p: 3, backgroundColor: '#505050', color: '#fff', height:"130px" }}>
+                  <Box sx={{ textAlign: 'center' }}>
+                    <item.icon fontSize="large" sx={{ color: '#ffa116' }} />
+                    <Typography variant="h6" component="h3" sx={{ mt: 2, color: '#ffa116' }}>
+                      {item.title}
+                    </Typography>
+                    <Typography variant="body1" align="center" sx={{ color: '#ccc' }}>
+                      {item.text}
+                    </Typography>
+                  </Box>
+                </Paper>
+              </Grid>
+            ))}
           </Grid>
         </motion.div>
       </motion.div>
