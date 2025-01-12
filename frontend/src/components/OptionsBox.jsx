@@ -1,33 +1,39 @@
-import * as React from "react";
+import React from "react";
+import { motion } from "framer-motion";
+import { Card, CardContent, Typography } from "@mui/material";
 import { useLocation } from "react-router-dom";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import { Box } from "@mui/material";
 
-export default function OptionsBox({ option, onOptionChosen, selected }) {
+const OptionsBox = ({ option, onOptionChosen, selected }) => {
   const location = useLocation();
-
-  // Determine height based on the path
-  const boxHeight =
-    location.pathname === "/quiz/:category/quiz-configuration" ? 60 : 150;
+  const isQuizConfigRoute = location.pathname.includes("/quiz/") && location.pathname.includes("/quiz-configuration");
+  const boxHeight = isQuizConfigRoute ? 60 : 150;
 
   return (
-    <Box className="option-box">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      transition={{ duration: 0.3 }}
+    >
       <Card
-        className="card"
         sx={{
-          minWidth: 275,
-          height: boxHeight, 
+          width: 275,
+          height: boxHeight,
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: selected ? "#39ff14" : "#242424",
-          border: selected ? "2px solid #39ff14" : "2px solid transparent",
+          backgroundColor: selected ? "#ffa116" : "#242424",
+          border: selected ? "3px solid #ffa116" : "3px solid #393939",
+          borderRadius: "12px",
+          transition: "all 0.3s ease",
+          cursor: "pointer",
           "&:hover": {
-            backgroundColor: "#3a3a3a",
-            "& .text": {
-              color: selected ? "#242424" : "#39ff14",
+            backgroundColor: selected ? "#ffa116" : "#3a3a3a",
+            border: "3px solid #ffa116",
+            "& .MuiTypography-root": {
+              color: selected ? "#393939" : "#ffa116",
             },
           },
         }}
@@ -35,17 +41,22 @@ export default function OptionsBox({ option, onOptionChosen, selected }) {
       >
         <CardContent>
           <Typography
-            className="text"
-            gutterBottom
+            variant="h5"
+            component="div"
             sx={{
-              color: selected ? "#242424" : "#3fc028",
-              fontSize: 30,
+              color: selected ? "#393939" : "#ffa116",
+              fontWeight: "bold",
+              textAlign: "center",
+              fontSize: isQuizConfigRoute ? "1rem" : "1.5rem",
             }}
           >
             {option}
           </Typography>
         </CardContent>
       </Card>
-    </Box>
+    </motion.div>
   );
-}
+};
+
+export default OptionsBox;
+

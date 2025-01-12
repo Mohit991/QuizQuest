@@ -6,120 +6,60 @@
 }
 
 #root {
-  /* max-width: 1280px; */
   margin: 0 auto 0 auto;
   padding: 2rem;
   text-align: center;
   font-family: 'Afacad Flux', sans-serif;
 }
 
-.homepage-maiin-heading {
-  padding-top: 2%;
+::-webkit-scrollbar {
+  width: 12px;
 }
 
-.homepage-heading-letter {
-  font-size: 6rem;
-  font-weight: 800;
-  letter-spacing: 3px;
-  text-shadow: -0.08em 0.03em 0.12em rgba(0, 0, 0, 0.9);
-  color: #ffa116;
+::-webkit-scrollbar-track {
+  background: #242424;
+  border-radius: 10px;
 }
 
-div span:not(:first-child) {
-  margin-left: -0.11em;
-}
-
-.homepage-main .start_btn_home {
-  padding: 25px 30px;
-  background-color: #050801;
-  color: #ffa116;
-  font-weight: bold;
-  border: none;
-  border-radius: 5px;
-  letter-spacing: 4px;
-  overflow: hidden;
-  transition: 0.5s;
-  cursor: pointer;
-  font-size: 1.1rem;
-}
-
-.homepage-main .start_btn_home:hover {
+::-webkit-scrollbar-thumb {
   background: #ffa116;
-  color: #050801;
-  box-shadow: 0 0 5px #ffa116, 0 0 25px #ffa116, 0 0 50px #ffa116,
-    0 0 200px #ffa116;
+  border-radius: 10px;
+  border: 3px solid #242424;
+  transition: background-color 0.3s ease;
 }
 
-.option-box .card:hover {
-  box-shadow: 0 0 5px #39ff14, 0 0 25px #39ff14, 0 0 50px #39ff14,
-    0 0 200px #39ff14;
+::-webkit-scrollbar-thumb:hover {
+  background: #ff8c00;
 }
 
-.selectedOptions .text {
-  font-size: large;
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #ffa116 #242424;
 }
 
-
-.selectedOptions .btn {
-  padding: 25px 30px;
-  background-color: #050801;
-  color: #39ff14;
-  font-weight: bold;
-  border: none;
-  border-radius: 5px;
-  letter-spacing: 4px;
-  overflow: hidden;
-  transition: 0.5s;
-  cursor: pointer;
-  font-size: 1.1rem;
+body {
+  -ms-overflow-style: none;
 }
 
-.selectedOptions .btn:hover {
-  background: #39ff14;
-  color: #050801;
-  box-shadow: 0 0 5px #39ff14, 0 0 25px #39ff14, 0 0 50px #39ff14,
-    0 0 200px #39ff14;
+body::-webkit-scrollbar {
+  display: none;
 }
 
-.option {
-  margin-top: 5px;
-  font-size: 18px;
+body:hover::-webkit-scrollbar {
+  display: block;
 }
 
-.option:hover {
-  box-shadow: 0 0 2px #39ff14, 0 0 10px #39ff14, 0 0 10px #39ff14,
-    0 0 200px #39ff14;
+html {
+  scroll-behavior: smooth;
 }
 
-.quizBoxMain .btn {
-  padding: 15px 30px;
-  margin-top: 10px;
-  background-color: transparent;
-  color: #39ff14;
-  font-weight: bold;
-  border: none;
-  border-radius: 5px;
-  letter-spacing: 4px;
-  overflow: hidden;
-  transition: 0.5s;
-  cursor: pointer;
-  font-size: 1.1rem;
-}
-
-.quizBoxMain .btn:hover {
-  background: #39ff14;
-  color: #050801;
-  box-shadow: 0 0 5px #39ff14, 0 0 25px #39ff14, 0 0 50px #39ff14,
-    0 0 200px #39ff14;
-}
-
-.appbar .appbar_option{
+.appbar .appbar_option {
   background-color: #393939;
   padding: 10px;
   color: #eff1f6bf;
-  font-family:  'Afacad Flux', sans-serif;
+  font-family: 'Afacad Flux', sans-serif;
 }
 
-.appbar .appbar_option:hover{
+.appbar .appbar_option:hover {
   background-color: rgba(57, 57, 57, 0.8)
 }
