@@ -29,7 +29,8 @@ const UserInfo = () => {
                 const data = await getUserInfo(userId, token);
                 setUserInfo({
                     ...data,
-                    gender: data.gender.toLowerCase() // Ensure gender is in lowercase
+                    gender: data.gender ? data.gender.toLowerCase() : null, // Ensure gender is in lowercase or set to null
+                    age: data.age ?? null // Set age to null if not present
                 });
             } catch (error) {
                 console.error('Error fetching user info:', error);

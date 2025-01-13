@@ -41,6 +41,16 @@ export const signUp = async (name, age, gender, email, password) => {
   }
 };
 
+export const googleSignIn = async (token) => {
+  try {
+    const response = await api.post('/public/google-login', { token });
+    return response.data;
+  } catch (error) {
+    console.error("Google token verification error:", error);
+    return null;
+  }
+};
+
 export const fetchCategories = async (token) => {
   try {
     const response = await api.get("/categories", {

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { signIn } from "../../services/apiService";
 import { AppContext } from "../../context/AppContext";
 import CustomSpinner from "../../components/CustomSpinner"; // Import CustomSpinner
+import GoogleLoginButton from '../../components/GoogleLoginButton';
 
 const SignInPage = () => {
   const { setUserName, setUserId, setUserEmail, setToken } = useContext(AppContext);
@@ -176,6 +177,7 @@ const SignInPage = () => {
         >
           {loading ? <CustomSpinner /> : "Sign In"}
         </Button>
+        <GoogleLoginButton />
       </Box>
     </Box>
   );

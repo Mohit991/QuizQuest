@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { signUp } from "../../services/apiService";
 import { AppContext } from "../../context/AppContext";
 import CustomSpinner from "../../components/CustomSpinner";
+import GoogleLoginButton from '../../components/GoogleLoginButton';
 
 const SignUpPage = () => {
   const { setUserName, setUserId, setUserEmail, setToken } =
@@ -383,6 +384,7 @@ const SignUpPage = () => {
         >
           {loading ? <CustomSpinner /> : "Sign Up"}
         </Button>
+        <GoogleLoginButton />
       </Box>
     </Box>
   );

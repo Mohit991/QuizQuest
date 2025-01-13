@@ -2,7 +2,7 @@ const User = require('../models/User');
 const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcrypt');
 const { generateToken, verifyToken } = require('../utils/jwtUtils'); // For generating JWT tokens
-
+const axios = require('axios')
 
 // @route   GET /api/users/verifyToken
 // @desc    Verify the JWT token and return user details
@@ -69,6 +69,65 @@ const createUser = asyncHandler(async (req, res) => {
     token,
   });
 });
+
+// @route   POST /api/users/google-login
+// @desc    Authenticate user and return token
+// @access  Public
+const authUsingGoogle = async (req, res) => {
+  try {
+    const token = req.body.token;
+    if (!token) {
+      return res.status(400).json({ message: "No token provided" });
+    }
+
+    // Verify the Google token using Google API
+    const response = await axios.get(`https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=${token}`);
+    const googleUser = response.data;
+
+    if (!googleUser) {
+      return res.status(401).json({ message: "Invalid Google token" });
+    }
+
+    const name = googleUser.name;
+    const email = googleUser.email;
+
+    // Check if the user already exists
+    let existingUser = await User.findOne({ where: { email } });
+
+    if (!existingUser) {
+      // Generate an 8-character random password
+      const generateRandomPassword = () => {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let password = '';
+        for (let i = 0; i < 8; i++) {
+          password += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return password;
+      };
+
+      const randomPassword = generateRandomPassword();
+
+      // Hash the generated password
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(randomPassword, salt);
+
+      // Create the new user
+      existingUser = await User.create({ name, email, password: hashedPassword });
+    }
+
+    const JwtToken = generateToken(existingUser.id); // Generate JWT token
+    res.status(201).json({
+      message: 'User registered successfully',
+      user: { id: existingUser.id, name, email },
+      JwtToken,
+    });
+
+  } catch (error) {
+    console.error("Google authentication error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 
 // @route   POST /api/users/login
 // @desc    Authenticate user and return token
@@ -193,6 +252,7 @@ const deleteUser = asyncHandler(async (req, res) => {
 module.exports = {
   verifyTokenHandler,
   createUser,
+  authUsingGoogle,
   loginUser,
   getAllUsers,
   getUserById,
