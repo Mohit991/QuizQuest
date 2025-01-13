@@ -1,4 +1,4 @@
-const sequelize = require('../config/database'); // Assuming sequelize instance is exported from this file
+const sequelize = require('../config/database'); 
 
 const getLeaderboard = async (req, res) => {
   try {

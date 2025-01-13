@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
-import { TextField, Button, Container, Typography, Grid, IconButton, MenuItem } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import { getUserInfo } from '../../services/apiService'; // Adjust the import path as necessary
+import { TextField, Button, Typography, Grid, IconButton, Paper, Box, Select, MenuItem, FormControl, InputLabel, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
+import { motion } from 'framer-motion';
+import { getUserInfo, updateUser } from '../../services/apiService';
 import { AppContext } from '../../context/AppContext';
+import { Edit } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 
 const UserInfo = () => {
     const { userId, token } = useContext(AppContext);
@@ -12,9 +14,11 @@ const UserInfo = () => {
         gender: '',
         email: ''
     });
-    const [editableField, setEditableField] = useState(null); // Track the field being edited
-    const [tempUserInfo, setTempUserInfo] = useState({}); // Temporary state for changes
+    const [editableField, setEditableField] = useState(null);
+    const [tempUserInfo, setTempUserInfo] = useState({});
+    const [isDialogOpen, setIsDialogOpen] = useState(false);
     const [error, setError] = useState("");
+    const navigate = useNavigate();
 
     const inputRefs = {
         name: useRef(null),
@@ -27,10 +31,8 @@ const UserInfo = () => {
         const fetchUserInfo = async () => {
             try {
                 const data = await getUserInfo(userId, token);
-                setUserInfo({
-                    ...data,
-                    gender: data.gender.toLowerCase() // Ensure gender is in lowercase
-                });
+                console.log("User data in UserInfo edit profile:", data);
+                setUserInfo(data);
             } catch (error) {
                 console.error('Error fetching user info:', error);
             }
@@ -39,29 +41,49 @@ const UserInfo = () => {
         fetchUserInfo();
     }, [userId, token]);
 
+    const handleDialogClose = () => {
+        setIsDialogOpen(false);
+        navigate('/'); // Navigate to home
+        window.location.reload(); // Refresh the page to load updated info
+    };
+
+
     const handleEditClick = (field) => {
         if (editableField === field) {
-            return; // Ignore if already editing the same field
+            return;
         }
         setEditableField(field);
-        setTempUserInfo({ ...userInfo }); // Preserve the current state
-        inputRefs[field].current.focus(); // Focus the input field
+        setTempUserInfo({ ...userInfo });
+        inputRefs[field].current.focus();
     };
 
     const handleCancel = () => {
-        setUserInfo({ ...tempUserInfo }); // Revert changes
-        setEditableField(null); // Close edit mode
-        setError(""); // Clear any errors
+        setUserInfo({ ...tempUserInfo });
+        setEditableField(null);
+        setError("");
     };
 
-    const handleSave = () => {
+    const handleSave = async () => {
         const validationError = validateForm();
         if (validationError) {
             setError(validationError);
             return;
         }
-        setEditableField(null); // Save changes and exit edit mode
-        setError(""); // Clear any errors
+
+        try {
+            const updatedData = { ...userInfo };
+            const response = await updateUser(userId, updatedData, token);
+
+            setUserInfo(response);
+            setEditableField(null);
+            setError("");
+
+            // Open the success dialog
+            setIsDialogOpen(true);
+        } catch (error) {
+            console.error('Error updating user info:', error);
+            setError(error.message || 'Failed to update user information.');
+        }
     };
 
     const handleChange = (e) => {
@@ -92,7 +114,8 @@ const UserInfo = () => {
             return "Age must be a number between 1 and 80.";
         }
 
-        if (!["male", "female", "other"].includes(gender.toLowerCase())) {
+        const standardizedGender = gender.charAt(0).toUpperCase() + gender.slice(1).toLowerCase();
+        if (!["Male", "Female", "Other"].includes(standardizedGender)) {
             return "Gender must be 'Male', 'Female', or 'Other'.";
         }
 
@@ -104,84 +127,299 @@ const UserInfo = () => {
     };
 
     return (
-        <Container sx={{ paddingTop: "10%" }}>
-            <Typography variant="h4" gutterBottom style={{ color: 'white' }}>
-                User Information
-            </Typography>
-            <form>
-                <Grid container spacing={2}>
-                    {['name', 'age', 'gender', 'email'].map((field) => (
-                        <Grid key={field} item xs={12} container alignItems="center">
-                            <Grid item xs={10}>
+        <Box sx={{
+            minHeight: "86vh",
+            backgroundColor: "#393939",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            pt: 4
+        }}>
+            <Paper elevation={3} sx={{
+                maxWidth: "600px",
+                width: "100%",
+                p: 4,
+                backgroundColor: "#242424",
+                color: "#ffa116",
+                borderRadius: "16px",
+            }}>
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                >
+                    <Typography variant="h4" gutterBottom sx={{ mb: 3, textAlign: 'center', color: '#ffa116' }}>
+                        User Information
+                    </Typography>
+                    <form>
+                        <Grid container spacing={3}>
+                            {/* Name Field */}
+                            <Grid item xs={12}>
                                 <TextField
                                     fullWidth
-                                    label={field.charAt(0).toUpperCase() + field.slice(1)}
-                                    name={field}
-                                    value={userInfo[field]}
+                                    label="Name"
+                                    name="name"
+                                    value={userInfo.name}
                                     onChange={handleChange}
-                                    select={field === 'gender'}
-                                    InputLabelProps={{ style: { color: 'white' } }}
+                                    InputLabelProps={{ style: { color: '#ffa116' } }}
                                     InputProps={{
-                                        readOnly: editableField !== field,
-                                        style: { color: 'white' }
+                                        readOnly: editableField !== "name",
+                                        style: { color: 'white' },
+                                        endAdornment: (
+                                            <IconButton
+                                                onClick={() => handleEditClick("name")}
+                                                sx={{ color: '#ffa116' }}
+                                            >
+                                                <Edit />
+                                            </IconButton>
+                                        )
                                     }}
-                                    SelectProps={field === 'gender' ? {
-                                        style: {
-                                            color: 'white',
-                                            backgroundColor: 'transparent',
-                                            border: '1px solid #004c70',
-                                        }
-                                    } : {}}
-                                    inputRef={inputRefs[field]} // Assign the ref here
+                                    inputRef={inputRefs.name}
+                                    sx={{
+                                        '& .MuiOutlinedInput-root': {
+                                            '& fieldset': {
+                                                borderColor: '#ffa116',
+                                            },
+                                            '&:hover fieldset': {
+                                                borderColor: '#ff8c00',
+                                            },
+                                            '&.Mui-focused fieldset': {
+                                                borderColor: '#ff8c00',
+                                            },
+                                        },
+                                    }}
+                                />
+                            </Grid>
+
+                            {/* Age Field */}
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    label="Age"
+                                    name="age"
+                                    value={userInfo.age}
+                                    onChange={handleChange}
+                                    InputLabelProps={{ style: { color: '#ffa116' } }}
+                                    InputProps={{
+                                        readOnly: editableField !== "age",
+                                        style: { color: 'white' },
+                                        endAdornment: (
+                                            <IconButton
+                                                onClick={() => handleEditClick("age")}
+                                                sx={{ color: '#ffa116' }}
+                                            >
+                                                <Edit />
+                                            </IconButton>
+                                        )
+                                    }}
+                                    inputRef={inputRefs.age}
+                                    sx={{
+                                        '& .MuiOutlinedInput-root': {
+                                            '& fieldset': {
+                                                borderColor: '#ffa116',
+                                            },
+                                            '&:hover fieldset': {
+                                                borderColor: '#ff8c00',
+                                            },
+                                            '&.Mui-focused fieldset': {
+                                                borderColor: '#ff8c00',
+                                            },
+                                        },
+                                    }}
+                                />
+                            </Grid>
+
+                            {/* Gender Field */}
+                            <Grid item xs={12}>
+                                <FormControl
+                                    className='gender-field-userinfo'
+                                    fullWidth
+                                    variant="outlined"
+                                    sx={{
+                                        textAlign: "left",
+                                        '& .MuiOutlinedInput-root': {
+                                            '& fieldset': {
+                                                borderColor: '#ffa116',
+                                                color: 'white'
+                                            },
+                                            '&:hover fieldset': {
+                                                borderColor: '#ffa116',
+                                                color: 'white'
+                                            },
+                                            '&.Mui-focused fieldset': {
+                                                borderColor: '#ffa116',
+                                                color: 'white'
+                                            },
+                                        },
+                                    }}
                                 >
-                                    {field === 'gender' && (
-                                        <>
-                                            <MenuItem value="male">Male</MenuItem>
-                                            <MenuItem value="female">Female</MenuItem>
-                                            <MenuItem value="other">Other</MenuItem>
-                                        </>
-                                    )}
-                                </TextField>
+                                    <InputLabel
+                                        sx={{
+                                            color: '#ffa116',
+                                            '&.Mui-focused': {
+                                                color: '#ffa116',
+                                            },
+                                            '&:hover': {
+                                                color: '#ffa116',
+                                            },
+                                        }}
+                                    >
+                                        Gender
+                                    </InputLabel>
+                                    <Select
+                                        className='gender-field-userinfo'
+                                        onClick={() => handleEditClick("gender")}
+                                        label="Gender"
+                                        name="gender"
+                                        value={userInfo.gender}
+                                        onChange={handleChange}
+                                        inputRef={inputRefs.gender}
+                                        disabled={editableField !== "gender"}
+                                        sx={{
+                                            '& .MuiSelect-select': {
+                                                color: 'white',
+                                            },
+                                            '&.Mui-disabled .MuiSelect-select': {
+                                                color: 'white',
+                                            },
+                                            backgroundColor: 'transparent',
+                                        }}
+                                        MenuProps={{
+                                            PaperProps: {
+                                                sx: {
+                                                    backgroundColor: '#242424',
+                                                    color: 'white',
+                                                },
+                                            },
+                                        }}
+                                    >
+                                        <MenuItem value="male">Male</MenuItem>
+                                        <MenuItem value="female">Female</MenuItem>
+                                        <MenuItem value="other">Other</MenuItem>
+                                    </Select>
+                                </FormControl>
+
                             </Grid>
-                            <Grid item xs={2}>
-                                {editableField === field ? (
-                                    <>
-                                        <Button
-                                            onClick={handleSave}
-                                            color="primary"
-                                            variant="contained"
-                                            size="small"
-                                            style={{ marginRight: 8 }}
-                                        >
-                                            Save
-                                        </Button>
-                                        <Button
-                                            onClick={handleCancel}
-                                            color="secondary"
-                                            variant="outlined"
-                                            size="small"
-                                        >
-                                            Cancel
-                                        </Button>
-                                    </>
-                                ) : (
-                                    <IconButton onClick={() => handleEditClick(field)}>
-                                        <EditIcon style={{ color: 'white' }} />
-                                    </IconButton>
-                                )}
+
+                            {/* Email Field */}
+                            <Grid item xs={12}>
+                                <TextField
+                                    fullWidth
+                                    label="Email"
+                                    name="email"
+                                    value={userInfo.email}
+                                    onChange={handleChange}
+                                    InputLabelProps={{ style: { color: '#ffa116' } }}
+                                    InputProps={{
+                                        readOnly: editableField !== "email",
+                                        style: { color: 'white' },
+                                        endAdornment: (
+                                            <IconButton
+                                                onClick={() => handleEditClick("email")}
+                                                sx={{ color: '#ffa116' }}
+                                            >
+                                                <Edit />
+                                            </IconButton>
+                                        )
+                                    }}
+                                    inputRef={inputRefs.email}
+                                    sx={{
+                                        '& .MuiOutlinedInput-root': {
+                                            '& fieldset': {
+                                                borderColor: '#ffa116',
+                                            },
+                                            '&:hover fieldset': {
+                                                borderColor: '#ff8c00',
+                                            },
+                                            '&.Mui-focused fieldset': {
+                                                borderColor: '#ff8c00',
+                                            },
+                                        },
+                                    }}
+                                />
                             </Grid>
+
+                            {/* Save/Cancel Buttons */}
+                            {editableField && (
+                                <Grid item xs={12}>
+                                    <Button
+                                        onClick={handleSave}
+                                        variant="contained"
+                                        sx={{
+                                            mr: 2,
+                                            backgroundColor: "#ffa116",
+                                            color: "#242424",
+                                            '&:hover': {
+                                                backgroundColor: "#ff8c00",
+                                            },
+                                        }}
+                                    >
+                                        Save
+                                    </Button>
+                                    <Button
+                                        onClick={handleCancel}
+                                        variant="outlined"
+                                        sx={{
+                                            color: "#ffa116",
+                                            borderColor: "#ffa116",
+                                            '&:hover': {
+                                                borderColor: "#ff8c00",
+                                            },
+                                        }}
+                                    >
+                                        Cancel
+                                    </Button>
+                                </Grid>
+                            )}
+
+                            {/* Error Message */}
+                            {error && (
+                                <Grid item xs={12}>
+                                    <Typography style={{ color: '#ff6347' }}>
+                                        {error}
+                                    </Typography>
+                                </Grid>
+                            )}
                         </Grid>
-                    ))}
-                    {error && (
-                        <Grid item xs={12}>
-                            <Typography style={{ color: '#ff6347' }}>
-                                {error}
-                            </Typography>
-                        </Grid>
-                    )}
-                </Grid>
-            </form>
-        </Container>
+                    </form>
+                </motion.div>
+            </Paper>
+            <Dialog
+                open={isDialogOpen}
+                onClose={handleDialogClose}
+                aria-labelledby="success-dialog-title"
+                aria-describedby="success-dialog-description"
+                PaperProps={{
+                    style: {
+                        backgroundColor: '#282828',
+                        boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.5)',
+                    },
+                }}
+            >
+                <DialogTitle id="success-dialog-title" sx={{ color: '#ffa116' }}>
+                    Update Successful
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="success-dialog-description" sx={{ color: '#eff1f6bf' }}>
+                        Your information has been updated successfully!
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        onClick={handleDialogClose}
+                        sx={{
+                            color: '#eff1f6bf',
+                            '&:hover': {
+                                backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                            },
+                        }}
+                    >
+                        OK
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
+        </Box>
     );
 };
 

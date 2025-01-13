@@ -82,8 +82,6 @@ const SignInPage = () => {
           padding: "20px",
           borderRadius: "8px",
           color: "#39ff14",
-
-          boxShadow: "0px 2px 8px rgba(57, 255, 20, 0.1)",
         }}
       >
         <TextField

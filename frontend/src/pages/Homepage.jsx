@@ -1,13 +1,48 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Box, Button, Container, Typography, Grid, Paper, Card, CardContent, CardActions, Divider } from '@mui/material';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 import { School, EmojiEvents, TrendingUp, Quiz } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
+import { getUserProgress } from '../services/apiService';
 
 const HomePage = () => {
-  const { userName, clearContext } = useContext(AppContext);
+  const [progressData, setProgressData] = useState([]);
+  const [quizCount, setQuizCount] = useState(0);
+  const [highestScore, setHighestScore] = useState(0);
+  const { userName, clearContext, token, userId } = useContext(AppContext);
   const navigate = useNavigate();
+
+  const quizCountMotion = useMotionValue(0);
+  const highestScoreMotion = useMotionValue(0);
+  const quizCountDisplay = useTransform(quizCountMotion, Math.round);
+  const highestScoreDisplay = useTransform(highestScoreMotion, Math.round);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getUserProgress(userId, token);
+        setProgressData(data);
+        console.log("user progress data in homepage:: ", data);
+      } catch (error) {
+        console.error('Failed to fetch user progress:', error);
+      }
+    };
+
+    fetchData();
+  }, [userId, token]);
+
+  useEffect(() => {
+    setQuizCount(progressData.length);
+
+    const maxScore = progressData.reduce((max, quiz) =>
+      quiz.correct_answers > max ? quiz.correct_answers : max, 0
+    );
+    setHighestScore(maxScore);
+
+    animate(quizCountMotion, progressData.length, { duration: 1 });
+    animate(highestScoreMotion, maxScore, { duration: 1 });
+  }, [progressData]);
 
   const startSelection = () => {
     navigate('/quiz');
@@ -81,19 +116,15 @@ const HomePage = () => {
             <Typography
               fontWeight={600}
               fontSize="1.5rem"
-              sx={{ letterSpacing: '3px', textShadow: '0.08em 0.03em 0.12em rgba(255, 255, 255, 0.9)' }}
+              sx={{ letterSpacing: '3px' }}
             >
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
                 <Typography>Quizzes Attempted</Typography>
-                <Typography>10</Typography>
+                <motion.span>{quizCountDisplay}</motion.span>
               </Box>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
                 <Typography>Highest Score</Typography>
-                <Typography>19</Typography>
-              </Box>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Typography>Current Rank</Typography>
-                <Typography>7</Typography>
+                <motion.span>{highestScoreDisplay}</motion.span>
               </Box>
             </Typography>
           </Box>
@@ -140,7 +171,7 @@ const HomePage = () => {
               { icon: TrendingUp, title: 'Improve', text: 'Track your progress and enhance your skills.' },
             ].map((item, index) => (
               <Grid item xs={12} md={4} key={index}>
-                <Paper elevation={3} sx={{ p: 3, backgroundColor: '#505050', color: '#fff', height:"130px" }}>
+                <Paper elevation={3} sx={{ p: 3, backgroundColor: '#505050', color: '#fff', height: "130px" }}>
                   <Box sx={{ textAlign: 'center' }}>
                     <item.icon fontSize="large" sx={{ color: '#ffa116' }} />
                     <Typography variant="h6" component="h3" sx={{ mt: 2, color: '#ffa116' }}>
@@ -161,3 +192,4 @@ const HomePage = () => {
 };
 
 export default HomePage;
+
