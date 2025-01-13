@@ -63,3 +63,7 @@ html {
 .appbar .appbar_option:hover {
   background-color: rgba(57, 57, 57, 0.8)
 }
+
+.gender-field-userinfo{
+  color: white;
+}

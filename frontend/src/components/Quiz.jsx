@@ -142,7 +142,7 @@ const Quiz = () => {
                         },
                       }}
                     >
-                      {option}
+                      {option.toLowerCase()}
                     </Button>
                   </motion.div>
                 ))}

@@ -126,8 +126,6 @@ const SignUpPage = () => {
           padding: "20px",
           borderRadius: "8px",
           color: "#004c70",
-
-          boxShadow: "0px 2px 8px rgba(0, 76, 112, 0.1)",
         }}
       >
         <TextField

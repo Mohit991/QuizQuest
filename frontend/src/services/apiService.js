@@ -160,7 +160,7 @@ export const getUserInfo = async (userId, token) => {
 
 export const fetchLeaderboards = async (token, categoryId) => {
   try {
-    const response = await api.get(`/leaderboards?category=${categoryId}`, {
+    const response = await api.get(`/leaderboards/${categoryId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return response.data;
@@ -171,3 +171,19 @@ export const fetchLeaderboards = async (token, categoryId) => {
   }
 };
 
+export const updateUser = async (userId, updatedData, token) => {
+  try {
+    const response = await api.put(
+      `/users/${userId}`,
+      updatedData,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    const err = new Error(error.response?.data?.message || error.message);
+    err.code = error.response?.status;
+    throw err;
+  }
+};
