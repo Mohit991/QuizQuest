@@ -88,7 +88,7 @@ const UserProgress = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', mb: 3 }}>
+        <Box sx={{ width: '100%', mb: 3 }}>
           <Typography variant="h6" sx={{ color: "#ffa116" }}>
             Average Score: {calculateAveragePercentage()}%
           </Typography>

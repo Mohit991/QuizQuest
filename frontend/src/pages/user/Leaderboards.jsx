@@ -112,7 +112,7 @@ const Leaderboards = () => {
                 <FormControl sx={{ m: 1, minWidth: 200 }}>
                     <InputLabel id="category-select-label" sx={{
                         color: '#ffa116', '&.Mui-focused': {
-                            color: '#ffa116', 
+                            color: '#ffa116',
                         },
                     }}>Select a category</InputLabel>
                     <Select
@@ -157,19 +157,19 @@ const Leaderboards = () => {
                             <Table>
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell sx={{ color: '#ffa116', fontWeight: 'bold' }}>Rank</TableCell>
-                                        <TableCell sx={{ color: '#ffa116', fontWeight: 'bold' }}>Name</TableCell>
-                                        <TableCell sx={{ color: '#ffa116', fontWeight: 'bold' }}>Score</TableCell>
-                                        <TableCell sx={{ color: '#ffa116', fontWeight: 'bold' }}>Achievement</TableCell>
+                                        <TableCell sx={{ color: '#ffa116', textAlign: 'center', fontWeight: 'bold' }}>Rank</TableCell>
+                                        <TableCell sx={{ color: '#ffa116', textAlign: 'center', fontWeight: 'bold' }}>Name</TableCell>
+                                        <TableCell sx={{ color: '#ffa116', textAlign: 'center', fontWeight: 'bold' }}>Score</TableCell>
+                                        <TableCell sx={{ color: '#ffa116', textAlign: 'center', fontWeight: 'bold' }}>Achievement</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
                                     {leaderboards.map((leader, index) => (
                                         <TableRow key={index} sx={{ '&:nth-of-type(odd)': { backgroundColor: '#2a2a2a' } }}>
-                                            <TableCell sx={{ color: 'white' }}>{index + 1}</TableCell>
-                                            <TableCell sx={{ color: 'white' }}>{leader.user_name}</TableCell>
-                                            <TableCell sx={{ color: 'white' }}>
-                                                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                            <TableCell sx={{ color: 'white', textAlign: 'center', }}>{index + 1}</TableCell>
+                                            <TableCell sx={{ color: 'white', textAlign: 'center', }}>{leader.user_name}</TableCell>
+                                            <TableCell sx={{ color: 'white', textAlign: 'center', }}>
+                                                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                                     <CircularProgress
                                                         variant="determinate"
                                                         value={leader.average_percentage}
@@ -184,7 +184,9 @@ const Leaderboards = () => {
                                                 </Box>
                                             </TableCell>
                                             <TableCell>
-                                                <EmojiEventsIcon sx={{ color: getTopThreeColors(index) }} />
+                                                <Box sx={{display:'flex', justifyContent:'center'}}>
+                                                    <EmojiEventsIcon sx={{ color: getTopThreeColors(index) }} />
+                                                </Box>
                                             </TableCell>
                                         </TableRow>
                                     ))}

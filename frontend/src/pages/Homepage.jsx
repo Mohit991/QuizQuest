@@ -132,36 +132,6 @@ const HomePage = () => {
 
         <motion.div variants={itemVariants}>
           <Typography variant="h3" component="h2" gutterBottom sx={{ mt: 6, mb: 3, color: '#ffa116' }}>
-            Featured Quizzes
-          </Typography>
-          <Grid container spacing={4}>
-            {featuredQuizzes.map((quiz, index) => (
-              <Grid item xs={12} md={4} key={index}>
-                <Card sx={{ backgroundColor: '#505050', color: '#fff', boxShadow: '0 4px 10px rgba(0,0,0,0.3)' }}>
-                  <CardContent>
-                    <Typography variant="h5" component="div" gutterBottom sx={{ color: '#ffa116' }}>
-                      {quiz.title}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ color: '#ccc' }}>
-                      {quiz.description}
-                    </Typography>
-                    <Typography variant="body2" sx={{ mt: 1, color: '#ffa116' }}>
-                      Difficulty: {quiz.difficulty}
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small" sx={{ color: '#ffa116' }}>
-                      Take Quiz
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </motion.div>
-
-        <motion.div variants={itemVariants}>
-          <Typography variant="h3" component="h2" gutterBottom sx={{ mt: 6, mb: 3, color: '#ffa116' }}>
             Why QuizHub?
           </Typography>
           <Grid container spacing={4}>
