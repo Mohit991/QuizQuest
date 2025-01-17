@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Container, Avatar, Tooltip, MenuItem, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-import logo from '../assets/images/logoKnowledgek.png';
+import quizquestlogo from '../assets/images/quizquestlogo.png';
 import profile from '../assets/images/user.png';
 import { AppContext } from '../context/AppContext';
 import { Link, useNavigate } from 'react-router-dom';
@@ -57,7 +57,7 @@ const ResponsiveAppBar = () => {
       <Container maxWidth="xl">
         <Toolbar sx={{ margin: "0px 100px" }} disableGutters>
           <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}>
-            <Link to="/"><img src={logo} height={45} alt="Logo" /></Link>
+            <Link to="/"><img src={quizquestlogo} height={30} alt="Logo" /></Link>
           </Box>
 
           {/* Mobile Menu Icon */}

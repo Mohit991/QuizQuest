@@ -150,10 +150,13 @@ const SignUpPage = () => {
             },
             "& .MuiInputLabel-root": {
               fontSize: "16px",
-              color: "#eff1f6bf",
+              color: "#ffa116",
             },
             "& .MuiInputLabel-root.Mui-focused": {
-              color: "#fff",
+              color: "#ffa116",
+            },
+            "& .MuiOutlinedInput-input": {
+              color: "white",
             },
           }}
         />
@@ -180,10 +183,13 @@ const SignUpPage = () => {
             },
             "& .MuiInputLabel-root": {
               fontSize: "16px",
-              color: "#eff1f6bf",
+              color: "#ffa116",
             },
             "& .MuiInputLabel-root.Mui-focused": {
-              color: "#fff",
+              color: "#ffa116",
+            },
+            "& .MuiOutlinedInput-input": {
+              color: "white",
             },
           }}
         />
@@ -198,7 +204,7 @@ const SignUpPage = () => {
           sx={{
             "& .MuiOutlinedInput-root": {
               backgroundColor: "#3e3e3e",
-              color:"#eff1f6bf",
+              color: "#eff1f6bf",
               "&:hover": {
                 backgroundColor: "none",
               },
@@ -211,10 +217,13 @@ const SignUpPage = () => {
             },
             "& .MuiInputLabel-root": {
               fontSize: "16px",
-              color: "#eff1f6bf",
+              color: "#ffa116",
             },
             "& .MuiInputLabel-root.Mui-focused": {
-              color: "#fff",
+              color: "#ffa116",
+            },
+            "& .MuiOutlinedInput-input": {
+              color: "white",
             },
           }}
         >
@@ -275,10 +284,13 @@ const SignUpPage = () => {
             },
             "& .MuiInputLabel-root": {
               fontSize: "16px",
-              color: "#eff1f6bf",
+              color: "#ffa116",
             },
             "& .MuiInputLabel-root.Mui-focused": {
-              color: "#fff",
+              color: "#ffa116",
+            },
+            "& .MuiOutlinedInput-input": {
+              color: "white",
             },
           }}
         />
@@ -305,10 +317,13 @@ const SignUpPage = () => {
             },
             "& .MuiInputLabel-root": {
               fontSize: "16px",
-              color: "#eff1f6bf",
+              color: "#ffa116",
             },
             "& .MuiInputLabel-root.Mui-focused": {
-              color: "#fff",
+              color: "#ffa116",
+            },
+            "& .MuiOutlinedInput-input": {
+              color: "white",
             },
           }}
         />
@@ -335,10 +350,13 @@ const SignUpPage = () => {
             },
             "& .MuiInputLabel-root": {
               fontSize: "16px",
-              color: "#eff1f6bf",
+              color: "#ffa116",
             },
             "& .MuiInputLabel-root.Mui-focused": {
-              color: "#fff",
+              color: "#ffa116",
+            },
+            "& .MuiOutlinedInput-input": {
+              color: "white",
             },
           }}
         />
@@ -382,7 +400,10 @@ const SignUpPage = () => {
         >
           {loading ? <CustomSpinner /> : "Sign Up"}
         </Button>
-        <GoogleLoginButton />
+        <Box color={"white"}>or</Box>
+        <Box py={1}>
+          <GoogleLoginButton />
+        </Box>
       </Box>
     </Box>
   );

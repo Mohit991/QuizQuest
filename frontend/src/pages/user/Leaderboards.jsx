@@ -20,6 +20,7 @@ import {
 } from '@mui/material';
 import { motion, AnimatePresence } from 'framer-motion';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import LeaderboardsContent from '../../components/LeaderboardsContent';
 
 const Leaderboards = () => {
     const [selectedCategory, setSelectedCategory] = useState(null);
@@ -109,7 +110,7 @@ const Leaderboards = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.2 }}
             >
-                <FormControl sx={{ m: 1, minWidth: 200 }}>
+                <FormControl sx={{ m: 1, minWidth: 200, textAlign:"center" }}>
                     <InputLabel id="category-select-label" sx={{
                         color: '#ffa116', '&.Mui-focused': {
                             color: '#ffa116',
@@ -120,6 +121,7 @@ const Leaderboards = () => {
                         value={selectedCategory ? selectedCategory.category_id : ''}
                         onChange={(e) => setSelectedCategory(categories.find(cat => cat.category_id === parseInt(e.target.value)))}
                         sx={{
+                            textAlign:"center",
                             color: 'white',
                             '& .MuiOutlinedInput-notchedOutline': {
                                 borderColor: '#ffa116',
@@ -140,6 +142,16 @@ const Leaderboards = () => {
                     </Select>
                 </FormControl>
             </motion.div>
+
+            {!selectedCategory && !loading && (
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                    <LeaderboardsContent />
+                </motion.div>
+            )}
 
             <AnimatePresence>
                 {selectedCategory && !loading && (

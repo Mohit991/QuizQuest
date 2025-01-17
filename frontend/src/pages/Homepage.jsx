@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Box, Button, Container, Typography, Grid, Paper, Card, CardContent, CardActions, Divider } from '@mui/material';
+import { Box, Button, Container, Typography, Grid, Paper, Divider } from '@mui/material';
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 import { School, EmojiEvents, TrendingUp, Quiz } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
@@ -10,7 +10,7 @@ const HomePage = () => {
   const [progressData, setProgressData] = useState([]);
   const [quizCount, setQuizCount] = useState(0);
   const [highestScore, setHighestScore] = useState(0);
-  const { userName, clearContext, token, userId } = useContext(AppContext);
+  const { userName, token, userId } = useContext(AppContext);
   const navigate = useNavigate();
 
   const quizCountMotion = useMotionValue(0);
@@ -65,12 +65,6 @@ const HomePage = () => {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
   };
-
-  const featuredQuizzes = [
-    { title: 'Science Spectacular', description: 'Test your knowledge of the natural world', difficulty: 'Medium' },
-    { title: 'History Heroes', description: 'Journey through time with this historical quiz', difficulty: 'Hard' },
-    { title: 'Pop Culture Mania', description: 'Stay up-to-date with the latest trends', difficulty: 'Easy' },
-  ];
 
   return (
     <Container maxWidth="lg" sx={{ backgroundColor: '#393939', color: '#fff', borderRadius: '10px', py: 4, px: 2 }}>
@@ -132,22 +126,24 @@ const HomePage = () => {
 
         <motion.div variants={itemVariants}>
           <Typography variant="h3" component="h2" gutterBottom sx={{ mt: 6, mb: 3, color: '#ffa116' }}>
-            Why QuizHub?
+            Why QuizQuest?
           </Typography>
-          <Grid container spacing={4}>
-            {[
-              { icon: School, title: 'Learn', text: 'Discover new topics and grow your expertise.' },
-              { icon: EmojiEvents, title: 'Compete', text: 'Challenge friends and climb the leaderboard.' },
-              { icon: TrendingUp, title: 'Improve', text: 'Track your progress and enhance your skills.' },
-            ].map((item, index) => (
-              <Grid item xs={12} md={4} key={index}>
-                <Paper elevation={3} sx={{ p: 3, backgroundColor: '#505050', color: '#fff', height: "130px" }}>
+          <Grid container spacing={4} direction="column">
+            {[{
+              icon: School, title: 'Learn', text: 'Discover new topics and grow your expertise. Access resources, tips, and challenges designed to make learning engaging and effective.',
+            }, {
+              icon: EmojiEvents, title: 'Compete', text: 'Challenge friends, participate in tournaments, and see your name on the leaderboard. Competition fuels growth!',
+            }, {
+              icon: TrendingUp, title: 'Improve', text: 'Track your progress with detailed analytics. Identify areas of improvement and strive for mastery.',
+            }].map((item, index) => (
+              <Grid item xs={12} key={index}>
+                <Paper elevation={3} sx={{ p: 4, backgroundColor: '#505050', color: '#fff' }}>
                   <Box sx={{ textAlign: 'center' }}>
-                    <item.icon fontSize="large" sx={{ color: '#ffa116' }} />
-                    <Typography variant="h6" component="h3" sx={{ mt: 2, color: '#ffa116' }}>
+                    <item.icon fontSize="large" sx={{ color: '#ffa116', fontSize: '3rem' }} />
+                    <Typography variant="h5" component="h3" sx={{ mt: 2, color: '#ffa116' }}>
                       {item.title}
                     </Typography>
-                    <Typography variant="body1" align="center" sx={{ color: '#ccc' }}>
+                    <Typography variant="body1" align="center" sx={{ color: '#ccc', mt: 1 }}>
                       {item.text}
                     </Typography>
                   </Box>
@@ -162,4 +158,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-

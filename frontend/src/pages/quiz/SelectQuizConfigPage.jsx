@@ -144,76 +144,68 @@ const SelectQuizConfigPage = () => {
               </Typography>
             </motion.div>
 
-            <Grid container spacing={4}>
-              <Grid item xs={12}>
-                <motion.div variants={itemVariants}>
-                  {/* <Typography variant="h6" fontWeight="bold" mb={2}>
-                    Choose Topic:
-                  </Typography> */}
-                  {isLoading ? (
-                    <CustomSpinner />
-                  ) : (
-                    <Grid container spacing={2}>
-                      {topics.map((topic) => (
-                        <Grid item xs={12} sm={6} md={4} key={topic.topic_id}>
-                          <OptionsBox
-                            option={topic.topic_name}
-                            selected={selectedTopic === topic.topic_name}
-                            onOptionChosen={() => onTopicSelected(topic)}
-                          />
-                        </Grid>
-                      ))}
-                    </Grid>
-                  )}
-                </motion.div>
-              </Grid>
+            <Box display="flex" flexDirection="column" gap={4} justifyContent={"space-between"}>
+              <motion.div variants={itemVariants}>
+                {isLoading ? (
+                  <CustomSpinner />
+                ) : (
+                  <Box display="flex" flexWrap="wrap"  justifyContent={"space-evenly"}>
+                    {topics.map((topic) => (
+                      <Box
+                        key={topic.topic_id}
+                      >
+                        <OptionsBox
+                          option={topic.topic_name}
+                          selected={selectedTopic === topic.topic_name}
+                          onOptionChosen={() => onTopicSelected(topic)}
+                        />
+                      </Box>
+                    ))}
+                  </Box>
+                )}
+              </motion.div>
 
-              <Grid item xs={12}>
-                <motion.div variants={itemVariants}>
-                  {/* <Typography variant="h6" fontWeight="bold" mb={2}>
-                    Choose Level:
-                  </Typography> */}
-                  {isLoading ? (
-                    <CustomSpinner />
-                  ) : (
-                    <Grid container spacing={2}>
-                      {levels.map((level, index) => (
-                        <Grid item xs={12} sm={6} md={4} key={index}>
-                          <OptionsBox
-                            option={level.name}
-                            selected={selectedLevel === level.name}
-                            onOptionChosen={() => onLevelSelected(level)}
-                          />
-                        </Grid>
-                      ))}
-                    </Grid>
-                  )}
-                </motion.div>
-              </Grid>
+              <motion.div variants={itemVariants}>
+                {isLoading ? (
+                  <CustomSpinner />
+                ) : (
+                  <Box display="flex" flexWrap="wrap"  justifyContent={"space-evenly"}>
+                    {levels.map((level, index) => (
+                      <Box
+                        key={index}
+                      >
+                        <OptionsBox
+                          option={level.name}
+                          selected={selectedLevel === level.name}
+                          onOptionChosen={() => onLevelSelected(level)}
+                        />
+                      </Box>
+                    ))}
+                  </Box>
+                )}
+              </motion.div>
 
-              <Grid item xs={12}>
-                <motion.div variants={itemVariants}>
-                  {/* <Typography variant="h6" fontWeight="bold" mb={2}>
-                    Choose Number of Questions:
-                  </Typography> */}
-                  {isLoading ? (
-                    <CustomSpinner />
-                  ) : (
-                    <Grid container spacing={2}>
-                      {quizQuestions.map((questionCounts, index) => (
-                        <Grid item xs={12} sm={6} md={4} key={index}>
-                          <OptionsBox
-                            option={questionCounts.count}
-                            selected={selectedNoOfQuestions === questionCounts.count}
-                            onOptionChosen={() => onNoOfQuestionsSelected(questionCounts)}
-                          />
-                        </Grid>
-                      ))}
-                    </Grid>
-                  )}
-                </motion.div>
-              </Grid>
-            </Grid>
+              <motion.div variants={itemVariants}>
+                {isLoading ? (
+                  <CustomSpinner />
+                ) : (
+                  <Box display="flex" flexWrap="wrap" justifyContent={"space-evenly"}>
+                    {quizQuestions.map((questionCounts, index) => (
+                      <Box
+                        key={index}
+                      >
+                        <OptionsBox
+                          option={questionCounts.count}
+                          selected={selectedNoOfQuestions === questionCounts.count}
+                          onOptionChosen={() => onNoOfQuestionsSelected(questionCounts)}
+                        />
+                      </Box>
+                    ))}
+                  </Box>
+                )}
+              </motion.div>
+            </Box>
+
 
             <motion.div variants={itemVariants}>
               <Box mt={4}>

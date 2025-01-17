@@ -41,7 +41,7 @@ const LandingPage = () => {
             textShadow: "0 4px 6px rgba(0, 0, 0, 0.3)", 
           }}
         >
-          Welcome to Quiz Hub
+          Welcome to QuizQuest
         </Typography>
       </motion.div>
       <motion.div

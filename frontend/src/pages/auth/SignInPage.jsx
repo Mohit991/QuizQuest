@@ -3,7 +3,7 @@ import { Box, TextField, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { signIn } from "../../services/apiService";
 import { AppContext } from "../../context/AppContext";
-import CustomSpinner from "../../components/CustomSpinner"; // Import CustomSpinner
+import CustomSpinner from "../../components/CustomSpinner";
 import GoogleLoginButton from '../../components/GoogleLoginButton';
 
 const SignInPage = () => {
@@ -82,7 +82,7 @@ const SignInPage = () => {
           border: "none",
           padding: "20px",
           borderRadius: "8px",
-          color: "#39ff14",
+          color: "white"
         }}
       >
         <TextField
@@ -90,13 +90,13 @@ const SignInPage = () => {
           label="Email"
           name="email"
           type="email"
+          autoComplete="off"
           value={formData.email}
           onChange={handleChange}
           margin="normal"
           sx={{
             "& .MuiOutlinedInput-root": {
               backgroundColor: "#3e3e3e",
-              border:"0px 0px 1px 0px solid red",
               "&:hover": {
                 backgroundColor: "none",
               },
@@ -107,20 +107,25 @@ const SignInPage = () => {
                 border: "none",
               },
             },
+            "& .MuiOutlinedInput-input": {
+              color: "white",
+            },
             "& .MuiInputLabel-root": {
               fontSize: "16px",
-              color: "#eff1f6bf",
+              color: "#ffa116",
             },
             "& .MuiInputLabel-root.Mui-focused": {
-              color: "#fff",
+              color: "#ffa116",
             },
           }}
         />
+
         <TextField
           fullWidth
           label="Password"
           name="password"
           type="password"
+          autoComplete="off"
           value={formData.password}
           onChange={handleChange}
           margin="normal"
@@ -137,12 +142,15 @@ const SignInPage = () => {
                 border: "none",
               },
             },
+            "& .MuiOutlinedInput-input": {
+              color: "white",
+            },
             "& .MuiInputLabel-root": {
               fontSize: "16px",
-              color: "#eff1f6bf",
+              color: "#ffa116",
             },
             "& .MuiInputLabel-root.Mui-focused": {
-              color: "#fff",
+              color: "#ffa116",
             },
           }}
         />
@@ -175,7 +183,10 @@ const SignInPage = () => {
         >
           {loading ? <CustomSpinner /> : "Sign In"}
         </Button>
-        <GoogleLoginButton />
+        <Box>or</Box>
+        <Box py={1}>
+          <GoogleLoginButton />
+        </Box>
       </Box>
     </Box>
   );

@@ -65,7 +65,7 @@ export const fetchCategories = async (token) => {
 };
 
 export const fetchTopicsOfCategory = async (token, selectedCategoryId) => {
-  console.log(selectedCategoryId);
+  console.log('selectedCategoryId = ', selectedCategoryId);
   try {
     const response = await api.get(`/categories/${selectedCategoryId}/topics`, {
       headers: { Authorization: `Bearer ${token}` },
