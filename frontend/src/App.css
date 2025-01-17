@@ -67,3 +67,15 @@ html {
 .gender-field-userinfo{
   color: white;
 }
+
+.MuiSelect-select{
+  -webkit-text-fill-color: #fff !important;
+}
+
+.MuiOutlinedInput-root.Mui-disabled {
+  border: 1px solid #ffa116;
+}
+
+.css-lohd6h-MuiSvgIcon-root-MuiSelect-icon {
+  color: #ffa116 !important;
+}

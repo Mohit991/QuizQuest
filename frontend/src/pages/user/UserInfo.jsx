@@ -258,6 +258,8 @@ const UserInfo = () => {
                                 >
                                     <InputLabel
                                         sx={{
+                                            background: '#242424',
+                                            padding: '0 5px',
                                             color: '#ffa116',
                                             '&.Mui-focused': {
                                                 color: '#ffa116',
