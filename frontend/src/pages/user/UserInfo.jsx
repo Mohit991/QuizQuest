@@ -46,19 +46,16 @@ const UserInfo = () => {
 
     const handleDialogClose = () => {
         setIsDialogOpen(false);
-        navigate('/'); // Navigate to home
-        window.location.reload(); // Refresh the page to load updated info
+        window.location.reload();
     };
-
 
     const handleEditClick = (field) => {
-        if (editableField === field) {
-            return;
-        }
+        if (editableField === field) return;
         setEditableField(field);
         setTempUserInfo({ ...userInfo });
-        inputRefs[field].current.focus();
+        setTimeout(() => inputRefs[field].current.focus(), 100);
     };
+
 
     const handleCancel = () => {
         setUserInfo({ ...tempUserInfo });
@@ -81,7 +78,6 @@ const UserInfo = () => {
             setEditableField(null);
             setError("");
 
-            // Open the success dialog
             setIsDialogOpen(true);
         } catch (error) {
             console.error('Error updating user info:', error);
@@ -156,7 +152,6 @@ const UserInfo = () => {
                     </Typography>
                     <form>
                         <Grid container spacing={3}>
-                            {/* Name Field */}
                             <Grid item xs={12}>
                                 <TextField
                                     fullWidth
@@ -192,9 +187,40 @@ const UserInfo = () => {
                                         },
                                     }}
                                 />
+                                {editableField === "name" && (
+                                    <Box sx={{ mt: 1 }}>
+                                        <Button
+                                            onClick={handleSave}
+                                            variant="contained"
+                                            sx={{
+                                                mr: 2,
+                                                backgroundColor: "#ffa116",
+                                                color: "#242424",
+                                                '&:hover': {
+                                                    backgroundColor: "#ff8c00",
+                                                },
+                                            }}
+                                        >
+                                            Save
+                                        </Button>
+                                        <Button
+                                            onClick={handleCancel}
+                                            variant="outlined"
+                                            sx={{
+                                                color: "#ffa116",
+                                                borderColor: "#ffa116",
+                                                '&:hover': {
+                                                    borderColor: "#ff8c00",
+                                                },
+                                            }}
+                                        >
+                                            Cancel
+                                        </Button>
+                                    </Box>
+                                )}
                             </Grid>
 
-                            {/* Age Field */}
+
                             <Grid item xs={12}>
                                 <TextField
                                     fullWidth
@@ -230,9 +256,39 @@ const UserInfo = () => {
                                         },
                                     }}
                                 />
+                                {editableField === "age" && (
+                                    <Box sx={{ mt: 1 }}>
+                                        <Button
+                                            onClick={handleSave}
+                                            variant="contained"
+                                            sx={{
+                                                mr: 2,
+                                                backgroundColor: "#ffa116",
+                                                color: "#242424",
+                                                '&:hover': {
+                                                    backgroundColor: "#ff8c00",
+                                                },
+                                            }}
+                                        >
+                                            Save
+                                        </Button>
+                                        <Button
+                                            onClick={handleCancel}
+                                            variant="outlined"
+                                            sx={{
+                                                color: "#ffa116",
+                                                borderColor: "#ffa116",
+                                                '&:hover': {
+                                                    borderColor: "#ff8c00",
+                                                },
+                                            }}
+                                        >
+                                            Cancel
+                                        </Button>
+                                    </Box>
+                                )}
                             </Grid>
 
-                            {/* Gender Field */}
                             <Grid item xs={12}>
                                 <FormControl
                                     className='gender-field-userinfo'
@@ -303,10 +359,40 @@ const UserInfo = () => {
                                         <MenuItem value="other">Other</MenuItem>
                                     </Select>
                                 </FormControl>
+                                {editableField === "gender" && (
+                                    <Box sx={{ mt: 1 }}>
+                                        <Button
+                                            onClick={handleSave}
+                                            variant="contained"
+                                            sx={{
+                                                mr: 2,
+                                                backgroundColor: "#ffa116",
+                                                color: "#242424",
+                                                '&:hover': {
+                                                    backgroundColor: "#ff8c00",
+                                                },
+                                            }}
+                                        >
+                                            Save
+                                        </Button>
+                                        <Button
+                                            onClick={handleCancel}
+                                            variant="outlined"
+                                            sx={{
+                                                color: "#ffa116",
+                                                borderColor: "#ffa116",
+                                                '&:hover': {
+                                                    borderColor: "#ff8c00",
+                                                },
+                                            }}
+                                        >
+                                            Cancel
+                                        </Button>
+                                    </Box>
+                                )}
 
                             </Grid>
 
-                            {/* Email Field */}
                             <Grid item xs={12}>
                                 <TextField
                                     fullWidth
@@ -342,42 +428,40 @@ const UserInfo = () => {
                                         },
                                     }}
                                 />
+                                {editableField === "email" && (
+                                    <Box sx={{ mt: 1 }}>
+                                        <Button
+                                            onClick={handleSave}
+                                            variant="contained"
+                                            sx={{
+                                                mr: 2,
+                                                backgroundColor: "#ffa116",
+                                                color: "#242424",
+                                                '&:hover': {
+                                                    backgroundColor: "#ff8c00",
+                                                },
+                                            }}
+                                        >
+                                            Save
+                                        </Button>
+                                        <Button
+                                            onClick={handleCancel}
+                                            variant="outlined"
+                                            sx={{
+                                                color: "#ffa116",
+                                                borderColor: "#ffa116",
+                                                '&:hover': {
+                                                    borderColor: "#ff8c00",
+                                                },
+                                            }}
+                                        >
+                                            Cancel
+                                        </Button>
+                                    </Box>
+                                )}
                             </Grid>
 
-                            {/* Save/Cancel Buttons */}
-                            {editableField && (
-                                <Grid item xs={12}>
-                                    <Button
-                                        onClick={handleSave}
-                                        variant="contained"
-                                        sx={{
-                                            mr: 2,
-                                            backgroundColor: "#ffa116",
-                                            color: "#242424",
-                                            '&:hover': {
-                                                backgroundColor: "#ff8c00",
-                                            },
-                                        }}
-                                    >
-                                        Save
-                                    </Button>
-                                    <Button
-                                        onClick={handleCancel}
-                                        variant="outlined"
-                                        sx={{
-                                            color: "#ffa116",
-                                            borderColor: "#ffa116",
-                                            '&:hover': {
-                                                borderColor: "#ff8c00",
-                                            },
-                                        }}
-                                    >
-                                        Cancel
-                                    </Button>
-                                </Grid>
-                            )}
 
-                            {/* Error Message */}
                             {error && (
                                 <Grid item xs={12}>
                                     <Typography style={{ color: '#ff6347' }}>
@@ -423,7 +507,6 @@ const UserInfo = () => {
                     </Button>
                 </DialogActions>
             </Dialog>
-
         </Box>
     );
 };
