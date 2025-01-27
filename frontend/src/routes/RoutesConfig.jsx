@@ -9,6 +9,7 @@ import UserProgress from "../pages/user/UserProgress";
 import SelectQuizConfigPage from "../pages/quiz/SelectQuizConfigPage"; 
 import UserInfo from "../pages/user/UserInfo";
 import Leaderboards from "../pages/user/Leaderboards";
+import AdminPanel from "../pages/admin/AdminPanel";
 
 const RoutesConfig = () => (
   <Routes>
@@ -23,6 +24,7 @@ const RoutesConfig = () => (
     <Route path="/user-progress" element={<UserProgress />} />
     <Route path="/leaderboards" element={<Leaderboards />} />
     <Route path="/quiz/score" element={<ScorePage />} />
+    <Route path="/admin/*" element={<AdminPanel />} />
   </Routes>
 );
 
