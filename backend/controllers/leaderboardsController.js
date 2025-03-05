@@ -13,7 +13,7 @@ const getLeaderboard = async (req, res) => {
         GROUP_CONCAT(DISTINCT t.category_id) AS categories
       FROM user_progress AS up
       INNER JOIN topics AS t ON up.topic_id = t.topic_id
-      INNER JOIN users AS u ON up.user_id = u.id
+      INNER JOIN Users AS u ON up.user_id = u.id
       WHERE t.category_id = :categoryId
       GROUP BY up.user_id, u.name
       ORDER BY quiz_count DESC
