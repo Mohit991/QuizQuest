@@ -65,7 +65,7 @@ export const fetchCategories = async (token) => {
 };
 
 export const fetchTopicsOfCategory = async (token, selectedCategoryId) => {
-  console.log('selectedCategoryId = ', selectedCategoryId);
+  // console.log('selectedCategoryId = ', selectedCategoryId);
   try {
     const response = await api.get(`/categories/${selectedCategoryId}/topics`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -83,7 +83,7 @@ export const fetchLevels = async (token) => {
     const response = await api.get('/levels', {
       headers: { Authorization: `Bearer ${token}` },
     });
-    console.log(response);
+    // console.log(response);
     return response.data;
   } catch (error) {
     const err = new Error(`HTTP error! status: ${error.response?.status}`);
@@ -125,7 +125,7 @@ export const getUserProgress = async (userId, token) => {
         headers: { Authorization: `Bearer ${token}` },
       }
     );
-    console.log(response);
+    // console.log(response);
     return response.data;
   } catch (error) {
     console.error('Error fetching user progress:', error);

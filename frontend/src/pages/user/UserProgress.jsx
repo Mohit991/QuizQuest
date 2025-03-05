@@ -28,7 +28,7 @@ const UserProgress = () => {
       try {
         const data = await getUserProgress(userId, token);
         setProgressData(data);
-        console.log("user progress data :: ",data);
+        // console.log("user progress data :: ",data);
       } catch (error) {
         console.error('Failed to fetch user progress:', error);
       } finally {

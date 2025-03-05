@@ -14,14 +14,14 @@ const GoogleLoginButton = () => {
       if (!token) {
         throw new Error("No token provided");
       }
-      console.log(token)
+      // console.log(token)
 
       const googleUser = await googleSignIn(token);
       if (!googleUser) {
         throw new Error("Invalid Google token");
       }
 
-      console.log('googleUser = ', googleUser);
+      // console.log('googleUser = ', googleUser);
 
       localStorage.setItem("token", googleUser.JwtToken);
       setToken(googleUser.JwtToken);

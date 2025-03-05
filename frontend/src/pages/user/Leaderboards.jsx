@@ -50,7 +50,7 @@ const Leaderboards = () => {
             fetchLeaderboards(token, selectedCategory.category_id)
                 .then(data => {
                     setLeaderboards(data);
-                    console.log("leaderboards data", data)
+                    // console.log("leaderboards data", data)
                     setLoading(false);
                 })
                 .catch(err => {
